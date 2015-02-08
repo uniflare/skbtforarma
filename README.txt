@@ -1,6 +1,5 @@
 ==================
 ARMA SERVER KEEPALIVE TOOL 0.9.4 beta
-DEVELOPMENT BUILD PRE-RELEASE
 ==================
 
 ==================
