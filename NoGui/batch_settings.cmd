@@ -1,5 +1,6 @@
 @echo off
 
+
 REM \\ // ===================================================== \\ //
 REM // \\             INTRODUCTION AND INFORMATION              // \\
 REM \\ // ===================================================== \\ //
@@ -33,23 +34,23 @@ REM \\ // ===================================================== \\ //
 
 
 REM // Keep database alive?
-set keepalive_database={KEEPALIVE_DATABASE}
+set keepalive_database=1
 REM // Keep BEC alive?
-set keepalive_bec={KEEPALIVE_BEC}
+set keepalive_bec=1
 REM // Keep an Arma Server Monitor alive? (@ASM)
-set keepalive_asm={KEEPALIVE_ASM}
+set keepalive_asm=0
 REM // Keep a Teamspeak Server alive?
-set keepalive_ts={KEEPALIVE_TS}
+set keepalive_ts=0
 REM // Keep a Headless Client alive?
-set keepalive_hc={KEEPALIVE_HC}
+set keepalive_hc=0
 
 REM // Server Port (this is used regardless if -ip param is omitted)
-set serverport={SERVERPORT}
+set serverport=2302
 
 REM // bindtoip, 1 to enable -ip param in command line, 0 to disable (omit from launch params).
-set bindtoip={BINDTOIP}
+set bindtoip=0
 REM // ONLY USED IF bindtoip IS 1 :: Public IP address when using the -ip param in your command line. 
-set serverip={SERVERIP}
+set serverip=127.0.0.1
 
 
 REM \\ // ===================================================== \\ //
@@ -57,10 +58,10 @@ REM // \\           EXTERNAL TOOL SPECIFIC SETTINGS             // \\
 REM \\ // ===================================================== \\ //
 
 REM // Teamspeak port number (if using)
-set teamspeak_port={TEAMSPEAK_PORT}
+set teamspeak_port=2310
 
 REM // ASM log file write interval (if using)
-set asm_log_interval={ASM_LOG_INTERVAL}
+set asm_log_interval=5
 
 
 REM \\ // ===================================================== \\ //
@@ -68,35 +69,35 @@ REM // \\           KEEPALIVE TOOL SPECIFIC SETTINGS            // \\
 REM \\ // ===================================================== \\ //
 
 REM // How long to wait for the server to start before assuming it has crashed
-set serverStartTimeout={SERVER_START_TIMEOUT}
+set serverStartTimeout=30
 
 REM // Database Backup Interval _in Minutes_ // CAUTION: Too short an interval and you may fill your hard drive rather quickly!
-set db_backup_interval={DB_BACKUP_INTERVAL}
+set db_backup_interval=5
 
 REM // Backup log files to zipped archives (1) or plaint text (0)
-set use_zip_logs={UZE_ZIP_LOGS}
+set use_zip_logs=1
 
 REM // Backup Database file to a zipped archive (1) or raw (0)
-set use_zip_backups={USE_ZIP_BACKUPS}
+set use_zip_backups=1
 
 REM // Folder to store the Database Backups
-set databasebackupfolder={DATABASE_BACKUP_FOLDER}
+set databasebackupfolder=C:\apps\epoch_redis_backups
 
 REM // Location to store the Server Log Backups
-set logfilebackupfolder={LOG_BACKUP_FOLDER}
+set logfilebackupfolder=C:\apps\epoch_log_backups
 
 REM // Manual Action Timeout in Seconds
 REM // Length of time to keep the game server down after using manual_stop.bat
 REM // ex, To edit the database objects or vehicles/mission file upload etc.
-set manual_timeout_length={MANUAL_TIMEOUT_LENGTH}
+set manual_timeout_length=300
 
 REM // Automated Event Timeout in Seconds
 REM // Length of time in seconds to wait for the Arma server EXE to close by itself before force closing it
 REM // Used with BEC Scheduler so it can setauto.bat and shutdown server using #shutdown gracefully
-set auto_timeout_length={AUTO_TIMEOUT_LENGTH}
+set auto_timeout_length=25
 
 REM // Auto close any error dialogs after a crash event (will close ALL WER error dialogs)
-set cleanWerDialogs={CLEAN_WER_DIALOGS}
+set cleanWerDialogs=false
 
 
 REM \\ // ===================================================== \\ //
@@ -104,7 +105,7 @@ REM // \\               HC COMMAND LINE PARAMTERS               // \\
 REM \\ // ===================================================== \\ //
 
 REM // Headless Client Launch params
-set hclaunchparams={HC_LAUNCH_PARAMS}
+set hclaunchparams=-connect=%serverip% -port=%serverport% -client -nosound -mod=@Epoch;
 
 
 REM \\ // ===================================================== \\ //
@@ -117,42 +118,42 @@ REM // To find these short names you can use the command: "dir /x" at a command 
 
 REM // Executable Names
 REM // Name of the server executable (if using arma 2 or arma 3 etc)
-set armaserverexe={ARMA_SERVER_EXE}
+set armaserverexe=arma3server.exe
 REM // Headless Client EXE name
-set hcexename={HC_EXE}
+set hcexename=arma3serverHC.exe
 REM // Teamspeak Server EXE name
-set teamspeakfilename={TS_EXE_NAME}
+set teamspeakfilename=ts3server_win64.exe
 REM // Database Server EXE name
-set redisexename={REDIS_EXE_NAME}
+set redisexename=redis-server.exe
 REM // BEC EXE name
-set becexename={BEC_EXE_NAME}
+set becexename=bec.exe
 REM // ASM EXE name
-set asmexename={ASM_EXE_NAME}
+set asmexename=ArmaServerMonitor.exe
 
 REM // Filename of the Database File/Folder (Only for reference in the backups)
-set databasefile_name={DATABASE_DUMP_NAME}
+set databasefile_name=dump.rdb
 REM // name of logfile for ASM (if using, will put in same directory as asm.exe)
-set asm_log_file={ASM_LOG_NAME}
+set asm_log_file=asm_performance.log
 
 
 REM // Full path to your Arma Server Directory (With the Arma EXE File Inside)
-set armapath={ARMA_PATH}
+set armapath=F:\games\A3Master
 REM // Headless Client path (if using)
-set hcarmapath={HC_PATH}
+set hcarmapath=%armapath%
 REM // Teamspeak Path (if using)
-set teamspeakpath={TS_PATH}
+set teamspeakpath=C:\apps\teamspeak
 REM // Full path the Database folder with redis.conf/redis-server.exe/dump.rdb
-set redispath={DB_PATH}
+set redispath=%armapath%\DB
 REM // Full path the Arma Server Monitor executable (Just put inside arma directory)
-set asmpath={ASM_PATH}
+set asmpath=%armapath%
 REM // Full path to the Battleye folder containing your BE Filters and Config
-set Battleyepath={BE_PATH}
+set Battleyepath=%armapath%\SC\BattlEye
 REM // Full path to the log/config/instance folder (containing server rpt and config.cfg and basic.cfg)
-set LogPath={LOG_PATH}
+set LogPath=%armapath%\SC
 REM // Full path to the BEC executable
-set becpath={BEC_PATH}
+set becpath=%armapath%\BEC
 REM // Full path to the Database File/Folder
-set databasefile={DB_FILE_FULLPATH}
+set databasefile=%armapath%\DB\%databasefile_name%
 
 
 REM \\ // ===================================================== \\ //
@@ -160,15 +161,15 @@ REM // \\             SERVER COMMAND LINE PARAMTERS             // \\
 REM \\ // ===================================================== \\ //
 
 REM // Location of config.cfg server config file
-set servercfgpath={SERVER_CONFIG_PATH}
+set servercfgpath=%armapath%\SC\config.cfg
 
 REM // Location of basic.cfg Server Config File
-set serverbasicpath={SERVER_BASIC_PATH}
+set serverbasicpath=%armapath%\SC\basic.cfg
 
 REM // Profile name
 REM // Location of the users folder with arma profiles (difficulty settings etc)
-set profilepathname={PROFILE_PATH}
-set cli_username={PROFILE_NAME}
+set profilepathname=SC
+set cli_username=SC
 
 REM // Command line to launch the server with as called from windows console/shortcuts.
 if %bindtoip%==1 (
@@ -178,30 +179,30 @@ if %bindtoip%==1 (
 )
 
 REM // Mod string for startup command line
-set mod_string= {MOD_STRING}
+set mod_string= -mod=@Epoch;@EpochHive;@CBA_A3
 
 REM // This should not need to be altered.
-set servercommandline={COMMAND_LINE}
+set servercommandline=%armaserverexe% %mod_string% -config=%servercfgpath% %ip_param% -port=%serverport% -profiles=%profilepathname% -cfg=%serverbasicpath% -name=%cli_username% -autoinit
 
 REM \\ // ===================================================== \\ //
 REM // \\           EXECUTABLE AFFINITIES/PRIORITIES            // \\
 REM \\ // ===================================================== \\ //
 
 REM // Affinity of the Process (use comma seperated list of processor core numbers, eg: "serverAffinity=0,2" for core 1 and 3)
-set serverAffinity={AFFINITY_SERVER}
-set becAffinity={AFFINITY_BEC}
-set hcAffinity={AFFINITY_HC}
-set redisAffinity={AFFINITY_DB}
-set teamspeakAffinity={AFFINITY_TS}
-set asmAffinity={AFFINITY_ASM}
+set serverAffinity=0,1
+set becAffinity=1
+set hcAffinity=2
+set redisAffinity=2
+set teamspeakAffinity=2
+set asmAffinity=2
 
 REM // Server Priority, Specify: low, belownormal, normal, abovenormal, high or realtime
-set serverPriority={PRIORITY_SERVER}
-set becPriority={PRIORITY_BEC}
-set hcPriority={PRIORITY_HC}
-set redisPriority={PRIORITY_DB}
-set teamspeakPriority={PRIORITY_TS}
-set asmPriority={PRIORITY_ASM}
+set serverPriority=normal
+set becPriority=normal
+set hcPriority=normal
+set redisPriority=normal
+set teamspeakPriority=normal
+set asmPriority=normal
 
 REM \\ // ====================================== \\ //
 REM // \\ BELOW ARE NOT NEEDED / NOT IMPLEMENTED // \\
@@ -236,73 +237,5 @@ REM set spbopath=%armapath%\@EpochHive\Addons
 
 REM // Path to PBO Manager's executable. (NOT IMPLEMENTED)
 REM set pbocompath=C:\Progra~1\PBO Manager v.1.4 beta
-
-REM // LOAD PATH NAMES TO SHORT VARIANTS
-
-for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%armapath%"') do (
-    set result=%%a
-)
-	set armapath=%result%
-
-for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%hcarmapath%"') do (
-    set result=%%a
-)
-	set hcarmapath=%result%
-
-for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%teamspeakpath%"') do (
-    set result=%%a
-)
-	set teamspeakpath=%result%
-
-for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%redispath%"') do (
-    set result=%%a
-)
-	set redispath=%result%
-
-for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%asmpath%"') do (
-    set result=%%a
-)
-	set asmpath=%result%
-
-for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%Battleyepath%"') do (
-    set result=%%a
-)
-	set Battleyepath=%result%
-
-for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%LogPath%"') do (
-    set result=%%a
-)
-	set LogPath=%result%
-
-for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%becpath%"') do (
-    set result=%%a
-)
-	set becpath=%result%
-
-for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%databasefile%"') do (
-    set result=%%a
-)
-	set databasefile=%result%
-
-for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%servercfgpath%"') do (
-    set result=%%a
-)
-	set servercfgpath=%result%
-
-for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%serverbasicpath%"') do (
-    set result=%%a
-)
-	set serverbasicpath=%result%
-
-for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%databasebackupfolder%"') do (
-    set result=%%a
-)
-	set databasebackupfolder=%result%
-
-for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%logfilebackupfolder%"') do (
-    set result=%%a
-)
-	set logfilebackupfolder=%result%
-
 goto :EOF
 rem exit
