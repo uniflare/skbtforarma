@@ -1,15 +1,14 @@
 ==================
-ARMA SERVER KEEPALIVE TOOL 0.9.4 beta
+ARMA SERVER KEEPALIVE TOOL 1.0.0 RELEASE
 ==================
 
 ==================
 == NEW CHANGES  ==
 ==================
-FIXED: Server crash on stop/start
-NEW: Crash Detection! Will force close any crashed processes!
-FIXED: Config Structure (should be easier to understand)
-NEW: Affinity and Priority settings!
-CHANGED: Bundled required exe's in external folder for redistributability
+
+NEW: **Installation GUI** (Not Required)
+NEW: Multi Server Support (Using GUI).
+NEW: Full Path names with spaces allowed in config. (AFAIK)
 
 ==================
 == INSTALLATION ==
@@ -61,6 +60,13 @@ The logfile is called "batchrun.log" and is placed in the batch_lib directory
 ==================
 = OLD CHANGELOGS =
 ==================
+
+== Version 0.9.4
+FIXED: Server crash on stop/start
+NEW: Crash Detection! Will force close any crashed processes!
+FIXED: Config Structure (should be easier to understand)
+NEW: Affinity and Priority settings!
+CHANGED: Bundled required exe's in external folder for redistributability
 
 == Version 0.9.3 HF (Private Release)
 **HOTFIX: Possibly fixed a double start issue for some (slower) servers.
