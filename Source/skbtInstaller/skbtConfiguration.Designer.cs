@@ -494,7 +494,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtArmaExePath.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.txtArmaExePath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtArmaExePath.Enabled = false;
             this.txtArmaExePath.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtArmaExePath.ForeColor = System.Drawing.SystemColors.ScrollBar;
             this.txtArmaExePath.Location = new System.Drawing.Point(186, 91);

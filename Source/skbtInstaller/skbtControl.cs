@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.IO.Compression;
 using System.Reflection;
 using System.Collections;
+using System.Runtime.InteropServices;
 
 namespace skbtInstaller
 {
@@ -20,6 +21,12 @@ namespace skbtInstaller
      */
     public class skbtServerControl
     {
+        [DllImport("kernel32", EntryPoint = "GetShortPathName", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern int GetShortPathName(string longPath, StringBuilder shortPath, int bufSize);
+
+        [DllImport("kernel32.dll", EntryPoint = "GetLongPathName", SetLastError = true, CharSet = CharSet.Auto)]
+        private static extern int GetLongPathName(string shortPath, StringBuilder longPath, int buffer);
+
         // Handle to Main Form Components
         public frmMainWindow frmMainWindowHandle;
 
@@ -45,7 +52,7 @@ namespace skbtInstaller
             this.frmConfigWindowHandle = new frmConfigWindow(this);
 
             // Load Config
-            CoreConfig = new skbtCoreConfig();
+            CoreConfig = new skbtCoreConfig(this);
 
             // Refresh List Box Items
             this.refreshListBox();
@@ -82,48 +89,34 @@ namespace skbtInstaller
             if (this.CoreConfig.ServerPathInUse(PathToEXE))
             {
                 // get name 
-                MessageBox.Show("This path is already in use as a server config (\"" + this.CoreConfig.getIdentifierOfPath(PathToEXE) + "\"). \nPlease select it from the list and click configure.");
+                MessageBox.Show("This path is already in use as a server config (\"" + this.CoreConfig.getConfigNameFromEXEPath(PathToEXE) + "\"). \nPlease select it from the list and click configure.");
                 return;
             }
 
             String batch_libPath = Path.Combine(FilePath, "batch_lib");
-            if (Directory.Exists(batch_libPath) && File.Exists(Path.Combine(batch_libPath, "start_keepalive.bat")))
+
+            String cPath = getConfigPathFromBatchFiles(batch_libPath);
+            if (cPath != null)
             {
-                // load config path string from file (2nd line).
-                Int32 counter = 0;
-                String line;
-                String configPath;
 
-                var file = new StreamReader(Path.Combine(batch_libPath, "start_keepalive.bat"));
-                while ((line = file.ReadLine()) != null)
-                {
-                    if (counter == 1)
-                    {
-                        break;
-                    }
-                    counter++;
-                }
-
-                file.Close();
-
-                // Config Path
-                configPath = line.Substring(5);
-
-                if (File.Exists(configPath))
+                if (File.Exists(cPath))
                 {
 
                     // No Folder, Not Installed
                     textualName = this.frmMainWindowHandle.getNewServerConfigNameFromUser();
-                    if(textualName == null){
+                    if (textualName == null)
+                    {
                         // User Cancelled
                         return;
-                    } else {
+                    }
+                    else
+                    {
 
                         // Add Server config instance to core config list
-                        this.CoreConfig.addServerConfig(newID, new skbtServerConfig(configPath));
+                        this.CoreConfig.addServerConfig(newID, new skbtServerConfig(PathToEXE, cPath));
 
                         // Add server meta for Application to keep track
-                        this.CoreConfig.addServerMeta(newID, new skbtServerMeta(newID, textualName, PathToEXE, configPath, true));
+                        this.CoreConfig.addServerMeta(newID, new skbtServerMeta(newID, textualName, PathToEXE, cPath, true));
 
                         // Update List Contents
                         this.refreshListBox();
@@ -146,7 +139,6 @@ namespace skbtInstaller
                 }
             }
 
-
             // No Folder, Not Installed
             textualName = this.frmMainWindowHandle.getNewServerConfigNameFromUser();
             if(textualName == null){
@@ -156,7 +148,7 @@ namespace skbtInstaller
             MessageBox.Show("There was no installation found. Please install.");
 
             // Add config internally
-            this.CoreConfig.addServerConfig(newID, new skbtServerConfig());
+            this.CoreConfig.addServerConfig(newID, new skbtServerConfig(PathToEXE));
 
             // Add Config Meta
             this.CoreConfig.addServerMeta(newID, new skbtServerMeta(newID, textualName, PathToEXE, null, false));
@@ -171,6 +163,53 @@ namespace skbtInstaller
             this.refreshButtons();
 
             this.CoreConfig.saveCoreConfig();
+        }
+
+        public String getConfigPathFromBatchFiles(String batchLibPath)
+        {
+            if (Directory.Exists(batchLibPath) && File.Exists(Path.Combine(batchLibPath, "start_keepalive.bat")))
+            {
+                // Decl
+                String result;
+
+                // Load Known Batch File
+                var file = new StreamReader(Path.Combine(batchLibPath, "start_keepalive.bat"));
+
+                // Skip read first line
+                file.ReadLine();
+
+                // Read Second line and remove "call " so we get the path
+                result = file.ReadLine().Substring(5);
+
+                String longPath = result;
+
+                // Check if result is shortpath
+                if (result.Contains('~'))
+                {
+                    // Get Short Path (just in case)
+                    var buffer = new StringBuilder(259);
+                    int len = GetLongPathName(longPath, buffer, buffer.Capacity);
+                    if (len == 0)
+                    {
+                        // Might need to sort this at some point
+                        // MessageBox.Show("Could not convert batch settings path from \"8.3 short path\" to normal \"Long path\".\n\nYou can continue, but be warned you will have to re-set the batch settings path in the configuration window.", "Kernel32.dll error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        longPath = buffer.ToString();
+                    }
+                }
+
+
+                // ...
+                file.Close();
+                return longPath;
+            }
+            else
+            {
+                return null;
+            }
+
         }
 
         /*  refreshListBox()
@@ -275,6 +314,17 @@ namespace skbtInstaller
             }
             return aStr;
         }
+        public static String getDefaultAffinityString()
+        {
+            UInt16 i = 0;
+            String result = "";
+            do
+            {
+                result += result.Length >= 1 ? "," + i.ToString() : i.ToString();
+                i++;
+            } while (i < Environment.ProcessorCount);
+            return result;
+        }
 
         /*  getSelectedPathIdentifier()
          * 
@@ -290,7 +340,7 @@ namespace skbtInstaller
          * 
          * Handles configuration button mechanics
          */
-        public void ShowConfigure()
+        public void ShowConfigure(Boolean isInstalling=false)
         {
             // Configure button was clicked
 
@@ -302,17 +352,8 @@ namespace skbtInstaller
             );
         }
 
-        public void InstallBatchLib(String Identifier, String newConfigName)
+        public void doBatchLibFiles(String cfgPath, String batchLibParentFolder)
         {
-            // exit on error/cancel
-            if (Identifier == null || newConfigName == null) { return; }
-            
-            // Set default objServerProc.Path / ExeFile
-            String serverPath = Path.GetDirectoryName(this.CoreConfig.getServerMetaObject(Identifier).PathToEXE);
-            String serverEXE = Path.GetFileName(this.CoreConfig.getServerMetaObject(Identifier).PathToEXE);
-
-            this.CoreConfig.getServerConfigList()[Identifier].objServerProc.Path = serverPath;
-            this.CoreConfig.getServerConfigList()[Identifier].objServerProc.EXEFile = serverEXE;
 
             // Copy Zip To Temp
             Assembly asm = Assembly.GetExecutingAssembly();
@@ -327,7 +368,7 @@ namespace skbtInstaller
             while (b != -1) { fs.WriteByte((byte)b); b = s.ReadByte(); }
             fs.Close();
 
-            String blPath = Path.Combine(serverPath, "batch_lib");
+            String blPath = Path.Combine(batchLibParentFolder, "batch_lib");
 
             // Check and/or delete batch_lib
             if (Directory.Exists(blPath))
@@ -336,7 +377,7 @@ namespace skbtInstaller
             }
 
             // Extract Zip to Batch Lib Folder
-            ZipFile.ExtractToDirectory(tempZip, this.CoreConfig.getServerConfigList()[Identifier].objServerProc.Path);
+            ZipFile.ExtractToDirectory(tempZip, batchLibParentFolder);
 
             // Get all .bat and .cmd files for processing
             ArrayList alFiles = new ArrayList();
@@ -348,6 +389,22 @@ namespace skbtInstaller
 
             string[] files = (string[])alFiles.ToArray(typeof(string));
 
+            String shortPath = cfgPath;
+            // Get Short Path (just in case)
+            if (shortPath.Contains(' ') && File.Exists(shortPath))
+            {
+                var buffer = new StringBuilder(259);
+                int len = GetShortPathName(shortPath, buffer, buffer.Capacity);
+                if (len == 0)
+                {
+                    MessageBox.Show("Could not convert batch settings path to 8.3 short name. (Make sure you have NO SPACES in your batch_settings path!", "Error converting path", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    shortPath = buffer.ToString();
+                }
+            }
+
             // Rewrite Strings
             for (int i = 0; i < files.Length; i++)
             {
@@ -355,19 +412,46 @@ namespace skbtInstaller
                 File.WriteAllText(
                         file,
                         File.ReadAllText(file)
-                            .Replace("{PATH_TO_CONFIG}", newConfigName)
+                            .Replace("{PATH_TO_CONFIG}", shortPath)
                             .Replace("{AUTHOR}", skbtCoreConfig.strAuthor)
                             .Replace("{VERSION}", skbtCoreConfig.strVersion)
                             .Replace("{KEEPALIVE_TITLE}", skbtCoreConfig.strKeepaliveTitle)
                             .Replace("{KALAUNCHER_TITLE}", skbtCoreConfig.strLauncherTitle)
                             .Replace("{DISPLAY_HEADER}", skbtCoreConfig.strKeepaliveHead)
                     );
-			};
+            };
+        }
 
-            // install complete (isInstalled true)
+        public void InstallBatchLib(String Identifier, String newConfigName)
+        {
+            // exit on error/cancel
+            if (Identifier == null || newConfigName == null) { return; }
+            
+            // Set default objServerProc.Path / ExeFile
+            String serverPath = Path.GetDirectoryName(this.CoreConfig.getServerMetaObject(Identifier).PathToEXE);
+            String serverEXE = Path.GetFileName(this.CoreConfig.getServerMetaObject(Identifier).PathToEXE);
 
-            // Display config screen
+            this.CoreConfig.getServerConfigList()[Identifier].objServerProc.Path = serverPath;
+            this.CoreConfig.getServerConfigList()[Identifier].objServerProc.EXEFile = serverEXE;
+            this.CoreConfig.getServerMetaObject(Identifier).PathToConfig = newConfigName;
 
+            bool created = false;
+            // Create default config file.
+            if (!File.Exists(newConfigName))
+            {
+                // Create blank config for shortname
+                File.WriteAllText(newConfigName, "BLANKFILE. IF YOU SEE THIS FILE. PLEASE REPORT A BUG FOR THE SKBT INSTALLER. (and delete this file)");
+                created = true;
+            }
+
+            // Copy and Process Batch Lib Files
+            this.doBatchLibFiles(newConfigName, serverPath);
+
+            // delete created file
+            if (created)
+            {
+                File.Delete(newConfigName);
+            }
         }
     }
 

@@ -26,7 +26,8 @@ namespace skbtInstaller
         public const String strLauncherTitle = "Keepalive Launcher v1.1";   // {KALAUNCHER_TITLE}
         public const String strKeepaliveHead = "Server Keepalive " + strVersion + " by " + strAuthor; // {DISPLAY_HEADER}
 
-
+        // Looped ref (do i care?)
+        skbtServerControl sc;
 
         // Path to Core Config File (Set in Constructor)
         private String skbtXMLConfigPath;
@@ -41,8 +42,10 @@ namespace skbtInstaller
          * 
          * Initializes all members and attempts to load required config files
          */
-        public skbtCoreConfig()
+        public skbtCoreConfig(skbtServerControl s)
         {
+            this.sc = s;
+
             // Initialize
             this.skbtXMLConfigPath = Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SKBT_Data"), "skbtConfig.xml");
 
@@ -129,8 +132,18 @@ namespace skbtInstaller
                                 }
                                 else
                                 {
+                                    // Check isInstalled against file structure
+                                    if (isInstalled == true)
+                                    {
+                                        if (!Directory.Exists( Path.Combine(Path.GetDirectoryName(exePath), "batch_lib") ))
+                                        {
+                                            MessageBox.Show("Batch Lib folder missing for \"" + textName + "\"." + Environment.NewLine + "Updating batch files automatically...");
+                                            this.sc.doBatchLibFiles(configPath, Path.GetDirectoryName(exePath));
+                                        }
+                                    }
+
                                     // Add new server config
-                                    this.addServerConfig(identifier, new skbtServerConfig(configPath));
+                                    this.addServerConfig(identifier, new skbtServerConfig(exePath, configPath));
                                     this.addServerMeta(identifier, new skbtServerMeta(identifier, textName, exePath, configPath, isInstalled));
                                 }
                             }
@@ -142,11 +155,15 @@ namespace skbtInstaller
                         }
                         ReadFileStream.Close();
                     }
-                    catch
+                    catch(Exception e)
                     {
                         // Catch everything, any errors, blank out the config
                         ReadFileStream.Close();
-                        MessageBox.Show("Your Config File seems Corrupted. Creating a Backup and cleaning...");
+                        MessageBox.Show(
+                            "There was an error loading application settings. .NET Said: " + Environment.NewLine + 
+                            e.Message + Environment.NewLine + 
+                            Environment.NewLine + 
+                            e.StackTrace);
                         this.cleanXMLConfig();
                     }
                 }
@@ -249,14 +266,14 @@ namespace skbtInstaller
 
         }
 
-        /*  getIdentifierOfPath(String PathToEXE)
+        /*  getConfigNameFromEXEPath(String PathToEXE)
          * 
-         * returns the Identifier of the Server Config Object that contains PathToEXE
+         * returns the Textual Name of the Server Config Object that contains PathToEXE
          * otherwise will return null
          * 
-         * [PathToEXE] Path to Server EXE (used in erver Config Object Meta)
+         * [PathToEXE] Path to Server EXE (used in Server Config Object Meta)
          */
-        public String getIdentifierOfPath(String p)
+        public String getConfigNameFromEXEPath(String p)
         {
             foreach (KeyValuePair<String, skbtServerMeta> pair in this.DictServerMeta)
             {
@@ -268,11 +285,33 @@ namespace skbtInstaller
             return null;
         }
 
-        /*  checkServerPath(String ConfigPath)
+        public String getNameOfConfigFromConfigPath(String p, String i=null)
+        {
+            foreach (KeyValuePair<String, skbtServerMeta> pair in this.DictServerMeta)
+            {
+                if (pair.Value.PathToConfig == p)
+                {
+                    if (i == null)
+                    {
+                        return pair.Value.textualName;
+                    }
+                    else
+                    {
+                        if (pair.Value.Identifier != i)
+                        {
+                            return pair.Value.textualName;
+                        }
+                    }
+                }
+            }
+            return "Unknown";
+        }
+
+        /*  ServerPathInUse(String EXEPath)
          * 
-         * Adds a new path to be controlled/configured
+         * Check if the EXE Path provided is already used by another config
          * 
-         * [ConfigPath]     Complete path to batch settings file
+         * [EXEPath]     Complete path to EXE File
          */
         public bool ServerPathInUse(String p)
         {
@@ -281,6 +320,34 @@ namespace skbtInstaller
                 if (Path.GetDirectoryName(pair.Value.PathToEXE) == Path.GetDirectoryName(p))
                 {
                     return true;
+                }
+            }
+            return false;
+        }
+
+        /*  ServerConfigInUse(String ConfigPath)
+         * 
+         * Check if the CONFIG Path provided is already used by another config
+         * 
+         * [ConfigPath]     Complete path to batch settings file
+         */
+        public bool ServerConfigInUse(String p, String i=null)
+        {
+            foreach (KeyValuePair<String, skbtServerMeta> pair in this.DictServerMeta)
+            {
+                if (pair.Value.PathToConfig == p)
+                {
+                    if (i != null)
+                    {
+                        if (pair.Value.Identifier != i)
+                        {
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        return true;
+                    }
                 }
             }
             return false;
@@ -305,6 +372,12 @@ namespace skbtInstaller
         public void setServerMeta(String Identifier, skbtServerMeta m)
         {
             this.DictServerMeta[Identifier] = m;
+        }
+
+        public void deleteConfigById(String id)
+        {
+            this.DictServerMeta.Remove(id);
+            this.DictServerConfig.Remove(id);
         }
     }
 }

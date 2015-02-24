@@ -53,10 +53,14 @@ namespace skbtInstaller
         public void DisplayConfigWindow(skbtServerMeta thisConfigMeta, skbtServerConfig thisConfigObject)
         {
             this.pageLoaded = false;
-            if (sc.getSelectedPathIdentifier() == null)
+
+            if (!File.Exists(thisConfigMeta.PathToConfig))
             {
-                MessageBox.Show("No Path was selected. \n(How did you even do this? Please report this as a bug.)");
-                return;
+                MessageBox.Show("No batch settings were found. Reverting to defaults.",
+                    "Settings not found",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information,
+                    MessageBoxDefaultButton.Button1);
             }
 
             // Set the Config Objects
@@ -275,32 +279,51 @@ namespace skbtInstaller
         }
         private void actionSaveConfig(object sender, EventArgs e)
         {
-            // Check Settings before saving! Meh, shouldn't be a need
-
-            // Assume all files are already installed (at least the templates, can check if they are templates).
-
-            String newfile = this.sMeta.PathToConfig;
+            String newFile = this.sMeta.PathToConfig;
             String oldFile = this.sc.CoreConfig.getServerMetaObject(this.sMeta.Identifier).PathToConfig;
 
-            if (newfile != oldFile) {
-                // TODO
-                // Edit every single reference in all zip files to new config location. (check for spaces? alert? cancel? wrap in quotes?)
-                    // Unzip Batch Lib from res to Batch Lib in arma folder
-                    // Loop file list and replace every occurence of "oldFile" to "newFile"
+            bool showChangePathDialog = false;
+            // Check if config path is in use by another config
+            if (this.sc.CoreConfig.ServerConfigInUse(newFile, this.sMeta.Identifier))
+            {
+                showChangePathDialog = true;
+            }
 
+            if (newFile != oldFile) {
 
                 // If rename flag is set, rename current config
                 if (this.onSaveRenameConfig == true)
                 {
                     // rename current config, then overwrite
-
-                    File.Move(oldFile, newfile);
+                    if (File.Exists(newFile)) { File.Delete(newFile); }
+                    File.Move(oldFile, newFile);
                 }
             }
+
+            if (showChangePathDialog == true)
+            {
+                MessageBox.Show(this,
+                    "This action would overwrite an existing config, save operation was canceled."
+                    + Environment.NewLine
+                    + Environment.NewLine
+                    + "Config is used by: \"" + this.sc.CoreConfig.getNameOfConfigFromConfigPath(newFile, this.sMeta.Identifier) + "\""
+                    + Environment.NewLine
+                    + "Please change your Batch Settings Path.",
+                    "Cannot Save Your Settings",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning,
+                    MessageBoxDefaultButton.Button1
+                );
+                return;
+            }
+
+            // quik fix
+            this.sConfig.objServerProc.ModLine = this.sConfig.objServerProc.ModLine.Trim(' ');
 
             // Map of replacement strings to values
             Dictionary<String, String> replacements = new Dictionary<string, string>()
             {
+
                 {"{KEEPALIVE_DATABASE}", this.sConfig.objDatabaseProc.Keepalive ? "1" : "0"},
                 {"{KEEPALIVE_BEC}", this.sConfig.objBECProc.Keepalive ? "1" : "0"},
                 {"{KEEPALIVE_ASM}", this.sConfig.objASMProc.Keepalive ? "1" : "0"},
@@ -357,8 +380,8 @@ namespace skbtInstaller
                 {"{PRIORITY_TS}", this.sConfig.objTeamspeakProc.Priority},
                 {"{PRIORITY_ASM}", this.sConfig.objASMProc.Priority}
             };
-
             this.sMeta.textualName = this.txtConfigName.Text;
+            this.sMeta.isInstalled = true;
 
             // Prepare new Batch Settings File
             String newConfigData = skbtInstaller.Properties.Resources.skbtConfigTemplate;
@@ -369,7 +392,7 @@ namespace skbtInstaller
             }
 
             // Write new batch settings file
-            System.IO.File.WriteAllText(newfile, newConfigData);
+            System.IO.File.WriteAllText(newFile, newConfigData);
 
             // Update Objects
             this.sc.CoreConfig.setServerConfig(this.sMeta.Identifier, this.sConfig);
@@ -383,6 +406,12 @@ namespace skbtInstaller
 
             // Save core Config Changes
             this.sc.CoreConfig.saveCoreConfig();
+
+            // Update Batch Files if Necessary
+            if (this.sc.getConfigPathFromBatchFiles(Path.Combine(Path.GetDirectoryName(this.sMeta.PathToEXE), "batch_lib")) != newFile)
+            {
+                this.sc.doBatchLibFiles(newFile, this.ExpandPathVars(this.sConfig.objServerProc.Path));
+            }
 
             // Close Configuration Window
             this.Close();
@@ -549,9 +578,13 @@ namespace skbtInstaller
         }
         private void actionConfigNameTouched(object sender, EventArgs e)
         {
-            if (((TextBox)sender).Text.Length < 5)
+            if (((TextBox)sender).Text.Length < 1)
             {
-                MessageBox.Show("Please choose a name with more than 4 characters.");
+                MessageBox.Show("Please choose a name with 1 or more characters.",
+                    "Name too short",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning,
+                    MessageBoxDefaultButton.Button1);
                 ((TextBox)sender).Text = this.sMeta.textualName;
                 return;
             }
@@ -638,18 +671,34 @@ namespace skbtInstaller
             // Check if validation was succesfull
             if (validResult == null)
             {
-                // Do Color checks
-                if (dColorCheck != null) { dColorCheck(newPath); }
-                else if (txtThis == null) { MessageBox.Show("Internal Error #5461353"); }
-                else { txtThis.BackColor = (this.CollapsePathVars(originPath).ToLower() != newPath.ToLower()) ? this.changedBack : Color.FromArgb(64, 64, 64); }
+
 
                 // Change text box and internal config data to reflect succesfull path selection
                 if (dSetWithCondition != null) { dSetWithCondition(newPath); }
                 else if(txtThis != null) { txtThis.Text = currentPath = newPath; }
                 else { /* Internal error fall silently */ }
+
+                // Do Color checks
+                if (dColorCheck != null) { dColorCheck(newPath); }
+                else if (txtThis == null)
+                {
+                    MessageBox.Show("Internal Error #5461353",
+                        "Internal Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error,
+                        MessageBoxDefaultButton.Button1);
+                }
+                else { txtThis.BackColor = (this.CollapsePathVars(originPath).ToLower() != newPath.ToLower()) ? this.changedBack : Color.FromArgb(64, 64, 64); }
             }
             // Failed Validation with Message
-            else if (validResult != "silent") { MessageBox.Show(validResult); }
+            else if (validResult != "silent")
+            {
+                MessageBox.Show(validResult,
+                    "Couldn't change path/file",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning,
+                    MessageBoxDefaultButton.Button1);
+            }
         }
         private void actionBrowseButtonForFilePath(object sender, EventArgs e)
         {
@@ -1174,6 +1223,7 @@ namespace skbtInstaller
 
                 case "btnFortxtBatchSettingsPath":  // Save File Batch Settings (*.cmd)
 
+                    Boolean Cancelled = false;
                     this.actionDelegateBrowseAction(
                         // TEXT BOX
                         this.txtBatchSettingsPath,
@@ -1189,7 +1239,8 @@ namespace skbtInstaller
                                 (Path.GetFileName(this.sMeta.PathToConfig) == null) ? "batch_settings.cmd" : Path.GetFileName(this.sMeta.PathToConfig),
                                 "Batch Tools Settings |*.cmd",
                                 Path.GetDirectoryName(this.sMeta.PathToConfig),
-                                "cmd"
+                                "cmd",
+                                true
                             );
                         },
                         // VALIDATION
@@ -1202,25 +1253,29 @@ namespace skbtInstaller
                         // SET WITH CONDITION
                         (userPathSetWithCondition)delegate(String newPathStr)
                         {
+                            String originPath = this.sc.CoreConfig.getServerMetaObject(this.sMeta.Identifier).PathToConfig.ToLower();
                             // Different from origin
-                            if (this.sc.CoreConfig.getServerMetaObject(this.sMeta.Identifier).PathToConfig.ToLower() != newPathStr.ToLower())
+                            if (originPath != newPathStr.ToLower() && File.Exists(originPath) && this.sMeta.isInstalled == true)
                             {
                                 DialogResult dRes = MessageBox.Show(
-                                    "Click Yes to rename the current settings file or No to create a new one"
+                                    "Would you like to keep the old config file?"
                                         + "\n\n Note: Changes will not take effect until you click \"SAVE\"",
                                     "Rename Config",
-                                    MessageBoxButtons.YesNoCancel);
+                                    MessageBoxButtons.YesNoCancel,
+                                    MessageBoxIcon.Warning,
+                                    MessageBoxDefaultButton.Button1);
 
                                 if (dRes == DialogResult.Yes)
                                 {
-                                    this.onSaveRenameConfig = true;
+                                    this.onSaveRenameConfig = false;
                                 }
                                 else if (dRes == DialogResult.No)
                                 {
-                                    this.onSaveRenameConfig = false;
+                                    this.onSaveRenameConfig = true;
                                 }
                                 else if (dRes == DialogResult.Cancel)
                                 {
+                                    Cancelled = true;
                                     return;
                                 }
                             }
@@ -1231,8 +1286,18 @@ namespace skbtInstaller
                             }
 
                             // Update Properties
-                            this.sConfig.skbtConfigPath = this.sMeta.PathToConfig = this.txtBatchSettingsPath.Text = newPathStr;
+                            this.sConfig.skbtConfigPath = this.sMeta.PathToConfig = this.txtBatchSettingsPath.Text = this.ExpandPathVars(newPathStr);
+                        },
+                        (userPathColorCheck) delegate(String newPathStr){
+                            if (Cancelled == true) { return; }
+
+                            this.txtBatchSettingsPath.BackColor = Color.FromArgb(64, 64, 64);
+                            if (this.ExpandPathVars(newPathStr) != this.ExpandPathVars(this.sc.CoreConfig.getServerMetaObject(this.sMeta.Identifier).PathToConfig))
+                            {
+                                this.txtBatchSettingsPath.BackColor = this.changedBack;
+                            }
                         }
+
                     );
                     return;
 
@@ -1372,7 +1437,11 @@ namespace skbtInstaller
             {
                 if (obj.Affinity.Length == 1)
                 {
-                    MessageBox.Show("You can't run a process on 0 cores now can you?\nSelect the cores you want, then deselect the ones you dont.");
+                    MessageBox.Show("You can't run a process on 0 cores. (To disable the process just click keepalive to red)",
+                    "Selected Cores Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning,
+                    MessageBoxDefaultButton.Button1);
                     return;
                 }
 
@@ -1517,6 +1586,16 @@ namespace skbtInstaller
             this.cBoxPriorityServer.BackColor = cBoxBackCol;
             this.cBoxPriorityTeamspeak.BackColor = cBoxBackCol;
 
+            // Num Selectors
+            this.numBackupInterval.ForeColor = Color.FromKnownColor(KnownColor.ScrollBar);
+            this.numASMLogInterval.ForeColor = Color.FromKnownColor(KnownColor.ScrollBar);
+            this.numTeamspeakPortNumber.ForeColor = Color.FromKnownColor(KnownColor.ScrollBar);
+            this.numServerIP1.ForeColor = Color.FromKnownColor(KnownColor.ScrollBar);
+            this.numServerIP2.ForeColor = Color.FromKnownColor(KnownColor.ScrollBar);
+            this.numServerIP3.ForeColor = Color.FromKnownColor(KnownColor.ScrollBar);
+            this.numServerIP4.ForeColor = Color.FromKnownColor(KnownColor.ScrollBar);
+            this.numServerPort.ForeColor = Color.FromKnownColor(KnownColor.ScrollBar);
+
         }
         private void resetAllAffinityCheckboxes()
         {
@@ -1533,8 +1612,17 @@ namespace skbtInstaller
             {
                 for (int i = 0; i < 8; i++)
                 {
+                    // Get checkbox
                     CheckBox tChk = (CheckBox)this.Controls.Find("chkAffinity" + tabName + (i).ToString(), true)[0];
-                    tChk.Enabled = (i > Environment.ProcessorCount - 1) ? false : true;
+
+                    this.setAffinityChkColor(tChk, true);
+
+                    // Only for the cores we can use
+                    if(i < Environment.ProcessorCount - 1){
+                        tChk.Enabled = true;
+                    }else{
+                        tChk.Enabled = false;
+                    }
                 }
             }
 
@@ -1551,16 +1639,17 @@ namespace skbtInstaller
                 // Enable the checkbox
                 tmpChkHandle.Enabled = true;
 
-                if (selCores.Contains((i).ToString()) || affinityStr == null || affinityStr == "")
+                // Core is selected in config
+                if (selCores.Contains(i.ToString()))
                 {
                     tmpChkHandle.Checked = true;
-
-                    // set to green
                     this.setAffinityChkColor(tmpChkHandle, false);
+
                 }
+                // Core is not selected
                 else
                 {
-                    // set to red
+                    tmpChkHandle.Checked = false;
                     this.setAffinityChkColor(tmpChkHandle, true);
                 }
             }
@@ -1696,7 +1785,7 @@ namespace skbtInstaller
 
             return newFolder;
         }
-        private String showSaveFileDialog(String title, String defaultFileName, String filter, String startFolder, String defaultExt)
+        private String showSaveFileDialog(String title, String defaultFileName, String filter, String startFolder, String defaultExt, Boolean overwritePrompt=false)
         {
             String newFilePath;
 
@@ -1708,7 +1797,7 @@ namespace skbtInstaller
             this.saveFileDialog.CheckPathExists = true;
             this.saveFileDialog.CreatePrompt = false;
             this.saveFileDialog.AddExtension = true;
-            this.saveFileDialog.OverwritePrompt = false;
+            this.saveFileDialog.OverwritePrompt = overwritePrompt;
             this.saveFileDialog.InitialDirectory = startFolder;
             this.saveFileDialog.FileName = defaultFileName;
 

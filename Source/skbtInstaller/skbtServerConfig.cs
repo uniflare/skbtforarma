@@ -33,6 +33,10 @@ namespace skbtInstaller
         public skbtProcessConfigBEC objBECProc             // BEC Process
         { get; private set; }
 
+        // Ref Prop
+        String refPathToEXE;
+
+
         // Keepalive Flags
         public bool CleanWER;
 
@@ -51,9 +55,10 @@ namespace skbtInstaller
          * Either attempts to load configPath File or will otherwise 
          * revert to default values.
          */
-        public skbtServerConfig(String configPath=null)
+        public skbtServerConfig(String PathToEXE, String configPath = null)
         {
             this.skbtConfigPath = configPath;
+            this.refPathToEXE = PathToEXE;
 
             // attempt to load skbt settings
             if (configPath == null || !File.Exists(this.skbtConfigPath))
@@ -159,21 +164,21 @@ namespace skbtInstaller
             this.AutoTimeoutLength = 25; // 25 sec for graceful shutdown
 
             this.objServerProc = new skbtProcessConfigServer(
-                    "Arma3Server.exe", 
-                    @"C:\Arma3Server", 
-                    true, 
-                    "normal", 
-                    "",
-                    (UInt16) 2302,
-                    @"%armapath%\SC\basic.cfg", 
-                    @"%armapath%\SC\config.cfg",
-                    "SC",
-                    "SC",
-                    "%armaserverexe% %mod_string% -config=%servercfgpath% %ip_param% -port=%serverport% -profiles=%profilepathname% -cfg=%serverbasicpath% -name=%cli_username% -autoinit",
-                    "-mod=@Epoch;@EpochHive;@CBA_A3",
-                    @"%armapath%\SC",
-                    @"C:\apps\epoch_log_backups",
-                    true
+                Path.GetFileName(refPathToEXE),
+                Path.GetDirectoryName(refPathToEXE), 
+                true, 
+                "normal",
+                skbtServerControl.getDefaultAffinityString(),
+                (UInt16) 2302,
+                @"%armapath%\SC\basic.cfg", 
+                @"%armapath%\SC\config.cfg",
+                "SC",
+                "SC",
+                "%armaserverexe% %mod_string% -config=%servercfgpath% %ip_param% -port=%serverport% -profiles=%profilepathname% -cfg=%serverbasicpath% -name=%cli_username% -autoinit",
+                "-mod=@Epoch;@EpochHive;@CBA_A3",
+                @"%armapath%\SC",
+                @"C:\apps\epoch_log_backups",
+                true
             );
 
             this.objDatabaseProc = new skbtProcessConfigDatabase(
@@ -181,7 +186,7 @@ namespace skbtInstaller
                 @"%armapath%\DB",
                 true,
                 "normal",
-                "",
+                skbtServerControl.getDefaultAffinityString(),
                 true,
                 5,
                 @"C:\apps\epoch_redis_backups",
@@ -194,7 +199,7 @@ namespace skbtInstaller
                 @"%armapath%\BEC",
                 true,
                 "normal",
-                "",
+                skbtServerControl.getDefaultAffinityString(),
                 @"%armapath%\SC\BattlEye"
             );
 
@@ -202,8 +207,8 @@ namespace skbtInstaller
                 "ArmaServerMonitor.exe", 
                 @"%armapath%", 
                 false, 
-                "normal", 
-                "", 
+                "normal",
+                skbtServerControl.getDefaultAffinityString(), 
                 "asm_performance.log", 
                 (UInt16)5
             );
@@ -213,7 +218,7 @@ namespace skbtInstaller
                 @"C:\apps\teamspeak",
                 false,
                 "normal",
-                "",
+                skbtServerControl.getDefaultAffinityString(),
                 (UInt16) 2310
             );
 
@@ -222,7 +227,7 @@ namespace skbtInstaller
                 @"%armapath%",
                 false,
                 "normal",
-                "",
+                skbtServerControl.getDefaultAffinityString(),
                 "-connect=%serverip% -port=%serverport% -client -nosound -mod=@Epoch;"
             );
 
@@ -255,7 +260,7 @@ namespace skbtInstaller
 
                             if (propStringSplit.Count<String>() > 1)
                             {
-                                skbtConfigArray.Add(propStringSplit[0], propStringSplit[1]);
+                                skbtConfigArray.Add(propStringSplit[0], propStringSplit[1].Trim(' '));
                             }
                         }
                     }
@@ -416,7 +421,6 @@ namespace skbtInstaller
                         skbtConfigArray["hcAffinity"],
                         skbtConfigArray["hclaunchparams"]
                 );
-
             }else{
                 MessageBox.Show("ERROR: Could not load batch_settings properly, has it been modified incorrectly? or from a different version?");
 
@@ -477,7 +481,7 @@ namespace skbtInstaller
                 {"{SERVER_BASIC_PATH}", this.objServerProc.ConfigPathBasic},
                 {"{PROFILE_PATH}", this.objServerProc.ProfilePath},
                 {"{PROFILE_NAME}", this.objServerProc.ProfileName},
-                {"{MOD_STRING}", this.objServerProc.ModLine},
+                {"{MOD_STRING}", " " + this.objServerProc.ModLine.Trim(' ')},
                 {"{COMMAND_LINE}", this.objServerProc.CommandLine},
                 {"{AFFINITY_SERVER}", this.objServerProc.Affinity},
                 {"{AFFINITY_BEC}", this.objBECProc.Affinity},
@@ -500,6 +504,11 @@ namespace skbtInstaller
 
             // Save to file.
 
+        }
+
+        private String expandPathVar(String path)
+        {
+            return path.Replace("%armapath%", Path.GetDirectoryName(this.refPathToEXE));
         }
     }
 }

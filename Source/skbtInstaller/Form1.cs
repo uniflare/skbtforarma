@@ -11,6 +11,8 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 
+
+
 namespace skbtInstaller
 {
     /*  class frmMainWindow : Form
@@ -60,12 +62,49 @@ namespace skbtInstaller
               
              */
 
-            // Get a new config name
+            // Install Batch Lib
             this.sc.InstallBatchLib(this.sc.getSelectedPathIdentifier(), this.getNewFilePathFromUser());
+
+            // Display config screen
+            this.sc.ShowConfigure(true);
         }
 
         private void btnUninstall_Click(object sender, EventArgs e)
         {
+            String thisIdentifier = this.getSelectedPath();
+            // Show small dialog containing:
+                // - ChkBox Delete Batch_Lib Folder
+                // - ChkBox Delete Batch_Settings File
+                // (unchecked = Keep both)
+                // DEFAULT: Delete Both
+
+            // To Push first release, quick n dirty
+            if (MessageBox.Show("Are you sure you wish to delete your config for this server?\nThis will also delete your batch_lib folder, and remove this config from your installer.", "Are you sure?", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                // delete settings
+                File.Delete(this.sc.CoreConfig.getServerMetaObject(thisIdentifier).PathToConfig);
+
+                // delete batch_lib
+                Directory.Delete(
+                    Path.Combine(
+                        Path.GetDirectoryName(this.sc.CoreConfig.getServerMetaObject(thisIdentifier).PathToEXE), 
+                        "batch_lib"
+                    ),
+                    true
+                );
+
+                // remove from config list
+                this.sc.CoreConfig.deleteConfigById(thisIdentifier);
+
+                // save core config
+                this.sc.CoreConfig.saveCoreConfig();
+
+                // Update List
+                this.sc.refreshListBox();
+
+                // Update Buttons
+                this.sc.refreshButtons();
+            }
         }
 
         /*  btnConfig_Click(object sender, EventArgs e)
@@ -218,7 +257,7 @@ namespace skbtInstaller
          * 
          * Grabs the MemberValue of the selected listbox item
          * 
-         * Returns String or null if the SelectedValue is null
+         * Returns Identifier (value) or null if the SelectedValue is null
          */
         public String getSelectedPath()
         {
