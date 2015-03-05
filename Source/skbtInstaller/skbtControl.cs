@@ -27,6 +27,8 @@ namespace skbtInstaller
         [DllImport("kernel32.dll", EntryPoint = "GetLongPathName", SetLastError = true, CharSet = CharSet.Auto)]
         private static extern int GetLongPathName(string shortPath, StringBuilder longPath, int buffer);
 
+        public static String ProgramGroupName = "SKBT for Arma";
+
         // Handle to Main Form Components
         public frmMainWindow frmMainWindowHandle;
 
@@ -99,7 +101,7 @@ namespace skbtInstaller
             if (cPath != null)
             {
 
-                if (File.Exists(cPath))
+                if (System.IO.File.Exists(cPath))
                 {
 
                     // No Folder, Not Installed
@@ -167,7 +169,7 @@ namespace skbtInstaller
 
         public String getConfigPathFromBatchFiles(String batchLibPath)
         {
-            if (Directory.Exists(batchLibPath) && File.Exists(Path.Combine(batchLibPath, "start_keepalive.bat")))
+            if (Directory.Exists(batchLibPath) && System.IO.File.Exists(Path.Combine(batchLibPath, "start_keepalive.bat")))
             {
                 // Decl
                 String result;
@@ -332,7 +334,7 @@ namespace skbtInstaller
          */
         public String getSelectedPathIdentifier()
         {
-            return this.frmMainWindowHandle.getSelectedPath();
+            return this.frmMainWindowHandle.getSelectedPathValue();
         }
 
 
@@ -361,9 +363,9 @@ namespace skbtInstaller
 
             FileStream fs;
             String tempZip = Path.Combine(Path.GetTempPath(), "batch_lib_template.zip");
-            if (File.Exists(tempZip)) { File.Delete(tempZip); }
+            if (System.IO.File.Exists(tempZip)) { System.IO.File.Delete(tempZip); }
 
-            fs = File.Create(tempZip);
+            fs = System.IO.File.Create(tempZip);
             int b = s.ReadByte();
             while (b != -1) { fs.WriteByte((byte)b); b = s.ReadByte(); }
             fs.Close();
@@ -391,7 +393,7 @@ namespace skbtInstaller
 
             String shortPath = cfgPath;
             // Get Short Path (just in case)
-            if (shortPath.Contains(' ') && File.Exists(shortPath))
+            if (shortPath.Contains(' ') && System.IO.File.Exists(shortPath))
             {
                 var buffer = new StringBuilder(259);
                 int len = GetShortPathName(shortPath, buffer, buffer.Capacity);
@@ -409,9 +411,9 @@ namespace skbtInstaller
             for (int i = 0; i < files.Length; i++)
             {
                 String file = files[i].ToString();
-                File.WriteAllText(
+                System.IO.File.WriteAllText(
                         file,
-                        File.ReadAllText(file)
+                        System.IO.File.ReadAllText(file)
                             .Replace("{PATH_TO_CONFIG}", shortPath)
                             .Replace("{AUTHOR}", skbtCoreConfig.strAuthor)
                             .Replace("{VERSION}", skbtCoreConfig.strVersion)
@@ -437,10 +439,10 @@ namespace skbtInstaller
 
             bool created = false;
             // Create default config file.
-            if (!File.Exists(newConfigName))
+            if (!System.IO.File.Exists(newConfigName))
             {
                 // Create blank config for shortname
-                File.WriteAllText(newConfigName, "BLANKFILE. IF YOU SEE THIS FILE. PLEASE REPORT A BUG FOR THE SKBT INSTALLER. (and delete this file)");
+                System.IO.File.WriteAllText(newConfigName, "BLANKFILE. IF YOU SEE THIS FILE. PLEASE REPORT A BUG FOR THE SKBT INSTALLER. (and delete this file)");
                 created = true;
             }
 
@@ -450,7 +452,7 @@ namespace skbtInstaller
             // delete created file
             if (created)
             {
-                File.Delete(newConfigName);
+                System.IO.File.Delete(newConfigName);
             }
         }
     }

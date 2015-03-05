@@ -34,6 +34,7 @@ namespace skbtInstaller
         {
             // init Window
             InitializeComponent();
+            this.Text = this.Text + " v" + skbtCoreConfig.strVersion;
 
             // Initialize Members
             sc = new skbtServerControl(this);
@@ -63,15 +64,20 @@ namespace skbtInstaller
              */
 
             // Install Batch Lib
-            this.sc.InstallBatchLib(this.sc.getSelectedPathIdentifier(), this.getNewFilePathFromUser());
 
-            // Display config screen
-            this.sc.ShowConfigure(true);
+            String result = null;
+            if ((result = this.getNewFilePathFromUser()) != null)
+            {
+                this.sc.InstallBatchLib(this.sc.getSelectedPathIdentifier(), result);
+                this.sc.ShowConfigure(true);
+            }
         }
 
         private void btnUninstall_Click(object sender, EventArgs e)
         {
-            String thisIdentifier = this.getSelectedPath();
+            // TODO: Check if SKBT is running.
+
+            String thisIdentifier = this.getSelectedPathValue();
             // Show small dialog containing:
                 // - ChkBox Delete Batch_Lib Folder
                 // - ChkBox Delete Batch_Settings File
@@ -92,6 +98,34 @@ namespace skbtInstaller
                     ),
                     true
                 );
+
+                // Delete Shrotcuts/Program Group
+                String StartMenuProgName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), "Programs", skbtServerControl.ProgramGroupName, this.sc.CoreConfig.getServerMetaObject(this.getSelectedPathValue()).textualName);
+
+                Dictionary<UInt32, String> Shortcuts = new Dictionary<uint, string>() {
+                    {0,Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Start Keepalive (" + this.sc.CoreConfig.getServerMetaObject(this.getSelectedPathValue()).textualName + ").lnk")},
+                    {1,Path.Combine(StartMenuProgName, "Start Keepalive.lnk")},
+                    {2,Path.Combine(StartMenuProgName, "Auto Restart Test.lnk")},
+                    {3,Path.Combine(StartMenuProgName, "Manual Restart.lnk")},
+                    {4,Path.Combine(StartMenuProgName, "Manual Start.lnk")},
+                    {5,Path.Combine(StartMenuProgName, "Manual Stop.lnk")}
+                };
+                foreach (KeyValuePair<UInt32, String> shortcut in Shortcuts)
+                {
+                    if (File.Exists(shortcut.Value))
+                    {
+                        File.Delete(shortcut.Value);
+                    }
+                }
+
+                // Remove Program Folder if Last config
+                if (this.cBoxArmaPath.Items.Count <= 1)
+                {
+                    if (Directory.Exists(StartMenuProgName))
+                    {
+                        Directory.Delete(StartMenuProgName, true);
+                    }
+                }
 
                 // remove from config list
                 this.sc.CoreConfig.deleteConfigById(thisIdentifier);
@@ -259,7 +293,7 @@ namespace skbtInstaller
          * 
          * Returns Identifier (value) or null if the SelectedValue is null
          */
-        public String getSelectedPath()
+        public String getSelectedPathValue()
         {
             // Check if Value is null
             if (this.cBoxArmaPath.SelectedValue == null)

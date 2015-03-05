@@ -1,27 +1,23 @@
 ==================
-ARMA SERVER KEEPALIVE TOOL 1.0.0 RELEASE
+ARMA SERVER KEEPALIVE TOOL 1.0.1 RELEASE
 ==================
+This release fixes a few bugs and adds shortcuts to your instances!
 
 ==================
 == NEW CHANGES  ==
 ==================
 
-NEW: **Installation GUI** (Not Required)
-NEW: Multi Server Support (Using GUI).
-NEW: Full Path names with spaces allowed in config. (AFAIK)
+Fixed template files, no more batch_settings errors spamming the screen.
+Fixed Install Dialog Cancel (Used to continue when cancelled).
+Fixed Uninstall Function (Works)
+Added keepalive instance shortcuts to start menu and desktop.
+Removed Text Window (not needed)
 
 ==================
 == INSTALLATION ==
 ==================
 
-1. Place batch_lib folder in your arma 3 main directory (with the server exe).
-2. Place batch_settings.cmd in the root of your c drive. 
-3. Create a shortcut somewhere to start_keepalive.bat
-4. Configure the batch_settings.cmd file properly
-5. Start the shortcut and test it out!
-
-IMPORTANT: The Game install can be on any drive, but the batch_settings.bat file MUST be on C Drive in Root folder (top folder).
-Note: desktop path in batch_settings.cmd is not needed, it is unused in this version)
+For Manual install instructions please download the NoGui version. Readme included has the instructions.
 
 Please dont distribute as your own work, link back to the forum post or drop me an email: uniflare@gmail.com
 Problems? Go to the forum thread and ask there.
@@ -30,6 +26,9 @@ Good luck!
 
 
 ====USAGE====
+Start the keepalive! It will keep your processes alive (albeit once configured correctly...).
+
+====AUTO/MANUAL RESTARTS====
 To set up auto restarts with this batch file, you need to add custom entries into your BEC Scheduler file, ie, you need to add a command to run setauto.bat (batch_lib/lib/setauto.bat) _JUST_ before shutting down. For example:
 
 	<!-- THESE TWO JOBS WILL AUTO RESTART THE SERVER AT MIDNIGHT, ASSUMING THE KEEPALIVE BATCH TOOL IS RUNNING -->
@@ -49,17 +48,21 @@ To set up auto restarts with this batch file, you need to add custom entries int
 	</job>
 
 When the server shuts down the batch will read "lastauto.txt" (set by running setauto.bat) and notice it is a planned restart (auto). 
-It wil log accordingly. without using this all your events will be "unknown".
+It will log accordingly. without using this all your events will be "unknown".
 
 You can also use some web service or other program on the computer to set a "Manual Restart" by running setmanual.bat. 
 Once set, the server will stay down for 60 seconds. (You can edit this in batch_settings.cmd - manual_timeout_length)
 
-The logfile is called "batchrun.log" and is placed in the batch_lib directory
-
+NOTE: The logfile is called "batchrun.log" and is placed in the batch_lib directory
 
 ==================
 = OLD CHANGELOGS =
 ==================
+
+== Version 1.0.0
+NEW: **Installation GUI** (Not Required)
+NEW: Multi Server Support (Using GUI).
+NEW: Full Path names with spaces allowed in config. (AFAIK)
 
 == Version 0.9.4
 FIXED: Server crash on stop/start

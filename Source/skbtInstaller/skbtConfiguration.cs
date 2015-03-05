@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using IWshRuntimeLibrary;
 
 namespace skbtInstaller
 {
@@ -54,7 +55,7 @@ namespace skbtInstaller
         {
             this.pageLoaded = false;
 
-            if (!File.Exists(thisConfigMeta.PathToConfig))
+            if (!System.IO.File.Exists(thisConfigMeta.PathToConfig))
             {
                 MessageBox.Show("No batch settings were found. Reverting to defaults.",
                     "Settings not found",
@@ -295,8 +296,8 @@ namespace skbtInstaller
                 if (this.onSaveRenameConfig == true)
                 {
                     // rename current config, then overwrite
-                    if (File.Exists(newFile)) { File.Delete(newFile); }
-                    File.Move(oldFile, newFile);
+                    if (System.IO.File.Exists(newFile)) { System.IO.File.Delete(newFile); }
+                    System.IO.File.Move(oldFile, newFile);
                 }
             }
 
@@ -381,7 +382,6 @@ namespace skbtInstaller
                 {"{PRIORITY_ASM}", this.sConfig.objASMProc.Priority}
             };
             this.sMeta.textualName = this.txtConfigName.Text;
-            this.sMeta.isInstalled = true;
 
             // Prepare new Batch Settings File
             String newConfigData = skbtInstaller.Properties.Resources.skbtConfigTemplate;
@@ -393,6 +393,65 @@ namespace skbtInstaller
 
             // Write new batch settings file
             System.IO.File.WriteAllText(newFile, newConfigData);
+
+            // Update Batch Files if Necessary
+            if (this.sc.getConfigPathFromBatchFiles(Path.Combine(Path.GetDirectoryName(this.sMeta.PathToEXE), "batch_lib")) != newFile)
+            {
+                this.sc.doBatchLibFiles(newFile, this.ExpandPathVars(this.sConfig.objServerProc.Path));
+            }
+
+            // Check if first time installation. If so, add shortcuts.
+            if (this.sMeta.isInstalled == false)
+            {
+                // Create Shortcuts on desktop / add to programs start menu
+                String StartMenuProgName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), "Programs", skbtServerControl.ProgramGroupName, this.sMeta.textualName);
+                String BatchLibPath = Path.Combine(this.sConfig.objServerProc.Path, "batch_lib");
+
+                if (!addShortcut(
+                    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Start Keepalive (" + this.sMeta.textualName + ").lnk"),
+                    Path.Combine(BatchLibPath, "start_keepalive.bat")))
+                {
+                    MessageBox.Show("There was an error creating a shortcut in the Start Menu (0).");
+                }
+
+                if (!addShortcut(
+                    Path.Combine(StartMenuProgName, "Start Keepalive.lnk"),
+                    Path.Combine(BatchLibPath, "start_keepalive.bat")))
+                {
+                    MessageBox.Show("There was an error creating a shortcut in the Start Menu (1).");
+                }
+
+                if (!addShortcut(
+                    Path.Combine(StartMenuProgName, "Auto Restart Test.lnk"),
+                    Path.Combine(BatchLibPath, "control", "auto_restart.bat")))
+                {
+                    MessageBox.Show("There was an error creating a shortcut in the Start Menu (2).");
+                }
+
+                if (!addShortcut(
+                    Path.Combine(StartMenuProgName, "Manual Restart.lnk"),
+                    Path.Combine(BatchLibPath, "control", "manual_restart.bat")))
+                {
+                    MessageBox.Show("There was an error creating a shortcut in the Start Menu (3).");
+                }
+
+                if (!addShortcut(
+                    Path.Combine(StartMenuProgName, "Manual Start.lnk"),
+                    Path.Combine(BatchLibPath, "control", "manual_start.bat")))
+                {
+                    MessageBox.Show("There was an error creating a shortcut in the Start Menu (4).");
+                }
+
+                if (!addShortcut(
+                    Path.Combine(StartMenuProgName, "Manual Stop.lnk"),
+                    Path.Combine(BatchLibPath, "control", "manual_stop.bat")))
+                {
+                    MessageBox.Show("There was an error creating a shortcut in the Start Menu (5).");
+                }
+            }
+
+            // Finally Installed
+            this.sMeta.isInstalled = true;
 
             // Update Objects
             this.sc.CoreConfig.setServerConfig(this.sMeta.Identifier, this.sConfig);
@@ -407,14 +466,31 @@ namespace skbtInstaller
             // Save core Config Changes
             this.sc.CoreConfig.saveCoreConfig();
 
-            // Update Batch Files if Necessary
-            if (this.sc.getConfigPathFromBatchFiles(Path.Combine(Path.GetDirectoryName(this.sMeta.PathToEXE), "batch_lib")) != newFile)
-            {
-                this.sc.doBatchLibFiles(newFile, this.ExpandPathVars(this.sConfig.objServerProc.Path));
-            }
-
             // Close Configuration Window
             this.Close();
+        }
+
+        private static Boolean addShortcut(String ShortcutPath, String TargetPath)
+        {
+
+            try
+            {
+                WshShell shell = new WshShell();
+                IWshShortcut link = (IWshShortcut)shell.CreateShortcut(ShortcutPath);
+                link.TargetPath = TargetPath;
+
+                if (!Directory.Exists(Path.GetDirectoryName(ShortcutPath)))
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(ShortcutPath));
+                }
+                link.Save();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
         private void actionSelectTabButton(object sender, EventArgs e)
         {
@@ -856,7 +932,7 @@ namespace skbtInstaller
                         // VALIDATION
                         (userPathValidation)delegate(String newPathStr)
                         {
-                            if (startFolder != this.ExpandPathVars(newPathStr) && File.Exists(this.ExpandPathVars(newPathStr)))
+                            if (startFolder != this.ExpandPathVars(newPathStr) && System.IO.File.Exists(this.ExpandPathVars(newPathStr)))
                             {
                                 // Get Profile Name
                                 String profileFileName = Path.GetFileNameWithoutExtension(newPathStr);
@@ -943,7 +1019,7 @@ namespace skbtInstaller
                                     this.sConfig.objDatabaseProc.DatabaseDumpFilePath, 
                                     this.sConfig.objDatabaseProc.DatabaseDumpFileName) 
                                 == newPathStr
-                                || !File.Exists(this.ExpandPathVars(newPathStr)))
+                                || !System.IO.File.Exists(this.ExpandPathVars(newPathStr)))
                             {
                                 return "silent";
                             }
@@ -984,7 +1060,7 @@ namespace skbtInstaller
                         // VALIDATION
                         (userPathValidation)delegate(String newPathStr)
                         {
-                            if (this.sConfig.objServerProc.ConfigPathBasic == newPathStr || !File.Exists(this.ExpandPathVars(newPathStr)))
+                            if (this.sConfig.objServerProc.ConfigPathBasic == newPathStr || !System.IO.File.Exists(this.ExpandPathVars(newPathStr)))
                             { return "silent"; }
                             else { return null; }
                         }
@@ -1013,7 +1089,7 @@ namespace skbtInstaller
                         // VALIDATION
                         (userPathValidation)delegate(String newPathStr)
                         {
-                            if (this.sConfig.objServerProc.ConfigPathServer == newPathStr || !File.Exists(this.ExpandPathVars(newPathStr)))
+                            if (this.sConfig.objServerProc.ConfigPathServer == newPathStr || !System.IO.File.Exists(this.ExpandPathVars(newPathStr)))
                             { return "silent"; }
                             else { return null; }
                         }
@@ -1050,7 +1126,7 @@ namespace skbtInstaller
                             var current = this.ExpandPathVars(Path.Combine(this.sConfig.objDatabaseProc.Path, this.sConfig.objDatabaseProc.EXEFile));
                             var newP = this.ExpandPathVars(newPathStr);
 
-                            if (current == newP || !File.Exists(newP)){ return "silent"; }
+                            if (current == newP || !System.IO.File.Exists(newP)) { return "silent"; }
                             else { return null; }
                         },
                         // SET WITH CONDITION
@@ -1088,7 +1164,7 @@ namespace skbtInstaller
                             var current = this.ExpandPathVars(Path.Combine(this.sConfig.objBECProc.Path, this.sConfig.objBECProc.EXEFile));
                             var newP = this.ExpandPathVars(newPathStr);
 
-                            if (current == newP || !File.Exists(newP)) { return "silent"; }
+                            if (current == newP || !System.IO.File.Exists(newP)) { return "silent"; }
                             else { return null; }
                         },
                         // SET WITH CONDITION
@@ -1126,7 +1202,7 @@ namespace skbtInstaller
                             var current = this.ExpandPathVars(Path.Combine(this.sConfig.objHeadlessClientProc.Path, this.sConfig.objHeadlessClientProc.EXEFile));
                             var newP = this.ExpandPathVars(newPathStr);
 
-                            if (current == newP || !File.Exists(newP)) { return "silent"; }
+                            if (current == newP || !System.IO.File.Exists(newP)) { return "silent"; }
                             else { return null; }
                         },
                         // SET WITH CONDITION
@@ -1164,7 +1240,7 @@ namespace skbtInstaller
                             var current = this.ExpandPathVars(Path.Combine(this.sConfig.objTeamspeakProc.Path, this.sConfig.objTeamspeakProc.EXEFile));
                             var newP = this.ExpandPathVars(newPathStr);
 
-                            if (current == newP || !File.Exists(newP)) { return "silent"; }
+                            if (current == newP || !System.IO.File.Exists(newP)) { return "silent"; }
                             else { return null; }
                         },
                         // SET WITH CONDITION
@@ -1202,7 +1278,7 @@ namespace skbtInstaller
                             var current = this.ExpandPathVars(Path.Combine(this.sConfig.objASMProc.Path, this.sConfig.objASMProc.EXEFile));
                             var newP = this.ExpandPathVars(newPathStr);
 
-                            if (current == newP || !File.Exists(newP)) { return "silent"; }
+                            if (current == newP || !System.IO.File.Exists(newP)) { return "silent"; }
                             else { return null; }
                         },
                         // SET WITH CONDITION
@@ -1255,7 +1331,7 @@ namespace skbtInstaller
                         {
                             String originPath = this.sc.CoreConfig.getServerMetaObject(this.sMeta.Identifier).PathToConfig.ToLower();
                             // Different from origin
-                            if (originPath != newPathStr.ToLower() && File.Exists(originPath) && this.sMeta.isInstalled == true)
+                            if (originPath != newPathStr.ToLower() && System.IO.File.Exists(originPath) && this.sMeta.isInstalled == true)
                             {
                                 DialogResult dRes = MessageBox.Show(
                                     "Would you like to keep the old config file?"

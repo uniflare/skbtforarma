@@ -50,7 +50,7 @@
             this.btnInstall.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnInstall.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnInstall.ForeColor = System.Drawing.Color.Green;
-            this.btnInstall.Location = new System.Drawing.Point(10, 112);
+            this.btnInstall.Location = new System.Drawing.Point(9, 76);
             this.btnInstall.Name = "btnInstall";
             this.btnInstall.Size = new System.Drawing.Size(147, 41);
             this.btnInstall.TabIndex = 0;
@@ -92,7 +92,7 @@
             this.btnUninstall.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUninstall.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnUninstall.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnUninstall.Location = new System.Drawing.Point(163, 112);
+            this.btnUninstall.Location = new System.Drawing.Point(162, 76);
             this.btnUninstall.Name = "btnUninstall";
             this.btnUninstall.Size = new System.Drawing.Size(147, 41);
             this.btnUninstall.TabIndex = 4;
@@ -107,7 +107,7 @@
             this.btnConfig.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnConfig.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnConfig.ForeColor = System.Drawing.Color.Teal;
-            this.btnConfig.Location = new System.Drawing.Point(316, 112);
+            this.btnConfig.Location = new System.Drawing.Point(315, 76);
             this.btnConfig.Name = "btnConfig";
             this.btnConfig.Size = new System.Drawing.Size(147, 41);
             this.btnConfig.TabIndex = 5;
@@ -118,11 +118,10 @@
             // lblDetails
             // 
             this.lblDetails.ForeColor = System.Drawing.Color.DimGray;
-            this.lblDetails.Location = new System.Drawing.Point(13, 51);
+            this.lblDetails.Location = new System.Drawing.Point(12, 54);
             this.lblDetails.Name = "lblDetails";
-            this.lblDetails.Size = new System.Drawing.Size(450, 58);
+            this.lblDetails.Size = new System.Drawing.Size(450, 19);
             this.lblDetails.TabIndex = 6;
-            this.lblDetails.Text = "Waiting for user action...";
             // 
             // cBoxArmaPath
             // 
@@ -153,7 +152,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.ClientSize = new System.Drawing.Size(472, 162);
+            this.ClientSize = new System.Drawing.Size(472, 130);
             this.Controls.Add(this.cBoxArmaPath);
             this.Controls.Add(this.lblDetails);
             this.Controls.Add(this.btnConfig);
@@ -163,7 +162,7 @@
             this.Controls.Add(this.btnInstall);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(488, 200);
-            this.MinimumSize = new System.Drawing.Size(488, 200);
+            this.MinimumSize = new System.Drawing.Size(488, 168);
             this.Name = "frmMainWindow";
             this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;

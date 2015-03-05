@@ -2,7 +2,7 @@
 call c:\batch_settings.cmd
 if not exist "%armapath%" goto :noArmaPath
 if not exist "%armapath%\batch_lib" goto :noBatchLib
-cd %armapath%
+cd /D %armapath%
 start "KEEPALIVE LAUNCHER" "batch_lib\core\ka_launcher.bat"
 exit
 
