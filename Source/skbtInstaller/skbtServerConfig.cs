@@ -334,8 +334,7 @@ namespace skbtInstaller
                 skbtConfigArray.ContainsKey("hcPriority") &&
                 skbtConfigArray.ContainsKey("redisPriority") &&
                 skbtConfigArray.ContainsKey("teamspeakPriority") &&
-                skbtConfigArray.ContainsKey("asmPriority") &&
-                skbtConfigArray.ContainsKey("enable_pbo_updates")
+                skbtConfigArray.ContainsKey("asmPriority")
             ){
                 this.CleanWER = (skbtConfigArray["cleanWerDialogs"] == "true")? true : false;
                 this.BindToIP = (skbtConfigArray["bindtoip"] == "1")? true : false;

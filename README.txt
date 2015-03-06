@@ -1,17 +1,13 @@
 ==================
-ARMA SERVER KEEPALIVE TOOL 1.0.1 RELEASE
+ARMA SERVER KEEPALIVE TOOL 1.0.2 HOTFIX RELEASE
 ==================
-This release fixes a few bugs and adds shortcuts to your instances!
+This hotfix remedies the config save/reopen bug.
 
 ==================
 == NEW CHANGES  ==
 ==================
 
-Fixed template files, no more batch_settings errors spamming the screen.
-Fixed Install Dialog Cancel (Used to continue when cancelled).
-Fixed Uninstall Function (Works)
-Added keepalive instance shortcuts to start menu and desktop.
-Removed Text Window (not needed)
+Fixed config editing issues after saving a config.
 
 ==================
 == INSTALLATION ==
@@ -58,6 +54,13 @@ NOTE: The logfile is called "batchrun.log" and is placed in the batch_lib direct
 ==================
 = OLD CHANGELOGS =
 ==================
+
+== Version 1.0.1
+FIXED: template files, no more batch_settings errors spamming the screen.
+FIXED: Install Dialog Cancel (Used to continue when cancelled).
+FIXED: Uninstall Function (Works)
+ADDED: keepalive instance shortcuts to start menu and desktop.
+REMOVED: Text Window (not needed)
 
 == Version 1.0.0
 NEW: **Installation GUI** (Not Required)
