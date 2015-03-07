@@ -695,16 +695,6 @@ if not exist "%armapath%\%armaserverexe%" (
 	echo.
 	goto :EndSanity
 )
-if not exist "%Battleyepath%" (
-	set criticalconfigerror=1
-	set current_message=CRITICAL ERROR^(s^) - REVIEW BELOW
-	call :draw_display
-	echo.CONFIG ERROR: Cannot find the path to Battleye at:
-	echo."%Battleyepath%"
-	echo. --- set Battleyepath in the config file to the correct location
-	echo.
-	goto :EndSanity
-)
 if not exist "%LogPath%" (
 	set criticalconfigerror=1
 	set current_message=CRITICAL ERROR^(s^) - REVIEW BELOW
@@ -715,25 +705,39 @@ if not exist "%LogPath%" (
 	echo.
 	goto :EndSanity
 )
-if not exist "%becpath%\%becexename%" (
-	set criticalconfigerror=1
-	set current_message=CRITICAL ERROR^(s^) - REVIEW BELOW
-	call :draw_display
-	echo.CONFIG ERROR: Cannot find Battleye's Extended Control executable file at:
-	echo."%becpath%\%becexename%"
-	echo. --- set becpath in the config file to the correct location
-	echo.
-	goto :EndSanity
+if %keepalive_bec%==1 (
+	if not exist "%Battleyepath%" (
+		set criticalconfigerror=1
+		set current_message=CRITICAL ERROR^(s^) - REVIEW BELOW
+		call :draw_display
+		echo.CONFIG ERROR: Cannot find the path to Battleye at:
+		echo."%Battleyepath%"
+		echo. --- set Battleyepath in the config file to the correct location
+		echo.
+		goto :EndSanity
+	)
+	if not exist "%becpath%\%becexename%" (
+		set criticalconfigerror=1
+		set current_message=CRITICAL ERROR^(s^) - REVIEW BELOW
+		call :draw_display
+		echo.CONFIG ERROR: Cannot find Battleye's Extended Control executable file at:
+		echo."%becpath%\%becexename%"
+		echo. --- set becpath in the config file to the correct location
+		echo.
+		goto :EndSanity
+	)
 )
-if not exist "%databasefile%" (
-	set criticalconfigerror=1
-	set current_message=CRITICAL ERROR^(s^) - REVIEW BELOW
-	call :draw_display
-	echo.CONFIG ERROR: Cannot find the server Database File at:
-	echo."%databasefile%"
-	echo. --- set databasefile in the config file to the correct location
-	echo.
-	goto :EndSanity
+if %keepalive_database%==1 (
+	if not exist "%databasefile%" (
+		set criticalconfigerror=1
+		set current_message=CRITICAL ERROR^(s^) - REVIEW BELOW
+		call :draw_display
+		echo.CONFIG ERROR: Cannot find the server Database File at:
+		echo."%databasefile%"
+		echo. --- set databasefile in the config file to the correct location
+		echo.
+		goto :EndSanity
+	)
 )
 if %keepalive_asm%==1 (
 	if not exist "%asmpath%" (
