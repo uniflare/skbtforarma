@@ -112,10 +112,6 @@ REM \\ // ===================================================== \\ //
 REM // \\                 FILE NAMES AND PATHS                  // \\
 REM \\ // ===================================================== \\ //
 
-REM // THESE PATHS MUST NOT CONTAIN ANY SPACES - unless:
-REM // *tip* If Your paths contain spaces you can use Short Dos Style Directory Paths Eg: C:\Progra~1\Steam\SteamApps\Common\Arma~1\)
-REM // To find these short names you can use the command: "dir /x" at a command prompt to see the folder/file names in short dos style
-
 REM // Executable Names
 REM // Name of the server executable (if using arma 2 or arma 3 etc)
 set armaserverexe=arma3server.exe
@@ -205,37 +201,60 @@ set teamspeakPriority=normal
 set asmPriority=normal
 
 REM \\ // ====================================== \\ //
-REM // \\ BELOW ARE NOT NEEDED / NOT IMPLEMENTED // \\
+REM // \\  FIX FOR LONG PATH NAMES WITH SPACES   // \\
 REM \\ // ====================================== \\ //
-
-REM // NOTE, PBO AUTO UPDATES ARE NOT ENABLED IN THIS VERSION.
-REM // Enable auto config pbo upload. (NOTE: Customized slightly for Epoch A3)
-REM //
-set enable_pbo_updates=0
-REM // Folder to upload new pbo files too automatically apply on next restart:
-REM set dropfolder_newpbo=c:\new_pbo
-REM // Folder to upload new config PBO to.
-REM set server_addon_folder=%armapath%\@EpochHive\Addons
-REM // Folder to upload new Mission PBO to.
-REM set mpmission_folder=%armapath%\MPMissions
-
-REM \\ // ====================================== \\ //
-REM // \\ BELOW ARE NOT NEEDED / NOT IMPLEMENTED // \\
-REM \\ // ====================================== \\ //
-
-REM // Full path to desktop (Not Implemented), should just use %desktop% or w/e anyway
-REM set desktop_path=C:\Users\Administrator\Desktop
-
-REM // Path to the Apache executable (httpd.exe) (NOT IMPLEMENTED)
-REM set apachebinpath=C:\web\bin\apache24\bin
-
-REM // Path to your MPMissions Folder (in your Arma Server Directory, shouldn't need to change this) (NOT IMPLEMENTED)
-REM set pbopath=%armapath%\MPMissions
-
-REM // Path to the Epoch Hive PBO file. (NOT IMPLEMENTED)
-REM set spbopath=%armapath%\@EpochHive\Addons
-
-REM // Path to PBO Manager's executable. (NOT IMPLEMENTED)
-REM set pbocompath=C:\Progra~1\PBO Manager v.1.4 beta
+for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%armapath%"') do (
+    set result=%%a
+)
+	set armapath=%result%
+for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%hcarmapath%"') do (
+    set result=%%a
+)
+	set hcarmapath=%result%
+for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%teamspeakpath%"') do (
+    set result=%%a
+)
+	set teamspeakpath=%result%
+for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%redispath%"') do (
+    set result=%%a
+)
+	set redispath=%result%
+for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%asmpath%"') do (
+    set result=%%a
+)
+	set asmpath=%result%
+for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%Battleyepath%"') do (
+    set result=%%a
+)
+	set Battleyepath=%result%
+for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%LogPath%"') do (
+    set result=%%a
+)
+	set LogPath=%result%
+for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%becpath%"') do (
+    set result=%%a
+)
+	set becpath=%result%
+for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%databasefile%"') do (
+    set result=%%a
+)
+	set databasefile=%result%
+for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%servercfgpath%"') do (
+    set result=%%a
+)
+	set servercfgpath=%result%
+for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%serverbasicpath%"') do (
+    set result=%%a
+)
+	set serverbasicpath=%result%
+for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%databasebackupfolder%"') do (
+    set result=%%a
+)
+	set databasebackupfolder=%result%
+for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%logfilebackupfolder%"') do (
+    set result=%%a
+)
+	set logfilebackupfolder=%result%
+	
 goto :EOF
 rem exit
