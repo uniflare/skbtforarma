@@ -1,9 +1,9 @@
 @echo off
-call c:\batch_settings.cmd
+call "C:\TESTFO~1\folder\FSF(SE~1.CMD"
 if not exist "%armapath%" goto :noArmaPath
 if not exist "%armapath%\batch_lib" goto :noBatchLib
 cd /D %armapath%
-start "KEEPALIVE LAUNCHER" "batch_lib\core\ka_launcher.bat"
+start "Keepalive Launcher v1.1" "batch_lib\core\ka_launcher.bat"
 exit
 
 :noArmaPath

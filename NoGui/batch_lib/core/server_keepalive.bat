@@ -1,9 +1,8 @@
 @echo off
 setlocal ENABLEDELAYEDEXPANSION
-call c:\batch_settings.cmd
 set criticalconfigerror=1
 call :doSanityCheck
-cd %armapath%
+cd "%armapath%"
 
 call :FUNC TIMESTR GetTimeStr
 call :FUNC NOVAR BatchLogWrite 1__KEEPALIVE__INITIALIZE__Starting
@@ -50,7 +49,7 @@ goto :EOF
 :draw_display
 cls
 echo ===========================================             %TIMESTR:@= @ %
-echo    Server Keepalive 0.9.4 beta by Chemical Bliss /AKA Uniflare
+echo    Server Keepalive 1.0.3 by Uniflare (AKA) Chemical Bliss
 echo.
 echo    Armapath: %armapath%
 echo.
@@ -63,7 +62,6 @@ echo    Status: %current_message%
 echo ===============================================================================
 echo Server events: %eventCount%
 echo.
-
 if "%eventCount%" LEQ "0" goto :EOF
 
 SET /a i=1
@@ -84,8 +82,8 @@ set %in_auto_routine%=%in_auto_routine%
 set %in_manual_routine%=%in_manual_routine%
 call :FUNC TIMESTR getTimeStr
 
-if exist "batch_lib/wrkdir/lastauto.txt" (
-	set /p lastauto=<batch_lib/wrkdir/lastauto.txt
+if exist "%armapath%\batch_lib\wrkdir\lastauto.txt" (
+	set /p lastauto=<batch_lib\wrkdir\lastauto.txt
 	set /a lastauto=!lastauto!
 	set /a lastauto=!lastauto!+%auto_timeout%
 	set foundIfMatch=false
@@ -93,7 +91,7 @@ if exist "batch_lib/wrkdir/lastauto.txt" (
 	if "%in_auto_routine%"=="true" (
 		set /a auto_counter=%auto_counter%+1
 		if !auto_counter!==%auto_timeout% (
-			call "batch_lib/control/stop_all.bat"
+			call "batch_lib\lib\stop_all.bat"
 			set autoLogMessage=TIMEOUT_FORCE_START
 			set restartDates[%last_auto_index%]=!restartDates[%last_auto_index%]! :: TIMEOUT [!auto_counter!s]
 		) else (
@@ -169,108 +167,113 @@ if exist "%armapath%\batch_lib\wrkdir\lastmanual.txt" (
 	set /a lastmanualraw=!thismanualraw!
 )
 
-if "!in_manual_routine!"=="false" (
-	if "!in_auto_routine!"=="false" (
-		if %forcedbsave%==1 (
-			set lastdb_backupunix=0
-		) else (
-			if exist "%armapath%\batch_lib\wrkdir\lastdb_backup.txt" (
-				set /p lastdb_backupunix=<%armapath%\batch_lib\wrkdir\lastdb_backup.txt
-			) else (
+REM // DATABASE BACKUP
+if exist "%databasefile%" (
+	if "!in_manual_routine!"=="false" (
+		if "!in_auto_routine!"=="false" (
+			if %forcedbsave%==1 (
 				set lastdb_backupunix=0
+			) else (
+				if exist "%armapath%\batch_lib\wrkdir\lastdb_backup.txt" (
+					set /p lastdb_backupunix=<"%armapath%\batch_lib\wrkdir\lastdb_backup.txt"
+				) else (
+					set lastdb_backupunix=0
+				)
 			)
-		)
-		set /a nextdb_backupunix=!lastdb_backupunix! + %db_backup_interval_sec%
-		
-		if %UNIX_TIME% GEQ !nextdb_backupunix! (
+			set /a nextdb_backupunix=!lastdb_backupunix! + %db_backup_interval_sec%
 			
-			set do_raw_backup=0
-			set backedupBytes=0
-			
-			if %use_zip_backups%==1 (
-			
-				if exist "%databasebackupfolder%\%datetimestr_last%.7z" (
-					call :FUNC backedupBytes getFileSize %databasebackupfolder%\%datetimestr_last%.7z
-					call :FUNC is7zarunning 7zaIsRunning
-					if "!is7zarunning!"=="false" (
-						REM // get compression ratio
-						call :FUNC original_size getFileSize %databasefile%
-						call :MATH compress_ratio !original_size! / !backedupBytes!
-						set current_message=DB Backup Finished. Size: !backedupBytes! Bytes. Ratio: !compress_ratio!x
-						call %armapath%\batch_lib\lib\setlastdb.bat %UNIX_TIME%
-						set lastdb_backuptime=!datetimestr_last!
-						set datetimestr_last=NULL
-						set db_backup_started=0
-						set forcedbsave=0
-						call :FUNC NOVAR BatchLogWrite 1__KEEPALIVE__DB_BACKUP__ZIP_SUCCESS
-						goto endDBbackup
+			if %UNIX_TIME% GEQ !nextdb_backupunix! (
+				
+				set do_raw_backup=0
+				set backedupBytes=0
+				
+				if %use_zip_backups%==1 (
+				
+					if exist "%databasebackupfolder%\%datetimestr_last%.7z" (
+						call :FUNC backedupBytes getFileSize "%databasebackupfolder%\%datetimestr_last%.7z"
+						call :FUNC is7zarunning 7zaIsRunning
+						if "!is7zarunning!"=="false" (
+							REM // get compression ratio
+							call :FUNC original_size getFileSize "%databasefile%"
+							call :MATH compress_ratio !original_size! / !backedupBytes!
+							set current_message=DB Backup Finished. Size: !backedupBytes! Bytes. Ratio: !compress_ratio!x
+							call "%armapath%\batch_lib\lib\setlastdb.bat" %UNIX_TIME%
+							set lastdb_backuptime=!datetimestr_last!
+							set datetimestr_last=NULL
+							set db_backup_started=0
+							set forcedbsave=0
+							call :FUNC NOVAR BatchLogWrite 1__KEEPALIVE__DB_BACKUP__ZIP_SUCCESS
+							goto endDBbackup
+						) else (
+							set current_message=Database Backup Running... !backedupBytes! Bytes
+						)
 					) else (
-						set current_message=Database Backup Running... !backedupBytes! Bytes
+						if %db_backup_started%==1 (
+							set current_message=Database Backup Zip Failed! Attempting Raw Backup - No Compression
+							call :FUNC NOVAR BatchLogWrite 1__KEEPALIVE__DB_BACKUP__ZIP_FAILED
+							set do_raw_backup=1
+						) else (
+							mkdir "%databasebackupfolder%" >nul 2>&1
+							start /B "" "%armapath%\batch_lib\external\7za" a -t7z "%databasebackupfolder%\%datetimestr_cur%.7z" "%databasefile%" -ms >nul
+							set datetimestr_last=%datetimestr_cur%
+							set old_message=%current_message%
+							set current_message=Database Backup Started... 0 Bytes
+							set db_backup_started=1
+						)
 					)
 				) else (
-					if %db_backup_started%==1 (
-						set current_message=Database Backup Zip Failed! Attempting Raw Backup - No Compression
-						call :FUNC NOVAR BatchLogWrite 1__KEEPALIVE__DB_BACKUP__ZIP_FAILED
-						set do_raw_backup=1
+					set do_raw_backup=1
+				)
+				
+				if !do_raw_backup!==1 (
+					REM //
+					if exist "%databasebackupfolder%\%datetimestr_last%\%databasefile_name%" (
+						// REM Copying
+						call :FUNC backedupBytes getFileSize "%databasebackupfolder%\%datetimestr_last%\%databasefile_name%"
+						if "!backedupBytes!"=="%db_size_raw%" (
+							REM // Finished
+							set current_message=DB Backup Finished. Size: !backedupBytes!
+							call "%armapath%\batch_lib\lib\setlastdb.bat" %UNIX_TIME%
+							set lastdb_backuptime=!datetimestr_last!
+							set datetimestr_last=NULL
+							set db_copy_started=0
+							call :FUNC NOVAR BatchLogWrite 1__KEEPALIVE__DB_BACKUP__RAW_SUCCESS
+							set forcedbsave=0
+							goto endDBbackup
+						) else (
+							REM // Running
+							set current_message=Database Backup Running - raw... !backedupBytes! Bytes
+						)
 					) else (
-						mkdir "%databasebackupfolder%" >nul 2>&1
-						start /B "" "%armapath%\batch_lib\external\7za" a -t7z %databasebackupfolder%\%datetimestr_cur%.7z %databasefile% -ms >nul
-						set datetimestr_last=%datetimestr_cur%
-						set old_message=%current_message%
-						set current_message=Database Backup Started... 0 Bytes
-						set db_backup_started=1
+						if %db_copy_started%==1 (
+							// REM Not Copying?? Error
+							set current_message=Error! Database Backup Failed!
+							call :DbBackupErrorEvent & call :draw_display
+							set datetimestr_last=NULL
+							set db_copy_started=0
+							call "%armapath%\batch_lib\lib\setlastdb.bat" %UNIX_TIME%
+							call :FUNC NOVAR BatchLogWrite 1__KEEPALIVE__DB_BACKUP__RAW_FAILED
+							goto endDBbackup
+							
+						) else (
+							// REM Start Copy
+							mkdir "%databasebackupfolder%\%datetimestr_cur%" >nul 2>&1
+							set datetimestr_last=%datetimestr_cur%
+							call :FUNC db_size_raw getFileSize "%databasefile%"
+							start /B "" "%armapath%\batch_lib\lib\db_copy_raw.bat" "%databasebackupfolder%\%datetimestr_cur%" >nul
+							set db_copy_started=1
+						)
 					)
 				)
 			) else (
-				set do_raw_backup=1
+				REM // Wait to backup
+				echo waiting
 			)
 			
-			if !do_raw_backup!==1 (
-				REM //
-				if exist "%databasebackupfolder%\%datetimestr_last%\%databasefile_name%" (
-					// REM Copying
-					call :FUNC backedupBytes getFileSize %databasebackupfolder%\%datetimestr_last%\%databasefile_name%
-					if "!backedupBytes!"=="%db_size_raw%" (
-						REM // Finished
-						set current_message=DB Backup Finished. Size: !backedupBytes!
-						call %armapath%\batch_lib\lib\setlastdb.bat %UNIX_TIME%
-						set lastdb_backuptime=!datetimestr_last!
-						set datetimestr_last=NULL
-						set db_copy_started=0
-						call :FUNC NOVAR BatchLogWrite 1__KEEPALIVE__DB_BACKUP__RAW_SUCCESS
-						set forcedbsave=0
-						goto endDBbackup
-					) else (
-						REM // Running
-						set current_message=Database Backup Running - raw... !backedupBytes! Bytes
-					)
-				) else (
-					if %db_copy_started%==1 (
-						// REM Not Copying?? Error
-						set current_message=Error! Database Backup Failed!
-						call :DbBackupErrorEvent & call :draw_display
-						set datetimestr_last=NULL
-						set db_copy_started=0
-						call %armapath%\batch_lib\lib\setlastdb.bat %UNIX_TIME%
-						call :FUNC NOVAR BatchLogWrite 1__KEEPALIVE__DB_BACKUP__RAW_FAILED
-						goto endDBbackup
-						
-					) else (
-						// REM Start Copy
-						mkdir "%databasebackupfolder%\%datetimestr_cur%" >nul 2>&1
-						set datetimestr_last=%datetimestr_cur%
-						call :FUNC db_size_raw getFileSize %databasefile%
-						start /B "" "%armapath%\batch_lib\lib\db_copy_raw.bat" %databasebackupfolder%\%datetimestr_cur% >nul
-						set db_copy_started=1
-					)
-				)
-			)
-		) else (
-			REM // Wait to backup
-			echo waiting
 		)
-		
 	)
+) else (
+	set current_message=No Database Dump Found. Skipping... No Database Backup Performed
 )
 :endDBbackup
 
@@ -413,8 +416,8 @@ if "%keepalive_database%"=="0" goto :Stage2
 tasklist /FI "IMAGENAME eq %redisexename%" 2>NUL | find /I /N "%redisexename%">NUL
 if "!ERRORLEVEL!"=="0"  goto Stage2
 if %firstloop%==0 call :RedisInactiveEvent & call :draw_display
-if %firstloop%==0 call "batch_lib/control/stop_all.bat"
-call "batch_lib/control/start_redis.bat" & set taskresult=SUCCESS || set taskresult=FAILURE
+if %firstloop%==0 call "batch_lib\lib\stop_all.bat"
+call "batch_lib/lib/start_redis.bat" & set taskresult=SUCCESS || set taskresult=FAILURE
 call :FUNC NOVAR BatchLogWrite 1__KEEPALIVE__START_REDIS_DB__%taskresult%
 set forcedbsave=1
 set redis_down=1
@@ -425,7 +428,7 @@ if "%keepalive_asm%"=="1" (
 	tasklist /FI "IMAGENAME eq %asmexename%" 2>NUL | find /I /N "%asmexename%">NUL
 	if "!ERRORLEVEL!"=="0"  goto Stage3
 	if %firstloop%==0 call :MonitorInactiveEvent & call :draw_display
-	call "batch_lib/control/start_asm.bat" & set taskresult=SUCCESS || set taskresult=FAILURE
+	call "batch_lib/lib/start_asm.bat" & set taskresult=SUCCESS || set taskresult=FAILURE
 	call :FUNC NOVAR BatchLogWrite 1__KEEPALIVE__START_ASM__%taskresult%
 )
 
@@ -435,7 +438,7 @@ if "%keepalive_ts%"=="1" (
 	tasklist /FI "IMAGENAME eq %teamspeakfilename%" 2>NUL | find /I /N "%teamspeakfilename%">NUL
 	if "!ERRORLEVEL!"=="0"  goto Stage4
 	if %firstloop%==0 call :TeamspeakInactiveEvent & call :draw_display
-	call "batch_lib/control/start_teamspeak.bat" & set taskresult=SUCCESS || set taskresult=FAILURE
+	call "batch_lib/lib/start_teamspeak.bat" & set taskresult=SUCCESS || set taskresult=FAILURE
 	call :FUNC NOVAR BatchLogWrite 1__KEEPALIVE__START_TEAMSPEAK__%taskresult%
 )
 
@@ -451,7 +454,7 @@ if "%keepalive_hc%"=="1" (
 			)
 		)
 	)
-	call "batch_lib/control/start_hc.bat" & set taskresult=SUCCESS || set taskresult=FAILURE
+	call "batch_lib/lib/start_hc.bat" & set taskresult=SUCCESS || set taskresult=FAILURE
 )
 
 :Stage5
@@ -506,7 +509,7 @@ goto LoopAgain
 
 :BECOnlyNotRunning
 if %firstloop%==0 call :BECInactiveEvent & call :draw_display
-call "batch_lib/control/start_bec.bat" & set taskresult=SUCCESS || set taskresult=FAILURE
+call "batch_lib/lib/start_bec.bat" & set taskresult=SUCCESS || set taskresult=FAILURE
 call :FUNC NOVAR BatchLogWrite 1__KEEPALIVE__START_BEC__%taskresult%
 
 goto LoopAgain
@@ -695,16 +698,6 @@ if not exist "%armapath%\%armaserverexe%" (
 	echo.
 	goto :EndSanity
 )
-if not exist "%LogPath%" (
-	set criticalconfigerror=1
-	set current_message=CRITICAL ERROR^(s^) - REVIEW BELOW
-	call :draw_display
-	echo.CONFIG ERROR: Cannot find the path to server logs at:
-	echo."%LogPath%"
-	echo. --- set LogPath in the config file to the correct location
-	echo.
-	goto :EndSanity
-)
 if %keepalive_bec%==1 (
 	if not exist "%Battleyepath%" (
 		set criticalconfigerror=1
@@ -726,6 +719,16 @@ if %keepalive_bec%==1 (
 		echo.
 		goto :EndSanity
 	)
+)
+if not exist "%LogPath%" (
+	set criticalconfigerror=1
+	set current_message=CRITICAL ERROR^(s^) - REVIEW BELOW
+	call :draw_display
+	echo.CONFIG ERROR: Cannot find the path to server logs at:
+	echo."%LogPath%"
+	echo. --- set LogPath in the config file to the correct location
+	echo.
+	goto :EndSanity
 )
 if %keepalive_database%==1 (
 	if not exist "%databasefile%" (
@@ -792,7 +795,7 @@ if "%use_zip_backups%"=="1" (
 	set check7za=1
 )
 if "!check7za!"=="1" (
-	if not exist %armapath%\batch_lib\external\7za.exe (
+	if not exist "%armapath%\batch_lib\external\7za.exe" (
 		set criticalconfigerror=1
 		set current_message=CRITICAL ERROR^(s^) - REVIEW BELOW
 		call :draw_display
@@ -814,7 +817,7 @@ if "%criticalconfigerror%"=="1" (
 
 :FUNC
 set currentDir=%CD%
-cd "%armapath%/batch_lib/gbl_func"
+cd /D "%armapath%/batch_lib/gbl_func"
 rem %1 = return var, %2 = function, %3 = args
 set returnvarname=%1
 set funcname=%2
@@ -830,16 +833,22 @@ set args=%argString%
 if "%args%"=="__=" set args=
 set filename=%funcname%.cmd
 set val1=
+
+if "%returnvarname%"=="original_size" (
+	echo 1 = "%1"
+	echo 2 = "%2"
+	echo 3 = %3
+)
 if not "%argString2%"=="" set args2= "%argString2%"
 for /f %%I in ('%filename% "%args%"%args2%') do (
 	set "val1=%%I"
 )
 set "%1=%val1%"
-cd %currentDir%
+cd /D %currentDir%
 goto :EOF
 
 :MATH
 set returnvarname=%1
-call "%armapath%/batch_lib/lib/math_simple.cmd" %2 %3 %4
+call "%armapath%/batch_lib/gbl_func/math_simple.cmd" %2 %3 %4
 set "%1=%result%"
 goto :EOF

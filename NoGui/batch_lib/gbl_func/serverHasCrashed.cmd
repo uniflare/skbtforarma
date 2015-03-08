@@ -1,5 +1,4 @@
 @echo off
-call c:/batch_settings.cmd
 cd "%armapath%"
 set crashed=false
 (tasklist /FI "Status eq not responding"|find "%armaserverexe%")&&set crashed=true

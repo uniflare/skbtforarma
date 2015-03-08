@@ -5,10 +5,10 @@ If fso.FolderExists(WScript.Arguments(0)) Then
    'It's a folder
    Set objFolder = fso.GetFolder(WScript.Arguments(0))
    WScript.StdOut.Write(objFolder.ShortPath)
-End If
-
-If fso.FileExists(WScript.Arguments(0)) Then
+ElseIf fso.FileExists(WScript.Arguments(0)) Then
    'It's a file
    Set objFile = fso.GetFile(WScript.Arguments(0))
    WScript.StdOut.Write(objFile.ShortPath)
+Else
+   WScript.StdOut.Write(WScript.Arguments(0))
 End If

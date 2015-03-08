@@ -1,9 +1,9 @@
 @echo off
-call c:\batch_settings.cmd
+call "C:\TESTFO~1\folder\FSF(SE~1.CMD"
 cd /D %armapath%
 call :FUNC NOVAR BatchLogWrite 1__MANUAL_STOP__EVENT__INITIALIZE====================================
 call batch_lib\lib\setmanual.bat >nul
-call batch_lib\control\stop_all.bat
+call batch_lib\lib\stop_all.bat
 goto :EOF
 
 :FUNC

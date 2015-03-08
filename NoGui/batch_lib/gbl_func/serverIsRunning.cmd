@@ -1,5 +1,4 @@
 @echo off
-call c:/batch_settings.cmd
 cd "%armapath%"
 tasklist /FI "IMAGENAME eq %armaserverexe%" 2>NUL | find /I /N "%armaserverexe%">NUL
 if "%ERRORLEVEL%"=="0" (

@@ -1,6 +1,5 @@
 @echo off
 setlocal ENABLEDELAYEDEXPANSION
-call c:\batch_settings.cmd
 cd %armapath%\batch_lib\gbl_func
 
 set serverfile_path=%1

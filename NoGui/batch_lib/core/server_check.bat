@@ -1,5 +1,4 @@
 @echo off
-call c:\batch_settings.cmd
 
 set server=false
 set bec=false
@@ -46,14 +45,14 @@ goto noserver_nobec
 
 :serverrunning_nobec
 echo Starting BEC
-cd %armapath%
-call batch_lib/core/start.bat bec
+cd /D "%armapath%"
+call "batch_lib/core/start.bat" bec
 goto End
 
 :noserver_nobec
 echo starting Both
-cd %armapath%
-call batch_lib/core/start.bat
+cd /D "%armapath%"
+call "batch_lib/core/start.bat"
 set /a started_server=true
 
 goto End
@@ -68,7 +67,7 @@ goto :EOF
 
 :FUNC
 set currentDir=%CD%
-cd "%armapath%/batch_lib/gbl_func"
+cd /D "%armapath%/batch_lib/gbl_func"
 rem %1 = return var, %2 = function, %3 = args
 set returnvarname=%1
 set funcname=%2
@@ -88,5 +87,5 @@ for /f %%I in ('%filename% "%args%"') do (
 	set "val1=%%I"
 )
 set "%1=%val1%"
-cd %currentDir%
+cd /D "%currentDir%"
 goto :EOF

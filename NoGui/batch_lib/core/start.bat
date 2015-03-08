@@ -1,9 +1,7 @@
 @echo off
 setlocal ENABLEDELAYEDEXPANSION
-
-call c:\batch_settings.cmd
-set originalDirectory=%CD%
-cd %armapath%
+set originalDirectory="%CD%"
+cd /D "%armapath%"
 call :FUNC NOVAR BatchLogWrite 1__START.BAT__INITIALIZE__STARTING_SERVER
 
 :StartServer
@@ -28,7 +26,7 @@ REM // Create a directory if none exists
 mkdir "%logfilebackupfolder%" >nul 2>&1
 
 REM // Set defaults
-cd /D %armapath%
+cd /D "%armapath%"
 set deleteServerLogs=0
 set deleteBELogs=0
 set log_normally=1
@@ -36,19 +34,19 @@ set log_normally=1
 REM // Try to archive logs using zip
 if "%use_zip_logs%"=="1" (
 	
-	echo Saving Log Files to zip file %logfilebackupfolder%\%datetimestr_start%.7z
+	echo Saving Log Files to zip file "%logfilebackupfolder%\%datetimestr_start%.7z"
 	echo.
-	echo Saving %LogPath%\*.log
-	echo Saving %BattleyePath%\*.log
-	echo Saving %LogPath%\*.rpt
+	echo Saving "%LogPath%\*.log"
+	echo Saving "%BattleyePath%\*.log"
+	echo Saving "%LogPath%\*.rpt"
 	echo.
 	
 	REM // Use a For construct to grab a result from 7za command
-	set commandstr=%armapath%\batch_lib\external\7za.exe a -t7z %logfilebackupfolder%\%datetimestr_start%.7z %LogPath%\*.rpt -ms
+	set commandstr=batch_lib\external\7za.exe a -t7z "%logfilebackupfolder%\%datetimestr_start%.7z" "%LogPath%\*.rpt" -ms
 	for /f %%a in ('!commandstr!') do set RESULT=%%a
-	set commandstr=%armapath%\batch_lib\external\7za.exe a -t7z %logfilebackupfolder%\%datetimestr_start%.7z %BattleyePath%\*.log -ms
+	set commandstr=batch_lib\external\7za.exe a -t7z "%logfilebackupfolder%\%datetimestr_start%.7z" "%BattleyePath%\*.log" -ms
 	for /f %%a in ('!commandstr!') do set RESULT=%%a
-	set commandstr=%armapath%\batch_lib\external\7za.exe a -t7z %logfilebackupfolder%\%datetimestr_start%.7z %LogPath%\*.log -ms
+	set commandstr=batch_lib\external\7za.exe a -t7z "%logfilebackupfolder%\%datetimestr_start%.7z" "%LogPath%\*.log" -ms
 	for /f %%a in ('!commandstr!') do set RESULT=%%a
 	
 	if exist %logfilebackupfolder%\%datetimestr_start%.7z (
@@ -90,7 +88,6 @@ if "%log_normally%"=="1" (
 	REM // Create the directories if none exist for the new log archives
 	mkdir "%logfilebackupfolder%\%datetimestr_start%" >nul 2>&1
 	mkdir "%logfilebackupfolder%\%datetimestr_start%\Battleye" >nul 2>&1
-	
 	
 	REM // Copy the logs over
 	copy "%LogPath%\*.rpt" "%logfilebackupfolder%\%datetimestr_start%" && set copiedLogs234234=SUCCESS || set copiedLogs=FAILED
@@ -203,6 +200,7 @@ cls
 echo STARTING SERVER
 set startserver=false
 set startbec=false
+
 IF /i "%1"=="" (
 	set startserver=true
 	set startbec=true
@@ -217,17 +215,17 @@ IF /i "%1"=="bec" (
 	echo STARTING BEC ONLY
 )
 if "%startbec%"=="true" (
-	call "batch_lib/control/start_bec.bat" && set taskresult=SUCCESS || set taskresult=FAILURE
+	call "batch_lib/lib/start_bec.bat" && set taskresult=SUCCESS || set taskresult=FAILURE
 	call :FUNC NOVAR BatchLogWrite 1__START.BAT__BECEXE__%taskresult%
 )
 
 if "%startserver%"=="true" (
-	call "batch_lib/control/start_server.bat" && set taskresult=SUCCESS || set taskresult=FAILURE
+	call "batch_lib/lib/start_server.bat" && set taskresult=SUCCESS || set taskresult=FAILURE
 	call :FUNC NOVAR BatchLogWrite 1__START.BAT__ARMAEXE__%taskresult%
 )
 
 :End
-cd %originalDirectory%
+cd /D "%originalDirectory%"
 goto :EOF
 
 :fMoveLogged
@@ -255,8 +253,8 @@ endlocal
 goto :EOF
 
 :FUNC
-set currentDir=%CD%
-cd "%armapath%/batch_lib/gbl_func"
+set currentDir="%CD%"
+cd /D "%armapath%/batch_lib/gbl_func"
 rem %1 = return var, %2 = function, %3 = args
 set returnvarname=%1
 set funcname=%2
@@ -276,5 +274,5 @@ for /f %%I in ('%filename% "%args%"') do (
 	set "val1=%%I"
 )
 set "%1=%val1%"
-cd %currentDir%
+cd /D "%currentDir%"
 goto :EOF

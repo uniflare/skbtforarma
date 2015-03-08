@@ -8,9 +8,8 @@ if "%~1"=="-FIXED_CTRL_C" (
    CALL <NUL %0 -FIXED_CTRL_C %*
    GOTO :EOF
 )
-call c:\batch_settings.cmd
 call :FUNC TIMESTR getTimeStr
-echo Keepalive Launcher 1.1.
+echo Keepalive Launcher.
 echo. 
 echo. NOTE: Keep this window open to keep the keepalive always open.
 echo. If you want to close the keepalive, you need to close this window first.
@@ -19,7 +18,7 @@ echo.
 echo [%TIMESTR%] Starting Keepalive
 cd %armapath%
 set /a kkk=0
-start /wait "Server Keepalive Tools v0.9.4 by Uniflare" "batch_lib\core\server_keepalive.bat" >nul 2>&1
+start /wait "Server Keepalive Tools v1.0.3 by Uniflare (AKA) Chemical Bliss" "batch_lib\core\server_keepalive.bat" >nul 2>&1
 :keep_keepalive_alive
 echo. 
 set /a kkk=%kkk%+1

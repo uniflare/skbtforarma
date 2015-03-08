@@ -1,13 +1,13 @@
 @echo off
-call c:\batch_settings.cmd
+call "C:\TESTFO~1\folder\FSF(SE~1.CMD"
 call :FUNC UNIX_TIME getUnixTime
 if "%1"=="clear" (
 	set fContents=0
 ) else (
 	set fContents=%UNIX_TIME%
 )
-set autotxtfile=%armapath%\batch_lib\wrkdir\lastauto.txt
-set manualtxtfile=%armapath%\batch_lib\wrkdir\lastmanual.txt
+set autotxtfile="%armapath%\batch_lib\wrkdir\lastauto.txt"
+set manualtxtfile="%armapath%\batch_lib\wrkdir\lastmanual.txt"
 call :FUNC NOVAR BatchLogWrite 1__MANUAL_SET__%fContents%__%manualtxtfile: =.-.%
 <nul set /p "=%fContents%" > "%manualtxtfile%"
 call :FUNC NOVAR BatchLogWrite 1__AUTO_SET__0__%autotxtfile: =.-.%
@@ -16,7 +16,7 @@ goto :EOF
 
 :FUNC
 set currentDir=%CD%
-cd "%armapath%/batch_lib/gbl_func"
+cd /D "%armapath%/batch_lib/gbl_func"
 rem %1 = return var, %2 = function, %3 = args
 set returnvarname=%1
 set funcname=%2
@@ -36,5 +36,5 @@ for /f %%I in ('%filename% "%args%"') do (
 	set "val1=%%I"
 )
 set "%1=%val1%"
-cd %currentDir%
+cd /D %currentDir%
 goto :EOF

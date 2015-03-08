@@ -1,8 +1,7 @@
 @echo off
 setlocal ENABLEDELAYEDEXPANSION
-call c:\batch_settings.cmd
 set currentDir=%CD%
-cd /D %armapath%\batch_lib\external
+cd /D "%armapath%\batch_lib\external"
 
 set exename="%1"
 set exename=%exename:"=%
@@ -71,5 +70,5 @@ for /f %%I in ('%filename% "%args%"') do (
 	set "val1=%%I"
 )
 set "%1=%val1%"
-cd %currentDir%
+cd /D %currentDir%
 goto :EOF
