@@ -1,13 +1,17 @@
 ==================
-ARMA SERVER KEEPALIVE TOOL 1.0 (NoGui)
+ARMA SERVER KEEPALIVE TOOL 1.0.3 (NoGui)
 ==================
+
+Many bug fixes, should now be able to sue FULL path names everywhere! (i hope)
 
 ==================
 == NEW CHANGES  ==
 ==================
 
-Fixed start_keepalive where starting from a different Disk Drive would fail.
-taskkill/tasklist removed from external folder as were unpredictable in other envirnoments. Now relies on the servers config.
+Fixed: Usage of parenthesis and spaces in path names fully! (hopefully).
+Changed: Less processor intensive. (was loading settings 12 times/sec ...)
+Added: Prevent database backup if database dump file not found.
+Fixed: A few more bugs related to config settings.
 
 ==================
 == INSTALLATION ==
@@ -19,8 +23,7 @@ taskkill/tasklist removed from external folder as were unpredictable in other en
 4. Configure the batch_settings.cmd file properly
 5. Start the shortcut and test it out!
 
-IMPORTANT: The Game install can be on any drive, but the batch_settings.bat file MUST be on C Drive in Root folder (top folder).
-Note: desktop path in batch_settings.cmd is not needed, it is unused in this version)
+IMPORTANT: The Game install can be on any drive, but the batch_settings.bat file MUST be on C Drive in Root folder (top folder): C:\batch_settings.cmd
 
 Please dont distribute as your own work, link back to the forum post or drop me an email: uniflare@gmail.com
 Problems? Go to the forum thread and ask there.
@@ -59,6 +62,14 @@ The logfile is called "batchrun.log" and is placed in the batch_lib directory
 ==================
 = OLD CHANGELOGS =
 ==================
+
+== Version 1.0.1:
+Fixed start_keepalive where starting from a different Disk Drive would fail.
+taskkill/tasklist removed from external folder as were unpredictable in other envirnoments. Now relies on the servers config.
+
+== Version 1.0.0:
+*FIXED: start_keepalive where starting from a different Disk Drive would fail.
+*REMOVED: taskkill/tasklist removed from external folder as were unpredictable in other envirnoments. Now relies on the servers config.
 
 == Version: 0.9.4:
 *FIXED: Server crash on stop/start
