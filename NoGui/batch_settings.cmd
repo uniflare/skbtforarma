@@ -1,5 +1,8 @@
 @echo off
-
+if "%configdone%"=="1" (
+	GOTO :EOF
+)
+set configdone=0
 
 REM \\ // ===================================================== \\ //
 REM // \\             INTRODUCTION AND INFORMATION              // \\
@@ -38,11 +41,11 @@ set keepalive_database=1
 REM // Keep BEC alive?
 set keepalive_bec=1
 REM // Keep an Arma Server Monitor alive? (@ASM)
-set keepalive_asm=0
+set keepalive_asm=1
 REM // Keep a Teamspeak Server alive?
-set keepalive_ts=0
+set keepalive_ts=1
 REM // Keep a Headless Client alive?
-set keepalive_hc=0
+set keepalive_hc=1
 
 REM // Server Port (this is used regardless if -ip param is omitted)
 set serverport=2302
@@ -81,10 +84,10 @@ REM // Backup Database file to a zipped archive (1) or raw (0)
 set use_zip_backups=1
 
 REM // Folder to store the Database Backups
-set databasebackupfolder=C:\apps\epoch_redis_backups
+set databasebackupfolder="C:\apps\epoch_redis_backups"
 
 REM // Location to store the Server Log Backups
-set logfilebackupfolder=C:\apps\epoch_log_backups
+set logfilebackupfolder="C:\apps\epoch_log_backups"
 
 REM // Manual Action Timeout in Seconds
 REM // Length of time to keep the game server down after using manual_stop.bat
@@ -97,7 +100,7 @@ REM // Used with BEC Scheduler so it can setauto.bat and shutdown server using #
 set auto_timeout_length=25
 
 REM // Auto close any error dialogs after a crash event (will close ALL WER error dialogs)
-set cleanWerDialogs=false
+set cleanWerDialogs=0
 
 
 REM \\ // ===================================================== \\ //
@@ -114,9 +117,9 @@ REM \\ // ===================================================== \\ //
 
 REM // Executable Names
 REM // Name of the server executable (if using arma 2 or arma 3 etc)
-set armaserverexe=arma3server.exe
+set armaserverexe=Arma3Server.exe
 REM // Headless Client EXE name
-set hcexename=arma3serverHC.exe
+set hcexename=Arma3ServerHC.exe
 REM // Teamspeak Server EXE name
 set teamspeakfilename=ts3server_win64.exe
 REM // Database Server EXE name
@@ -133,23 +136,23 @@ set asm_log_file=asm_performance.log
 
 
 REM // Full path to your Arma Server Directory (With the Arma EXE File Inside)
-set armapath=F:\games\A3Master
+set armapath="c:\Arma3Server"
 REM // Headless Client path (if using)
-set hcarmapath=%armapath%
+set hcarmapath="%armapath:"=%"
 REM // Teamspeak Path (if using)
-set teamspeakpath=C:\apps\teamspeak
+set teamspeakpath="C:\apps\teamspeak"
 REM // Full path the Database folder with redis.conf/redis-server.exe/dump.rdb
-set redispath=%armapath%\DB
+set redispath="%armapath:"=%\DB"
 REM // Full path the Arma Server Monitor executable (Just put inside arma directory)
-set asmpath=%armapath%
+set asmpath="%armapath:"=%"
 REM // Full path to the Battleye folder containing your BE Filters and Config
-set Battleyepath=%armapath%\SC\BattlEye
+set Battleyepath="%armapath:"=%\SC\Battleye"
 REM // Full path to the log/config/instance folder (containing server rpt and config.cfg and basic.cfg)
-set LogPath=%armapath%\SC
+set LogPath="%armapath:"=%"
 REM // Full path to the BEC executable
-set becpath=%armapath%\BEC
+set becpath="%armapath:"=%\BEC"
 REM // Full path to the Database File/Folder
-set databasefile=%armapath%\DB\%databasefile_name%
+set databasefile="%armapath:"=%\DB\dump.rdb"
 
 
 REM \\ // ===================================================== \\ //
@@ -157,15 +160,15 @@ REM // \\             SERVER COMMAND LINE PARAMTERS             // \\
 REM \\ // ===================================================== \\ //
 
 REM // Location of config.cfg server config file
-set servercfgpath=%armapath%\SC\config.cfg
+set servercfgpath="SC\config.cfg"
 
 REM // Location of basic.cfg Server Config File
-set serverbasicpath=%armapath%\SC\basic.cfg
+set serverbasicpath="SC\basic.cfg"
 
 REM // Profile name
 REM // Location of the users folder with arma profiles (difficulty settings etc)
-set profilepathname=SC
-set cli_username=SC
+set profilepathname="SC"
+set cli_username="SC"
 
 REM // Command line to launch the server with as called from windows console/shortcuts.
 if %bindtoip%==1 (
@@ -175,7 +178,7 @@ if %bindtoip%==1 (
 )
 
 REM // Mod string for startup command line
-set mod_string= -mod=@Epoch;@EpochHive;@CBA_A3
+set mod_string= -mod=@Epoch;@EpochHive
 
 REM // This should not need to be altered.
 set servercommandline=%armaserverexe% %mod_string% -config=%servercfgpath% %ip_param% -port=%serverport% -profiles=%profilepathname% -cfg=%serverbasicpath% -name=%cli_username% -autoinit
@@ -185,12 +188,12 @@ REM // \\           EXECUTABLE AFFINITIES/PRIORITIES            // \\
 REM \\ // ===================================================== \\ //
 
 REM // Affinity of the Process (use comma seperated list of processor core numbers, eg: "serverAffinity=0,2" for core 1 and 3)
-set serverAffinity=0,1
-set becAffinity=1
-set hcAffinity=2
-set redisAffinity=2
-set teamspeakAffinity=2
-set asmAffinity=2
+set serverAffinity=0,3,1
+set becAffinity=0,1,2,3
+set hcAffinity=0,1,2,3
+set redisAffinity=0,1,2,3
+set teamspeakAffinity=0,1,2,3
+set asmAffinity=0,1,2,3
 
 REM // Server Priority, Specify: low, belownormal, normal, abovenormal, high or realtime
 set serverPriority=normal
@@ -203,58 +206,59 @@ set asmPriority=normal
 REM \\ // ====================================== \\ //
 REM // \\  FIX FOR LONG PATH NAMES WITH SPACES   // \\
 REM \\ // ====================================== \\ //
-for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%armapath%"') do (
+
+cd /D %armapath%
+for /F "delims=" %%a in ('cscript.exe "batch_lib/lib/getShortPath.vbs" %armapath%') do (
     set result=%%a
 )
 	set armapath=%result%
-for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%hcarmapath%"') do (
+for /F "delims=" %%a in ('cscript.exe "batch_lib/lib/getShortPath.vbs" %hcarmapath%') do (
     set result=%%a
 )
 	set hcarmapath=%result%
-for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%teamspeakpath%"') do (
+for /F "delims=" %%a in ('cscript.exe "batch_lib/lib/getShortPath.vbs" %teamspeakpath%') do (
     set result=%%a
 )
 	set teamspeakpath=%result%
-for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%redispath%"') do (
+for /F "delims=" %%a in ('cscript.exe "batch_lib/lib/getShortPath.vbs" %redispath%') do (
     set result=%%a
 )
 	set redispath=%result%
-for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%asmpath%"') do (
+for /F "delims=" %%a in ('cscript.exe "batch_lib/lib/getShortPath.vbs" %asmpath%') do (
     set result=%%a
 )
 	set asmpath=%result%
-for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%Battleyepath%"') do (
+for /F "delims=" %%a in ('cscript.exe "batch_lib/lib/getShortPath.vbs" %Battleyepath%') do (
     set result=%%a
 )
 	set Battleyepath=%result%
-for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%LogPath%"') do (
+for /F "delims=" %%a in ('cscript.exe "batch_lib/lib/getShortPath.vbs" %LogPath%') do (
     set result=%%a
 )
 	set LogPath=%result%
-for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%becpath%"') do (
+for /F "delims=" %%a in ('cscript.exe "batch_lib/lib/getShortPath.vbs" %becpath%') do (
     set result=%%a
 )
 	set becpath=%result%
-for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%databasefile%"') do (
+for /F "delims=" %%a in ('cscript.exe "batch_lib/lib/getShortPath.vbs" "%databasefile:"=%"') do (
     set result=%%a
 )
 	set databasefile=%result%
-for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%servercfgpath%"') do (
+for /F "delims=" %%a in ('cscript.exe "batch_lib/lib/getShortPath.vbs" %servercfgpath%') do (
     set result=%%a
 )
 	set servercfgpath=%result%
-for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%serverbasicpath%"') do (
+for /F "delims=" %%a in ('cscript.exe "batch_lib/lib/getShortPath.vbs" %serverbasicpath%') do (
     set result=%%a
 )
 	set serverbasicpath=%result%
-for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%databasebackupfolder%"') do (
+for /F "delims=" %%a in ('cscript.exe "batch_lib/lib/getShortPath.vbs" %databasebackupfolder%') do (
     set result=%%a
 )
 	set databasebackupfolder=%result%
-for /F "delims=" %%a in ('cscript.exe "%armapath%/batch_lib/lib/getShortPath.vbs" "%logfilebackupfolder%"') do (
+for /F "delims=" %%a in ('cscript.exe "batch_lib/lib/getShortPath.vbs" %logfilebackupfolder%') do (
     set result=%%a
 )
 	set logfilebackupfolder=%result%
-	
+set configdone=1
 goto :EOF
-rem exit
