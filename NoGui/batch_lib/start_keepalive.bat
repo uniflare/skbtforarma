@@ -1,5 +1,5 @@
 @echo off
-call "C:\TESTFO~1\folder\FSF(SE~1.CMD"
+call "c:\batch_settings.cmd"
 if not exist "%armapath%" goto :noArmaPath
 if not exist "%armapath%\batch_lib" goto :noBatchLib
 cd /D %armapath%

@@ -1,5 +1,5 @@
 @echo off
-call "C:\TESTFO~1\folder\FSF(SE~1.CMD"
+call "c:\batch_settings.cmd"
 cd /D %armapath%
 call :FUNC NOVAR BatchLogWrite 1__MANUAL_RESTART__EVENT__INITIALIZE====================================
 call batch_lib\lib\setmanual.bat

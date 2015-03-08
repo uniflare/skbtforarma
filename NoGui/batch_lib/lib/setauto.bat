@@ -1,5 +1,5 @@
 @echo off
-call "C:\TESTFO~1\folder\FSF(SE~1.CMD"
+call "c:\batch_settings.cmd"
 call :FUNC UNIX_TIME getUnixTime
 if "%1"=="clear" (
 	set fContents=0
