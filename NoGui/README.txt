@@ -8,9 +8,11 @@ Many bug fixes, should now be able to sue FULL path names everywhere! (i hope)
 == NEW CHANGES  ==
 ==================
 
-Fixed: Usage of parenthesis and spaces in path names fully! (hopefully).
-Changed: Less processor intensive. (was loading settings 12 times/sec ...)
+Speed: Less processor intensive. (was loading settings 12 times/sec ...)
+Added: New config setting: bec_flag_dsc , if 1 will launch BEC with the --dsc option (fix BEC auto closing due to no update signal)
 Added: Prevent database backup if database dump file not found.
+Fixed: Usage of parenthesis and spaces in path names fully! (hopefully).
+Fixed: Arma Launch parameters weren't quoted correctly.
 Fixed: A few more bugs related to config settings.
 
 ==================

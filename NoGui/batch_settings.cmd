@@ -37,15 +37,15 @@ REM \\ // ===================================================== \\ //
 
 
 REM // Keep database alive?
-set keepalive_database=1
+set keepalive_database=0
 REM // Keep BEC alive?
 set keepalive_bec=1
 REM // Keep an Arma Server Monitor alive? (@ASM)
-set keepalive_asm=1
+set keepalive_asm=0
 REM // Keep a Teamspeak Server alive?
-set keepalive_ts=1
+set keepalive_ts=0
 REM // Keep a Headless Client alive?
-set keepalive_hc=1
+set keepalive_hc=0
 
 REM // Server Port (this is used regardless if -ip param is omitted)
 set serverport=2302
@@ -59,6 +59,9 @@ set serverip=127.0.0.1
 REM \\ // ===================================================== \\ //
 REM // \\           EXTERNAL TOOL SPECIFIC SETTINGS             // \\
 REM \\ // ===================================================== \\ //
+
+REM // Use Battleye Extended Controls DSC Flag? (adds --dsc to BEC startup command. Try if BEC keeps closing when connecting).
+set bec_flag_dsc=1
 
 REM // Teamspeak port number (if using)
 set teamspeak_port=2310
@@ -181,7 +184,7 @@ REM // Mod string for startup command line
 set mod_string= -mod=@Epoch;@EpochHive
 
 REM // This should not need to be altered.
-set servercommandline=%armaserverexe% %mod_string% -config=%servercfgpath% %ip_param% -port=%serverport% -profiles=%profilepathname% -cfg=%serverbasicpath% -name=%cli_username% -autoinit
+set servercommandline=%armaserverexe% %ip_param% -port=%serverport% "-config=%servercfgpath:"=%" "-cfg=%serverbasicpath:"=%" "-profiles=%profilepathname:"=%" "-name=%cli_username:"=%" "%mod_string:"=%" -autoinit
 
 REM \\ // ===================================================== \\ //
 REM // \\           EXECUTABLE AFFINITIES/PRIORITIES            // \\
