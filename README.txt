@@ -1,13 +1,24 @@
 ==================
-ARMA SERVER KEEPALIVE TOOL 1.0.2 HOTFIX RELEASE
+ARMA SERVER KEEPALIVE TOOL 1.0.3 RELEASE
 ==================
-This hotfix remedies the config save/reopen bug.
+This release includes the updated template files from updates of the SKBT core.
+And some bug fixes.
 
 ==================
 == NEW CHANGES  ==
 ==================
 
-Fixed config editing issues after saving a config.
+Template files updated to reflect new changes in nogui version.
+Fixed a bug where the path to the database EXE was used as backup target instead of dump file.
+
+SKBT Template changes:
+
+Speed: Less processor intensive. (was loading settings 12 times/sec ...)
+Added: New config setting: bec_flag_dsc , if 1 will launch BEC with the --dsc option (fix BEC auto closing due to no update signal)
+Added: Prevent database backup if database dump file not found.
+Fixed: Usage of parenthesis and spaces in path names fully! (hopefully).
+Fixed: Arma Launch parameters weren't quoted correctly.
+Fixed: A few more bugs related to config settings.
 
 ==================
 == INSTALLATION ==
@@ -54,6 +65,9 @@ NOTE: The logfile is called "batchrun.log" and is placed in the batch_lib direct
 ==================
 = OLD CHANGELOGS =
 ==================
+
+== Version 1.0.2
+Fixed config editing issues after saving a config.
 
 == Version 1.0.1
 FIXED: template files, no more batch_settings errors spamming the screen.

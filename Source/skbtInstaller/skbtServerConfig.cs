@@ -95,7 +95,8 @@ namespace skbtInstaller
                 origin.objBECProc.Keepalive,
                 origin.objBECProc.Priority,
                 origin.objBECProc.Affinity,
-                origin.objBECProc.BEPath
+                origin.objBECProc.BEPath,
+                origin.objBECProc.useDSC
             );
             this.objDatabaseProc = new skbtProcessConfigDatabase(
                 origin.objDatabaseProc.EXEFile,
@@ -170,20 +171,20 @@ namespace skbtInstaller
                 "normal",
                 skbtServerControl.getDefaultAffinityString(),
                 (UInt16) 2302,
-                @"%armapath%\SC\basic.cfg", 
-                @"%armapath%\SC\config.cfg",
+                "%armapath:\"=%\\SC\\basic.cfg", 
+                "%armapath:\"=%\\SC\\config.cfg",
                 "SC",
                 "SC",
-                "%armaserverexe% %mod_string% -config=%servercfgpath% %ip_param% -port=%serverport% -profiles=%profilepathname% -cfg=%serverbasicpath% -name=%cli_username% -autoinit",
-                "-mod=@Epoch;@EpochHive;@CBA_A3",
-                @"%armapath%\SC",
+                "%armaserverexe% \"%mod_string:\"=%\" \"-config=%servercfgpath:\"=%\" %ip_param% -port=%serverport% \"-profiles=%profilepathname:\"=%\" \"-cfg=%serverbasicpath:\"=%\" \"-name=%cli_username:\"=%\" -autoinit",
+                "-mod=@Epoch;@EpochHive",
+                "%armapath:\"=%\\SC",
                 @"C:\apps\epoch_log_backups",
                 true
             );
 
             this.objDatabaseProc = new skbtProcessConfigDatabase(
                 "redis-server.exe",
-                @"%armapath%\DB",
+                "%armapath:\"=%\\DB",
                 true,
                 "normal",
                 skbtServerControl.getDefaultAffinityString(),
@@ -191,21 +192,22 @@ namespace skbtInstaller
                 5,
                 @"C:\apps\epoch_redis_backups",
                 "dump.rdb",
-                @"%armapath%\DB"
+                "%armapath:\"=%\\DB"
             );
 
             this.objBECProc = new skbtProcessConfigBEC(
                 "bec.exe",
-                @"%armapath%\BEC",
+                "%armapath:\"=%\\BEC",
                 true,
                 "normal",
                 skbtServerControl.getDefaultAffinityString(),
-                @"%armapath%\SC\BattlEye"
+                "%armapath:\"=%\\SC\\BattlEye",
+                true
             );
 
             this.objASMProc = new skbtProcessConfigASM(
                 "ArmaServerMonitor.exe", 
-                @"%armapath%", 
+                "%armapath:\"=%", 
                 false, 
                 "normal",
                 skbtServerControl.getDefaultAffinityString(), 
@@ -224,7 +226,7 @@ namespace skbtInstaller
 
             this.objHeadlessClientProc = new skbtProcessConfigHC(
                 "arma3serverHC.exe",
-                @"%armapath%",
+                "%armapath:\"=%",
                 false,
                 "normal",
                 skbtServerControl.getDefaultAffinityString(),
@@ -260,7 +262,14 @@ namespace skbtInstaller
 
                             if (propStringSplit.Count<String>() > 1)
                             {
-                                skbtConfigArray.Add(propStringSplit[0], propStringSplit[1].Trim(' '));
+                                if (skbtConfigArray.ContainsKey(propStringSplit[0]))
+                                {
+                                    skbtConfigArray[propStringSplit[0]] = expandPathVar(propStringSplit[1].Trim(' ', '"'));
+                                }
+                                else
+                                {
+                                    skbtConfigArray.Add(propStringSplit[0], expandPathVar(propStringSplit[1].Trim(' ', '"')));
+                                }
                             }
                         }
                     }
@@ -335,7 +344,15 @@ namespace skbtInstaller
                 skbtConfigArray.ContainsKey("redisPriority") &&
                 skbtConfigArray.ContainsKey("teamspeakPriority") &&
                 skbtConfigArray.ContainsKey("asmPriority")
-            ){
+            )
+            {
+                // Backwards Compatibility
+                Boolean useDSC = true;  // Default on, most compatible setting.
+                if (skbtConfigArray.ContainsKey("bec_flag_dsc")){
+                    useDSC = (skbtConfigArray["bec_flag_dsc"].ToString() == "0") ? false : true;
+                }
+
+
                 this.CleanWER = (skbtConfigArray["cleanWerDialogs"] == "true")? true : false;
                 this.BindToIP = (skbtConfigArray["bindtoip"] == "1")? true : false;
                 this.IP = skbtConfigArray["serverip"];
@@ -377,7 +394,7 @@ namespace skbtInstaller
                         Convert.ToUInt32(skbtConfigArray["db_backup_interval"]),
                         skbtConfigArray["databasebackupfolder"],
                         skbtConfigArray["databasefile_name"],
-                        Path.GetDirectoryName(skbtConfigArray["databasefile"])
+                        Path.GetDirectoryName(skbtConfigArray["databasefile"].Replace("%databasefile_name:\"=%", skbtConfigArray["databasefile_name"]))
                 );
 
                 // New BEC Process Config Instance
@@ -387,7 +404,8 @@ namespace skbtInstaller
                         (skbtConfigArray["keepalive_bec"] == "1") ? true : false,
                         skbtConfigArray["becPriority"],
                         skbtConfigArray["becAffinity"],
-                        skbtConfigArray["Battleyepath"]
+                        skbtConfigArray["Battleyepath"],
+                        useDSC
                 );
 
                 // New Teamspeak Process Config Instance
@@ -428,86 +446,10 @@ namespace skbtInstaller
             }
         }
 
-        /*  saveBatchSettingsToFile()
-         * 
-         * Attempts to save this config to file (this.skbtconfigPath)
-         */
-        public void saveBatchSettingsToFile()
-        {
-            // Get config template
-            String skbtConfigTemplate = global::skbtInstaller.Properties.Resources.skbtConfigTemplate;
-            
-            // Build replacement list
-            Dictionary<string, string> _replacements = new Dictionary<string, string>() {
-                {"{KEEPALIVE_DATABASE}", (this.objDatabaseProc.Keepalive == true)? "1" : "0"},
-                {"{KEEPALIVE_BEC}", (this.objBECProc.Keepalive == true)? "1" : "0"},
-                {"{KEEPALIVE_ASM}", (this.objASMProc.Keepalive == true)? "1" : "0"},
-                {"{KEEPALIVE_TS}", (this.objTeamspeakProc.Keepalive == true)? "1" : "0"},
-                {"{KEEPALIVE_HC}", (this.objHeadlessClientProc.Keepalive == true)? "1" : "0"},
-                {"{SERVERPORT}", this.objServerProc.Port.ToString()},
-                {"{BINDTOIP}", (this.BindToIP == true)? "1" : "0"},
-                {"{SERVERIP}", this.IP},
-                {"{TEAMSPEAK_PORT}", this.objTeamspeakProc.PortNumber.ToString()},
-                {"{ASM_LOG_INTERVAL}", this.objASMProc.LogInterval.ToString()},
-                {"{SERVER_START_TIMEOUT}", this.ServerStartTimeout.ToString()},
-                {"{DB_BACKUP_INTERVAL}", this.objDatabaseProc.DatabaseBackupInterval.ToString()},
-                {"{UZE_ZIP_LOGS}", (this.objServerProc.UseZipLogs == true)? "1" : "0"},
-                {"{USE_ZIP_BACKUPS}", (this.objDatabaseProc.UseZipBackups == true)? "1" : "0"},
-                {"{DATABASE_BACKUP_FOLDER}", this.objDatabaseProc.BackupFolder},
-                {"{LOG_BACKUP_FOLDER}", this.objServerProc.LogFileBackupPath},
-                {"{MANUAL_TIMEOUT_LENGTH}", this.ManualTimeoutLength.ToString()},
-                {"{AUTO_TIMEOUT_LENGTH}", this.AutoTimeoutLength.ToString()},
-                {"{CLEAN_WER_DIALOGS}", (this.CleanWER == true)? "true" : "false"},
-                {"{HC_LAUNCH_PARAMS}", this.objHeadlessClientProc.LaunchParams},
-                {"{ARMA_SERVER_EXE}", this.objServerProc.EXEFile},
-                {"{HC_EXE}", this.objHeadlessClientProc.EXEFile},
-                {"{TS_EXE_NAME}", this.objTeamspeakProc.EXEFile},
-                {"{REDIS_EXE_NAME}", this.objDatabaseProc.EXEFile},
-                {"{BEC_EXE_NAME}", this.objBECProc.EXEFile},
-                {"{ASM_EXE_NAME}", this.objASMProc.EXEFile},
-                {"{DATABASE_DUMP_NAME}", this.objDatabaseProc.DatabaseDumpFileName},
-                {"{ASM_LOG_NAME}", this.objASMProc.LogFileName},
-                {"{ARMA_PATH}", this.objServerProc.Path},
-                {"{HC_PATH}", this.objHeadlessClientProc.Path},
-                {"{TS_PATH}", this.objTeamspeakProc.Path},
-                {"{DB_PATH}", this.objDatabaseProc.Path},
-                {"{ASM_PATH}", this.objASMProc.Path},
-                {"{BE_PATH}", this.objBECProc.BEPath},
-                {"{LOG_PATH}",this.objServerProc.LogFilePath},
-                {"{BEC_PATH}", this.objBECProc.Path},
-                {"{DB_FILE_FULLPATH}", Path.Combine(this.objDatabaseProc.DatabaseDumpFilePath, this.objDatabaseProc.DatabaseDumpFileName)},
-                {"{SERVER_CONFIG_PATH}", this.objServerProc.ConfigPathServer},
-                {"{SERVER_BASIC_PATH}", this.objServerProc.ConfigPathBasic},
-                {"{PROFILE_PATH}", this.objServerProc.ProfilePath},
-                {"{PROFILE_NAME}", this.objServerProc.ProfileName},
-                {"{MOD_STRING}", " " + this.objServerProc.ModLine.Trim(' ')},
-                {"{COMMAND_LINE}", this.objServerProc.CommandLine},
-                {"{AFFINITY_SERVER}", this.objServerProc.Affinity},
-                {"{AFFINITY_BEC}", this.objBECProc.Affinity},
-                {"{AFFINITY_HC}", this.objHeadlessClientProc.Affinity},
-                {"{AFFINITY_DB}", this.objDatabaseProc.Affinity},
-                {"{AFFINITY_TS}", this.objTeamspeakProc.Affinity},
-                {"{AFFINITY_ASM}", this.objASMProc.Affinity},
-                {"{PRIORITY_SERVER}",this.objServerProc.Affinity},
-                {"{PRIORITY_BEC}", this.objBECProc.Priority},
-                {"{PRIORITY_HC}", this.objHeadlessClientProc.Priority},
-                {"{PRIORITY_DB}", this.objDatabaseProc.Priority},
-                {"{PRIORITY_TS}", this.objTeamspeakProc.Priority},
-                {"{PRIORITY_ASM}", this.objASMProc.Priority}
-            };
-
-            // Replace items (build config)
-            foreach (string to_replace in _replacements.Keys) {
-                skbtConfigTemplate = skbtConfigTemplate.Replace(to_replace, _replacements[to_replace]);
-            }
-
-            // Save to file.
-
-        }
-
         private String expandPathVar(String path)
         {
-            return path.Replace("%armapath%", Path.GetDirectoryName(this.refPathToEXE));
+            return path.Replace("%armapath%", Path.GetDirectoryName(this.refPathToEXE)).Replace("%armapath:\"=%", Path.GetDirectoryName(this.refPathToEXE));
+            return path;
         }
     }
 }
