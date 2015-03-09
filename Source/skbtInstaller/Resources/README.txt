@@ -4,6 +4,8 @@ ARMA SERVER KEEPALIVE TOOL 1.0.3 RELEASE
 This release includes the updated template files from updates of the SKBT core.
 And some bug fixes.
 
+**Reccommended to "Uninstall" your previous configs and remake them using the Gui tool.
+
 ==================
 == NEW CHANGES  ==
 ==================
