@@ -1,5 +1,5 @@
 @echo off
-call "c:\batch_settings.cmd"
+call "C:\batch_settings.cmd"
 cd /D %armapath%
 call :FUNC NOVAR BatchLogWrite 1__MANUALSTART__EVENT__INITIALIZE====================================
 call batch_lib\lib\setmanual.bat clear
