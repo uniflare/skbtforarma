@@ -1,12 +1,14 @@
 ==================
-ARMA SERVER KEEPALIVE TOOL 1.0.3 (NoGui)
+ARMA SERVER KEEPALIVE TOOL 1.0.3.1 HOTFIX (NoGui)
 ==================
+HOTFIX: Fixed modline problem.
 
-Many bug fixes, should now be able to sue FULL path names everywhere! (i hope)
+Many bug fixes, should now be able to use FULL path names everywhere! (i hope)
 
 ==================
 == NEW CHANGES  ==
 ==================
+HOTFIX: Config setting had a spcae at start which broke the startup parameter
 
 Speed: Less processor intensive. (was loading settings 12 times/sec ...)
 Added: New config setting: bec_flag_dsc , if 1 will launch BEC with the --dsc option (fix BEC auto closing due to no update signal)

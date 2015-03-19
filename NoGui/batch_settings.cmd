@@ -180,8 +180,8 @@ if %bindtoip%==1 (
 	set ip_param=
 )
 
-REM // Mod string for startup command line
-set mod_string= -mod=@Epoch;@EpochHive
+REM // Mod string for startup command line -- NOTE: Make sure there are NO extra spaces before "-mod...."
+set mod_string=-mod=@Epoch;@EpochHive
 
 REM // This should not need to be altered.
 set servercommandline=%armaserverexe% %ip_param% -port=%serverport% "-config=%servercfgpath:"=%" "-cfg=%serverbasicpath:"=%" "-profiles=%profilepathname:"=%" "-name=%cli_username:"=%" "%mod_string:"=%" -autoinit
