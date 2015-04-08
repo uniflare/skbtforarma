@@ -2,7 +2,7 @@
 setlocal ENABLEDELAYEDEXPANSION
 set originalDirectory="%CD%"
 cd /D "%armapath%"
-call :FUNC NOVAR BatchLogWrite 1__START.BAT__INITIALIZE__STARTING_SERVER
+call :FUNC NOVAR BatchLogWrite 3__START.BAT__INITIALIZE__STARTING_SERVER
 
 :StartServer
 echo Server Start Initialize!
@@ -134,7 +134,7 @@ echo.
 if "!deleteServerLogs!"=="0"  (
 	if "!deleteBELogs!"=="1" (
 		REM // Should never happen on modern windows??
-		call :FUNC NOVAR BatchLogWrite 1__START.BAT__ARCHIVE__FAILED:LOGS_NOT_ARCHIVED
+		call :FUNC NOVAR BatchLogWrite 2__START.BAT__ARCHIVE__FAILED:LOGS_NOT_ARCHIVED
 	)
 )
 
@@ -146,7 +146,7 @@ echo Executing Restart Queries
 call "batch_lib/exec_sql.bat"
 
 :DISABLED_FEATURES_A1
-call :FUNC NOVAR BatchLogWrite 1__START.BAT__SQL_AUTO_SCRIPT__FEATURE_DISABLED
+call :FUNC NOVAR BatchLogWrite 3__START.BAT__SQL_AUTO_SCRIPT__FEATURE_DISABLED
 
 :checkNewConfigPBO
 if %enable_pbo_updates%==1 (
@@ -175,24 +175,24 @@ if exist "%file_newmish%" (
 		del "%file_lastmish%" && set taskresult=SUCCESS || set taskresult=FAILURE	
 		echo DELETING LAST MISSION FILE BACKUP %taskresult%
 	)
-	call :FUNC NOVAR BatchLogWrite 1__START.BAT__REMOVE:%file_lastmish: =.-.%:RESULT__!taskresult!
+	call :FUNC NOVAR BatchLogWrite 3__START.BAT__REMOVE:%file_lastmish: =.-.%:RESULT__!taskresult!
 	
 	set taskresult=NO_FILE
 	if exist "%file_oldmish%" (
 		rename "%file_oldmish%" DayZ_Epoch_11.Chernarus.pbo.last && set taskresult=SUCCESS || set taskresult=FAILURE
 		echo BACKING UP OLD MISSION FILE %taskresult%
 	)
-	call :FUNC NOVAR BatchLogWrite 1__START.BAT__RENAME_TO_LAST:%file_oldmish: =.-.%:RESULT__!taskresult!
+	call :FUNC NOVAR BatchLogWrite 3__START.BAT__RENAME_TO_LAST:%file_oldmish: =.-.%:RESULT__!taskresult!
 	
 	echo MOVING NEW MISSION FILE
 	call :fMoveLogged "%file_newmish%" "%armapath%\MPMissions"
 ) else (
-	call :FUNC NOVAR BatchLogWrite 1__START.BAT__NOT_DETECTED__NEW_MISSION
+	call :FUNC NOVAR BatchLogWrite 3__START.BAT__NOT_DETECTED__NEW_MISSION
 )
 goto startCommand
 
 :DISABLED_FEATURES_A2
-call :FUNC NOVAR BatchLogWrite 1__START.BAT__PBO_AUTO_FEATURES_WORKINPROGRESS
+call :FUNC NOVAR BatchLogWrite 3__START.BAT__PBO_AUTO_FEATURES_WORKINPROGRESS
 
 :SKIP_ROUTINE
 :startCommand
@@ -216,12 +216,12 @@ IF /i "%1"=="bec" (
 )
 if "%startbec%"=="true" (
 	call "batch_lib/lib/start_bec.bat" && set taskresult=SUCCESS || set taskresult=FAILURE
-	call :FUNC NOVAR BatchLogWrite 1__START.BAT__BECEXE__%taskresult%
+	call :FUNC NOVAR BatchLogWrite 3__START.BAT__BECEXE__%taskresult%
 )
 
 if "%startserver%"=="true" (
 	call "batch_lib/lib/start_server.bat" && set taskresult=SUCCESS || set taskresult=FAILURE
-	call :FUNC NOVAR BatchLogWrite 1__START.BAT__ARMAEXE__%taskresult%
+	call :FUNC NOVAR BatchLogWrite 3__START.BAT__ARMAEXE__%taskresult%
 )
 
 :End
@@ -245,9 +245,9 @@ set t_move=%1
 set t_move=%t_move:\*=._.%
 set t_move=%t_move: =.-.%
 if "%taskresult%"=="SUCCESS" (
-	call :FUNC NOVAR BatchLogWrite 1__START.BAT__MOVE:%t_move%:RESULT__%taskresult%[%resultnum%]
+	call :FUNC NOVAR BatchLogWrite 3__START.BAT__MOVE:%t_move%:RESULT__%taskresult%[%resultnum%]
 ) else (
-	call :FUNC NOVAR BatchLogWrite 1__START.BAT__MOVE:%t_move%:RESULT__%taskresult%
+	call :FUNC NOVAR BatchLogWrite 3__START.BAT__MOVE:%t_move%:RESULT__%taskresult%
 )
 endlocal
 goto :EOF

@@ -7,7 +7,7 @@ if "%1"=="clear" (
 	set fContents=%UNIX_TIME%
 )
 set startedtxtfile="%armapath%\batch_lib\wrkdir\laststarted.txt"
-call :FUNC NOVAR BatchLogWrite 1__STARTED_SET__%fContents%__%startedtxtfile: =.-.%
+call :FUNC NOVAR BatchLogWrite 3__STARTED_SET__%fContents%__%startedtxtfile: =.-.%
 <nul set /p "=%fContents%" > "%startedtxtfile%"
 goto :EOF
 

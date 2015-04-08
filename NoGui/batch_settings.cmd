@@ -3,6 +3,8 @@ if "%configdone%"=="1" (
 	GOTO :EOF
 )
 set configdone=0
+REM // skbt_debug; 0=no log; 1=events; 2=events+errors; 3+=verbose(everything)
+set skbt_debug=1
 
 REM \\ // ===================================================== \\ //
 REM // \\             INTRODUCTION AND INFORMATION              // \\
@@ -37,9 +39,9 @@ REM \\ // ===================================================== \\ //
 
 
 REM // Keep database alive?
-set keepalive_database=0
+set keepalive_database=1
 REM // Keep BEC alive?
-set keepalive_bec=1
+set keepalive_bec=0
 REM // Keep an Arma Server Monitor alive? (@ASM)
 set keepalive_asm=0
 REM // Keep a Teamspeak Server alive?
@@ -75,10 +77,10 @@ REM // \\           KEEPALIVE TOOL SPECIFIC SETTINGS            // \\
 REM \\ // ===================================================== \\ //
 
 REM // How long to wait for the server to start before assuming it has crashed
-set serverStartTimeout=30
+set serverStartTimeout=45
 
 REM // Database Backup Interval _in Minutes_ // CAUTION: Too short an interval and you may fill your hard drive rather quickly!
-set db_backup_interval=5
+set db_backup_interval=15
 
 REM // Backup log files to zipped archives (1) or plaint text (0)
 set use_zip_logs=1
@@ -87,10 +89,10 @@ REM // Backup Database file to a zipped archive (1) or raw (0)
 set use_zip_backups=1
 
 REM // Folder to store the Database Backups
-set databasebackupfolder="C:\apps\epoch_redis_backups"
+set databasebackupfolder="C:\epoch_redis_backups"
 
 REM // Location to store the Server Log Backups
-set logfilebackupfolder="C:\apps\epoch_log_backups"
+set logfilebackupfolder="C:\epoch_log_backups"
 
 REM // Manual Action Timeout in Seconds
 REM // Length of time to keep the game server down after using manual_stop.bat
@@ -100,10 +102,14 @@ set manual_timeout_length=300
 REM // Automated Event Timeout in Seconds
 REM // Length of time in seconds to wait for the Arma server EXE to close by itself before force closing it
 REM // Used with BEC Scheduler so it can setauto.bat and shutdown server using #shutdown gracefully
-set auto_timeout_length=25
+set auto_timeout_length=30
+
+REM // Delay the start of server after a restart event by this many seconds.
+REM // This effectively freezes the keepalive process for this many seconds after the server has been stopped and before it has been started again.
+set auto_restart_delay=5
 
 REM // Auto close any error dialogs after a crash event (will close ALL WER error dialogs)
-set cleanWerDialogs=0
+set cleanWerDialogs=1
 
 
 REM \\ // ===================================================== \\ //
@@ -139,7 +145,7 @@ set asm_log_file=asm_performance.log
 
 
 REM // Full path to your Arma Server Directory (With the Arma EXE File Inside)
-set armapath="c:\Arma3Server"
+set armapath="C:\A3Master"
 REM // Headless Client path (if using)
 set hcarmapath="%armapath:"=%"
 REM // Teamspeak Path (if using)
@@ -191,12 +197,12 @@ REM // \\           EXECUTABLE AFFINITIES/PRIORITIES            // \\
 REM \\ // ===================================================== \\ //
 
 REM // Affinity of the Process (use comma seperated list of processor core numbers, eg: "serverAffinity=0,2" for core 1 and 3)
-set serverAffinity=0,3,1
-set becAffinity=0,1,2,3
-set hcAffinity=0,1,2,3
-set redisAffinity=0,1,2,3
-set teamspeakAffinity=0,1,2,3
-set asmAffinity=0,1,2,3
+set serverAffinity=0
+set becAffinity=0
+set hcAffinity=0
+set redisAffinity=0
+set teamspeakAffinity=0
+set asmAffinity=0
 
 REM // Server Priority, Specify: low, belownormal, normal, abovenormal, high or realtime
 set serverPriority=normal

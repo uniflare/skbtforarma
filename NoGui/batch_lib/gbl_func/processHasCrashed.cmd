@@ -5,7 +5,7 @@ set processName=%1
 set processName=%processName:"=%
 (tasklist /FI "Status eq Not Responding"|find "%processName%")&&set crashed=true
 (tasklist /FI "Status eq Unknown"|find "%processName%")&&set crashed=true
-call :FUNC NOVAR BatchLogWrite 1__processHasCrashed__%processName%__%crashed%
+call :FUNC NOVAR BatchLogWrite 3__processHasCrashed__%processName%__%crashed%
 echo.%crashed%
 goto :EOF
 

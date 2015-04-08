@@ -8,6 +8,7 @@ if %keepalive_bec%==1 (
 	set dscoption=--dsc
 	if "%bec_flag_dsc%"=="0" set dscoption=
 	psexec -w "%becpath%" -d -%becPriority% -a %becAffinity% -accepteula "%becpath%/%becexename%" -f Config.cfg %dscoption%
+	call :FUNC NOVAR BatchLogWrite 3__START_BEC__PSEXEC__-w.-."%becpath: =.-.%".-.-d.-.-%becPriority: =.-.%.-.-a.-.%becAffinity:,=.+.%.-.-accepteula.-."%becpath: =.-.%/%becexename: =.-.%".-.-f.-.Config.cfg.-.%dscoption: =.-.%
 	cd /D "!currentDir!"
 )
 goto :EOF

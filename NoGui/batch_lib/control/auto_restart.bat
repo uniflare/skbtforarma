@@ -1,7 +1,9 @@
 @echo off
 call "C:\batch_settings.cmd"
 cd /D %armapath%
-call :FUNC NOVAR BatchLogWrite 1__AUTO_RESTART__EVENT__INITIALIZE====================================
+if %skbt_debug% GTR 2 (
+	call :FUNC NOVAR BatchLogWrite 3__AUTO_RESTART__EVENT__INITIALIZE====================================
+)
 call batch_lib\lib\setauto.bat
 call batch_lib\lib\stop_all.bat
 goto :EOF

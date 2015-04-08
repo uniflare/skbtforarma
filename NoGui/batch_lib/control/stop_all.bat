@@ -1,5 +1,6 @@
 @echo off
 call c:\batch_settings.cmd
+call :FUNC NOVAR BatchLogWrite 3__STOP_ALL__BATCH__INITIALIZE====================================
 call :FUNC TIMESTR GetTimeStr
 echo Stopping BEC
 call :FUNC RETURNVAR stop %becexename% >nul 2>&1

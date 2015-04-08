@@ -6,6 +6,10 @@ set currentDir=%CD%
 cd /D %armapath%/batch_lib/external
 
 psexec -w "%armapath%" -d -%serverPriority% -a %serverAffinity% -accepteula %armapath%/%servercommandline%
+set safecommandline=%servercommandline: =.-.%
+set safecommandline=
+call :FUNC NOVAR BatchLogWrite 3__START_SERVER__PSEXEC__-w.-."%armapath: =.-.%".-.-d.-.-%serverPriority: =.-.%.-.-a.-.%serverAffinity:,=.+.%.-.-accepteula.-.%armapath: =.-.%/%safecommandline%
+
 REM // call :FUNC sleeprtn sleep %serverStartTimeout%
 cd /D %currentDir%
 REM psexec [\\computer[,computer2[,...] | @file]][-u user [-p psswd][-n s][-r servicename][-h][-l][-s|-e][-x][-i [session]][-c [-f|-v]][-w directory][-d][-<priority>][-a n,n,...] cmd [arguments]

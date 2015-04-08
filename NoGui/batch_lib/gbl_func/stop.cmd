@@ -18,10 +18,10 @@ if "%ERRORLEVEL%"=="0" (
 		ping -n 2 127.0.0.1 > nul
 		tasklist /FI "IMAGENAME eq %exename%" 2>NUL | find /I /N "%exename%"
 		if "!ERRORLEVEL!"=="0" (
-			call :FUNC NOVAR BatchLogWrite 1__STOP.CMD__KILLTASK:%exename%__PROCESS_STUCK
+			call :FUNC NOVAR BatchLogWrite 3__STOP.CMD__KILLTASK:%exename%__PROCESS_STUCK
 			echo FAILED
 		) else (
-			call :FUNC NOVAR BatchLogWrite 1__STOP.CMD__KILLTASK:%exename%__PROCESS_MANUAL_FORCE_TERMINATED
+			call :FUNC NOVAR BatchLogWrite 3__STOP.CMD__KILLTASK:%exename%__PROCESS_MANUAL_FORCE_TERMINATED
 			echo PROCESS_TERMINATED
 		)
 	) else (
@@ -31,12 +31,12 @@ if "%ERRORLEVEL%"=="0" (
 		if "!ERRORLEVEL!"=="0" (
 			taskkill /t /f /im %exename% && set taskresult=SUCCESS || set taskresult=FAILURE
 		) else (
-			call :FUNC NOVAR BatchLogWrite 1__STOP.CMD__KILLTASK:%exename%__PROCESS_FORCE_TERMINATED
+			call :FUNC NOVAR BatchLogWrite 3__STOP.CMD__KILLTASK:%exename%__PROCESS_FORCE_TERMINATED
 			echo PROCESS_TERMINATED
 		)
 	)
 ) else (
-	call :FUNC NOVAR BatchLogWrite 1__STOP.CMD__KILLTASK:%exename%__PROCESS_NOT_RUNNING
+	call :FUNC NOVAR BatchLogWrite 3__STOP.CMD__KILLTASK:%exename%__PROCESS_NOT_RUNNING
 	echo PROCESS_NOT_RUNNING
 )
 tasklist /FI "IMAGENAME eq %exename%" | find /I "%exename%"

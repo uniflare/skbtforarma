@@ -5,7 +5,7 @@ call :doSanityCheck
 cd "%armapath%"
 
 call :FUNC TIMESTR GetTimeStr
-call :FUNC NOVAR BatchLogWrite 1__KEEPALIVE__INITIALIZE__Starting
+call :FUNC NOVAR BatchLogWrite 1__KEEPALIVE__INITIALIZE__Starting_v1.1.0_NoGui
 set DEBUG_FLAG=0
 set /a auto_timeout=%auto_timeout_length%
 set /a manual_timeout=%manual_timeout_length%
@@ -49,7 +49,7 @@ goto :EOF
 :draw_display
 cls
 echo ===========================================             %TIMESTR:@= @ %
-echo    Server Keepalive 1.0.3 by Uniflare (AKA) Chemical Bliss
+echo    Server Keepalive 1.1.0_NoGui by Uniflare (AKA) Chemical Bliss
 echo.
 echo    Armapath: %armapath%
 echo.
@@ -58,7 +58,7 @@ echo    Checking in %checkTimeout% Seconds
 echo.   
 echo    Last Database Backup: %lastdb_backuptime:@= @ %
 echo.   
-echo    Status: %current_message%
+echo    Status: !current_message!
 echo ===============================================================================
 echo Server events: %eventCount%
 echo.
@@ -90,10 +90,12 @@ if exist "%armapath%\batch_lib\wrkdir\lastauto.txt" (
 	if !lastauto! GEQ %UNIX_TIME% set foundIfMatch=true
 	if "%in_auto_routine%"=="true" (
 		set /a auto_counter=%auto_counter%+1
+		set serverStoppedT=false
 		if !auto_counter!==%auto_timeout% (
 			call "batch_lib\lib\stop_all.bat"
 			set autoLogMessage=TIMEOUT_FORCE_START
 			set restartDates[%last_auto_index%]=!restartDates[%last_auto_index%]! :: TIMEOUT [!auto_counter!s]
+			set serverStoppedT=true
 		) else (
 		
 			call :FUNC isRunning serverIsRunning
@@ -101,7 +103,14 @@ if exist "%armapath%\batch_lib\wrkdir\lastauto.txt" (
 				set /a checkTimeout=0
 				set autoLogMessage=GRACEFUL_START_[!auto_counter!]s
 				set restartDates[%last_auto_index%]=!restartDates[%last_auto_index%]! :: GRACEFUL [!auto_counter!s]
+				set serverStoppedT=true
 			)
+		)
+		if !serverStoppedT!==true (
+			call :FUNC NOVAR BatchLogWrite 3__KEEPALIVE__AUTO_RESTART__WAITING_%auto_restart_delay%_SECONDS
+			set current_message=Waiting %auto_restart_delay% seconds as per auto_restart_delay config...
+			call :draw_display
+			call :FUNC sleeprtn sleep %auto_restart_delay%
 		)
 		set foundIfMatch=false
 	)
@@ -409,6 +418,9 @@ set /a keepalive_count=%keepalive_count%+1
 call :draw_display
 call :reset_timer
 
+REM EVENT HOOK - custom/event_BeforeServerCheck.bat
+call "batch_lib/custom/event_BeforeServerCheck.bat"
+
 :Stage1
 REM CHECK IF DATABASE IS ACTIVE FIRST/ALWAYS
 if "%keepalive_database%"=="0" goto :Stage2
@@ -418,7 +430,7 @@ if "!ERRORLEVEL!"=="0"  goto Stage2
 if %firstloop%==0 call :RedisInactiveEvent & call :draw_display
 if %firstloop%==0 call "batch_lib\lib\stop_all.bat"
 call "batch_lib/lib/start_redis.bat" & set taskresult=SUCCESS || set taskresult=FAILURE
-call :FUNC NOVAR BatchLogWrite 1__KEEPALIVE__START_REDIS_DB__%taskresult%
+call :FUNC NOVAR BatchLogWrite 3__KEEPALIVE__START_REDIS_DB__%taskresult%
 set forcedbsave=1
 set redis_down=1
 
@@ -429,7 +441,7 @@ if "%keepalive_asm%"=="1" (
 	if "!ERRORLEVEL!"=="0"  goto Stage3
 	if %firstloop%==0 call :MonitorInactiveEvent & call :draw_display
 	call "batch_lib/lib/start_asm.bat" & set taskresult=SUCCESS || set taskresult=FAILURE
-	call :FUNC NOVAR BatchLogWrite 1__KEEPALIVE__START_ASM__%taskresult%
+	call :FUNC NOVAR BatchLogWrite 3__KEEPALIVE__START_ASM__%taskresult%
 )
 
 :Stage3
@@ -439,7 +451,7 @@ if "%keepalive_ts%"=="1" (
 	if "!ERRORLEVEL!"=="0"  goto Stage4
 	if %firstloop%==0 call :TeamspeakInactiveEvent & call :draw_display
 	call "batch_lib/lib/start_teamspeak.bat" & set taskresult=SUCCESS || set taskresult=FAILURE
-	call :FUNC NOVAR BatchLogWrite 1__KEEPALIVE__START_TEAMSPEAK__%taskresult%
+	call :FUNC NOVAR BatchLogWrite 3__KEEPALIVE__START_TEAMSPEAK__%taskresult%
 )
 
 :Stage4
@@ -468,7 +480,7 @@ if "!isRunning!"=="true" (
 				set manualLogMessage=TIMEOUT_UNKNOWN_START[%manual_counter%s]
 			)
 		)
-		call :FUNC NOVAR BatchLogWrite 1__KEEPALIVE__STARTSERVER__!manualLogMessage!
+		call :FUNC NOVAR BatchLogWrite 3__KEEPALIVE__STARTSERVER__!manualLogMessage!
 		call "batch_lib/lib/setmanual.bat" clear
 	) else (
 		if "%keepalive_bec%"=="1" (
@@ -510,11 +522,15 @@ goto LoopAgain
 :BECOnlyNotRunning
 if %firstloop%==0 call :BECInactiveEvent & call :draw_display
 call "batch_lib/lib/start_bec.bat" & set taskresult=SUCCESS || set taskresult=FAILURE
-call :FUNC NOVAR BatchLogWrite 1__KEEPALIVE__START_BEC__%taskresult%
+call :FUNC NOVAR BatchLogWrite 3__KEEPALIVE__START_BEC__%taskresult%
 
 goto LoopAgain
 
 :ServerNotRunning
+
+REM EVENT HOOK - custom/event_BeforeServerStart.bat
+call "batch_lib/custom/event_BeforeServerStart.bat"
+
 set tempType=unknown
 if %redis_down%==1 set tempType=redis
 if %firstloop%==1 set tempType=firststart
@@ -542,7 +558,7 @@ if not "%manualLogMessage%"=="" (
 	)
 	set taskresult=%manualLogMessage%
 )
-call :FUNC NOVAR BatchLogWrite 1__KEEPALIVE__STARTSERVER__%taskresult%
+call :FUNC NOVAR BatchLogWrite 3__KEEPALIVE__STARTSERVER__%taskresult%
 call "batch_lib/lib/setmanual.bat" clear
 call "batch_lib/lib/setauto.bat" clear
 
@@ -556,6 +572,10 @@ set current_message=Waiting for timer to check server status...
 set manual_stopped=false
 set in_auto_routine=false
 set in_manual_routine=false
+
+REM EVENT HOOK - custom/event_AfterServerStart.bat
+call "batch_lib/custom/event_AfterServerStart.bat"
+
 goto doloop
 
 :EventDetected

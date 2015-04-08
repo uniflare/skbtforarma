@@ -1,7 +1,7 @@
 @echo off
 call "C:\batch_settings.cmd"
 cd /D %armapath%
-call :FUNC NOVAR BatchLogWrite 1__MANUAL_RESTART__EVENT__INITIALIZE====================================
+call :FUNC NOVAR BatchLogWrite 3__MANUAL_RESTART__EVENT__INITIALIZE====================================
 call batch_lib\lib\setmanual.bat
 call batch_lib\lib\stop_all.bat
 call :FUNC NOVAR sleep 5

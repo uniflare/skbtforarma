@@ -1,21 +1,17 @@
 ==================
-ARMA SERVER KEEPALIVE TOOL 1.0.3.1 HOTFIX (NoGui)
+ARMA SERVER KEEPALIVE TOOL 1.1.0 (NoGui)
 ==================
-HOTFIX: Fixed modline problem.
-
-Many bug fixes, should now be able to use FULL path names everywhere! (i hope)
+Added some new config variables and Fixed a typo that broke ASM Start Procedure.
 
 ==================
 == NEW CHANGES  ==
 ==================
-HOTFIX: Config setting had a spcae at start which broke the startup parameter
+Fixed: ASM not starting unless keepalive_hc was 1, typo
+Added: New config variable "skbt_debug". Change log detail level
+Added: New config "auto_restart_delay". Forcefully delays between ONLY restart events
+Added: 3 batch files in custom folder to aid in hooking code before certain events, more info inside those files
 
-Speed: Less processor intensive. (was loading settings 12 times/sec ...)
-Added: New config setting: bec_flag_dsc , if 1 will launch BEC with the --dsc option (fix BEC auto closing due to no update signal)
-Added: Prevent database backup if database dump file not found.
-Fixed: Usage of parenthesis and spaces in path names fully! (hopefully).
-Fixed: Arma Launch parameters weren't quoted correctly.
-Fixed: A few more bugs related to config settings.
+Note; Check config file for details on how to use these new settings.
 
 ==================
 == INSTALLATION ==
@@ -66,6 +62,22 @@ The logfile is called "batchrun.log" and is placed in the batch_lib directory
 ==================
 = OLD CHANGELOGS =
 ==================
+
+== Version 1.0.3.1 HOTIFIX:
+Fixed modline problem (Wasn't loading mods properly).
+Finally fixed space and parenthesis usage in path names
+
+== Version 1.0.3:
+Less processor intensive. (was loading settings 12 times/sec ...)
+Fixed a bug where the path to the database EXE was used as backup target instead of dump file.
+Fixed usage of parenthesis and spaces in path names fully! (hopefully).
+Fixed Arma Launch parameters weren't quoted correctly.
+Fixed a few more bugs related to config settings.
+Added a new config setting: bec_flag_dsc, (fix BEC auto closing due to no update signal).
+Fixed database backup if database dump file not found related errors.
+
+== Version 1.0.2:
+-Minor Fixes, skipped public release
 
 == Version 1.0.1:
 Fixed start_keepalive where starting from a different Disk Drive would fail.

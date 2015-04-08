@@ -5,6 +5,7 @@ if %keepalive_hc%==1 (
 	set currentDir=%CD%
 	cd /D %armapath%/batch_lib/external
 	psexec -w "%hcarmapath%" -d -%hcPriority% -a %hcAffinity% -accepteula %hcarmapath%/%hcexename% %hclaunchparams%
+	call :FUNC NOVAR BatchLogWrite 3__START_HC__PSEXEC__-w.-."%hcarmapath: =.-.%".-.-d.-.-%hcPriority: =.-.%.-.-a.-.%hcAffinity:,=.+.%.-.-accepteula.-.%hcarmapath: =.-.%/%hcexename: =.-.% %hclaunchparams: =.-.%
 	cd /D !currentDir!
 )
 goto :EOF

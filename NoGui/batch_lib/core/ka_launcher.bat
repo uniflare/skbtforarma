@@ -23,7 +23,7 @@ start /wait "Server Keepalive Tools v1.0.3 by Uniflare (AKA) Chemical Bliss" "ba
 echo. 
 set /a kkk=%kkk%+1
 echo [%TIMESTR%] UNKNOWN EVENT. KEEPALIVE WAS CLOSED.
-call :FUNC NOVAR BatchLogWrite 1__KEEPALIVE_LAUNCHER__DETECTED__KEEPALIVE_QUIT[%kkk%]
+call :FUNC NOVAR BatchLogWrite 2__KEEPALIVE_LAUNCHER__DETECTED__KEEPALIVE_QUIT[%kkk%]
 copy "batch_lib\core\server_keepalive.bat" "batch_lib\core\server_keepalive.%kkk%.bat" >nul 2>&1
 echo [%TIMESTR%] STARTING "server_keepalive.%kkk%.bat"
 start /wait "KEEPALIVE CONSOLE APP" "batch_lib\core\server_keepalive.%kkk%.bat" >nul 2>&1

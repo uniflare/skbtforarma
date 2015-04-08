@@ -8,9 +8,9 @@ if "%1"=="clear" (
 )
 set autotxtfile="%armapath%\batch_lib\wrkdir\lastauto.txt"
 set manualtxtfile="%armapath%\batch_lib\wrkdir\lastmanual.txt"
-call :FUNC NOVAR BatchLogWrite 1__MANUAL_SET__%fContents%__%manualtxtfile: =.-.%
+call :FUNC NOVAR BatchLogWrite 3__MANUAL_SET__%fContents%__%manualtxtfile: =.-.%
 <nul set /p "=%fContents%" > "%manualtxtfile%"
-call :FUNC NOVAR BatchLogWrite 1__AUTO_SET__0__%autotxtfile: =.-.%
+call :FUNC NOVAR BatchLogWrite 3__AUTO_SET__0__%autotxtfile: =.-.%
 <nul set /p "=0" > "%autotxtfile%"
 goto :EOF
 
