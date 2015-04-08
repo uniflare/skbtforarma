@@ -134,6 +134,24 @@ namespace skbtInstaller
             // Path Log File to Backup Folder
             this.txtPathToBackupLog.Text = this.sConfig.objServerProc.LogFileBackupPath;
 
+            // Clean WER Dialogs
+            this.chkCleanWERs.Checked = this.sConfig.CleanWER;
+
+            // Debug Level
+            this.cBoxDebugLevel.SelectedItem = this.getDebugLevelTextFromInt(this.sConfig.skbtDebugLevel);
+
+            // Restart Delay
+            this.numAutoDelay.Value = this.sConfig.AutoRestartDelay;
+
+            // Restart Timeout
+            this.numAutoTimeout.Value = this.sConfig.AutoTimeoutLength;
+
+            // Manual Timeout
+            this.numManualTimeout.Value = this.sConfig.ManualTimeoutLength;
+
+            // Server Start Timeout
+            this.numStartTimeout.Value = this.sConfig.ServerStartTimeout;
+
             // Server IP
             String[] ipArr = this.sConfig.IP.Split('.');
             this.numServerIP1.Value = Convert.ToDecimal(ipArr[0]);
@@ -328,6 +346,7 @@ namespace skbtInstaller
             Dictionary<String, String> replacements = new Dictionary<string, string>()
             {
 
+                {"{DEBUG_LEVEL}", this.sConfig.skbtDebugLevel.ToString()},
                 {"{KEEPALIVE_DATABASE}", this.sConfig.objDatabaseProc.Keepalive ? "1" : "0"},
                 {"{KEEPALIVE_BEC}", this.sConfig.objBECProc.Keepalive ? "1" : "0"},
                 {"{KEEPALIVE_ASM}", this.sConfig.objASMProc.Keepalive ? "1" : "0"},
@@ -347,6 +366,7 @@ namespace skbtInstaller
                 {"{LOG_BACKUP_FOLDER}", this.sConfig.objServerProc.LogFileBackupPath},
                 {"{MANUAL_TIMEOUT_LENGTH}", this.sConfig.ManualTimeoutLength.ToString()},
                 {"{AUTO_TIMEOUT_LENGTH}", this.sConfig.AutoTimeoutLength.ToString()},
+                {"{AUTO_RESTART_DELAY_LENGTH}", this.sConfig.AutoRestartDelay.ToString()},
                 {"{CLEAN_WER_DIALOGS}", this.sConfig.CleanWER ? "1":"0"},
                 {"{HC_LAUNCH_PARAMS}", this.sConfig.objHeadlessClientProc.LaunchParams},
                 {"{ARMA_SERVER_EXE}", this.sConfig.objServerProc.EXEFile},
@@ -541,9 +561,29 @@ namespace skbtInstaller
             {
                 cBox.BackColor = changedBack;
             }
-            else 
+            else
             {
                 cBox.BackColor = Color.FromArgb(40, 40, 40);
+            }
+        }
+        private void actionDebugChanged(object sender, EventArgs e)
+        {
+            if (this.pageLoaded == false) return;
+
+            // Get object from list name
+            ComboBox cBox = ((ComboBox)sender);
+            String selDebug = cBox.SelectedItem.ToString();
+
+            this.sConfig.skbtDebugLevel = Convert.ToUInt16(selDebug[0].ToString());
+            if (this.sConfig.skbtDebugLevel != this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].skbtDebugLevel)
+            {
+                // red
+                this.cBoxDebugLevel.BackColor = changedBack;
+            }
+            else
+            {
+                // normal
+                this.cBoxDebugLevel.BackColor = Color.FromArgb(40, 40, 40);
             }
         }
         private void actionUseZipLogs(object sender, EventArgs e)
@@ -558,6 +598,20 @@ namespace skbtInstaller
             {
                 // normal
                 this.chkUseZipLogs.ForeColor = Color.FromKnownColor(KnownColor.ScrollBar);
+            }
+        }
+        private void actionCleanWER(object sender, EventArgs e)
+        {
+            this.sConfig.CleanWER = (((CheckBox)sender).Checked == true) ? true : false;
+            if (this.chkCleanWERs.Checked != this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].CleanWER)
+            {
+                // red
+                this.chkCleanWERs.ForeColor = changedFore;
+            }
+            else
+            {
+                // normal
+                this.chkCleanWERs.ForeColor = Color.FromKnownColor(KnownColor.ScrollBar);
             }
         }
         private void actionUseZipBackups(object sender, EventArgs e)
@@ -600,6 +654,66 @@ namespace skbtInstaller
             {
                 // normal
                 this.numServerPort.ForeColor = Color.FromKnownColor(KnownColor.ScrollBar);
+            }
+        }
+        private void actionAutoDelayChanged(object sender, EventArgs e)
+        {
+            this.sConfig.AutoRestartDelay = (UInt16)((NumericUpDown)sender).Value;
+            int originVal = (int)this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].AutoRestartDelay;
+            if ((int)this.numAutoDelay.Value != originVal)
+            {
+                // red
+                this.numAutoDelay.ForeColor = changedFore;
+            }
+            else
+            {
+                // normal
+                this.numAutoDelay.ForeColor = Color.FromKnownColor(KnownColor.ScrollBar);
+            }
+        }
+        private void actionAutoTimeoutChanged(object sender, EventArgs e)
+        {
+            this.sConfig.AutoTimeoutLength = (UInt16)((NumericUpDown)sender).Value;
+            int originVal = (int)this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].AutoTimeoutLength;
+            if ((int)this.numAutoTimeout.Value != originVal)
+            {
+                // red
+                this.numAutoTimeout.ForeColor = changedFore;
+            }
+            else
+            {
+                // normal
+                this.numAutoTimeout.ForeColor = Color.FromKnownColor(KnownColor.ScrollBar);
+            }
+        }
+        private void actionManualTimeoutChanged(object sender, EventArgs e)
+        {
+            this.sConfig.ManualTimeoutLength = (UInt16)((NumericUpDown)sender).Value;
+            int originVal = (int)this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].ManualTimeoutLength;
+            if ((int)this.numManualTimeout.Value != originVal)
+            {
+                // red
+                this.numManualTimeout.ForeColor = changedFore;
+            }
+            else
+            {
+                // normal
+                this.numManualTimeout.ForeColor = Color.FromKnownColor(KnownColor.ScrollBar);
+            }
+        }
+        private void actionStartTimeoutChanged(object sender, EventArgs e)
+        {
+            this.sConfig.ServerStartTimeout = (UInt16)((NumericUpDown)sender).Value;
+            int originVal = (int)this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].ServerStartTimeout;
+            if ((int)this.numStartTimeout.Value != originVal)
+            {
+                // red
+                this.numStartTimeout.ForeColor = changedFore;
+            }
+            else
+            {
+                // normal
+                this.numStartTimeout.ForeColor = Color.FromKnownColor(KnownColor.ScrollBar);
             }
         }
         private void actionTeamspeakPortChanged(object sender, EventArgs e)
@@ -1124,11 +1238,15 @@ namespace skbtInstaller
 
                 case "btnFortxtPathToEXEDB":        // Open File Database EXE (*.exe)
 
+                    String dbPath = this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objDatabaseProc.Path;
+                    String dbFile = this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objDatabaseProc.EXEFile;
+                    String originPathStr = Path.Combine(this.ExpandPathVars(dbPath), this.ExpandPathVars(dbFile));
+
                     this.actionDelegateBrowseAction(
                         // TEXT BOX
                         this.txtPathToEXEDB,
                         // ORIGIN PATH STRING
-                        Path.Combine(this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objDatabaseProc.Path, this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objDatabaseProc.EXEFile),
+                        originPathStr,
                         // REF TO CURRENT PATH STRING
                         ref this.sConfig.objDatabaseProc.Path,
                         // DIALOG
@@ -1144,7 +1262,7 @@ namespace skbtInstaller
                         // VALIDATION
                         (userPathValidation)delegate(String newPathStr)
                         {
-                            var current = this.ExpandPathVars(Path.Combine(this.sConfig.objDatabaseProc.Path, this.sConfig.objDatabaseProc.EXEFile));
+                            var current = this.ExpandPathVars(Path.Combine(this.ExpandPathVars(this.sConfig.objDatabaseProc.Path), this.sConfig.objDatabaseProc.EXEFile));
                             var newP = this.ExpandPathVars(newPathStr);
 
                             if (current == newP || !System.IO.File.Exists(newP)) { return "silent"; }
@@ -1154,8 +1272,8 @@ namespace skbtInstaller
                         (userPathSetWithCondition)delegate(String newPathStr)
                         {
                             this.txtPathToEXEDB.Text = newPathStr;
-                            this.sConfig.objDatabaseProc.EXEFile = Path.GetFileName(newPathStr);
-                            this.sConfig.objDatabaseProc.Path = Path.GetDirectoryName(newPathStr);
+                            this.sConfig.objDatabaseProc.EXEFile = Path.GetFileName(this.ExpandPathVars(newPathStr));
+                            this.sConfig.objDatabaseProc.Path = Path.GetDirectoryName(this.ExpandPathVars(newPathStr));
                         }
                     );
                     return;
@@ -1166,7 +1284,7 @@ namespace skbtInstaller
                         // TEXT BOX
                         this.txtPathToEXEBEC,
                         // ORIGIN PATH STRING
-                        Path.Combine(this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objBECProc.Path, this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objBECProc.EXEFile),
+                        Path.Combine(this.ExpandPathVars(this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objBECProc.Path), this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objBECProc.EXEFile),
                         // REF TO CURRENT PATH STRING
                         ref this.sConfig.objBECProc.Path,
                         // DIALOG
@@ -1182,7 +1300,7 @@ namespace skbtInstaller
                         // VALIDATION
                         (userPathValidation)delegate(String newPathStr)
                         {
-                            var current = this.ExpandPathVars(Path.Combine(this.sConfig.objBECProc.Path, this.sConfig.objBECProc.EXEFile));
+                            var current = Path.Combine(this.ExpandPathVars(this.sConfig.objBECProc.Path), this.sConfig.objBECProc.EXEFile);
                             var newP = this.ExpandPathVars(newPathStr);
 
                             if (current == newP || !System.IO.File.Exists(newP)) { return "silent"; }
@@ -1192,8 +1310,8 @@ namespace skbtInstaller
                         (userPathSetWithCondition)delegate(String newPathStr)
                         {
                             this.txtPathToEXEBEC.Text = newPathStr;
-                            this.sConfig.objBECProc.EXEFile = Path.GetFileName(this.txtPathToEXEBEC.Text);
-                            this.sConfig.objBECProc.Path = Path.GetDirectoryName(this.txtPathToEXEBEC.Text);
+                            this.sConfig.objBECProc.EXEFile = Path.GetFileName(this.ExpandPathVars(this.txtPathToEXEBEC.Text));
+                            this.sConfig.objBECProc.Path = Path.GetDirectoryName(this.ExpandPathVars(this.txtPathToEXEBEC.Text));
                         }
                     );
                     return;
@@ -1204,7 +1322,7 @@ namespace skbtInstaller
                         // TEXT BOX
                         this.txtPathToEXEHC,
                         // ORIGIN PATH STRING
-                        Path.Combine(this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objHeadlessClientProc.Path, this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objHeadlessClientProc.EXEFile),
+                        Path.Combine(this.ExpandPathVars(this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objHeadlessClientProc.Path), this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objHeadlessClientProc.EXEFile),
                         // REF TO CURRENT PATH STRING
                         ref this.sConfig.objHeadlessClientProc.Path,
                         // DIALOG
@@ -1220,7 +1338,7 @@ namespace skbtInstaller
                         // VALIDATION
                         (userPathValidation)delegate(String newPathStr)
                         {
-                            var current = this.ExpandPathVars(Path.Combine(this.sConfig.objHeadlessClientProc.Path, this.sConfig.objHeadlessClientProc.EXEFile));
+                            var current = Path.Combine(this.ExpandPathVars(this.sConfig.objHeadlessClientProc.Path), this.sConfig.objHeadlessClientProc.EXEFile);
                             var newP = this.ExpandPathVars(newPathStr);
 
                             if (current == newP || !System.IO.File.Exists(newP)) { return "silent"; }
@@ -1230,8 +1348,8 @@ namespace skbtInstaller
                         (userPathSetWithCondition)delegate(String newPathStr)
                         {
                             this.txtPathToEXEHC.Text = newPathStr;
-                            this.sConfig.objHeadlessClientProc.EXEFile = Path.GetFileName(this.txtPathToEXEHC.Text);
-                            this.sConfig.objHeadlessClientProc.Path = Path.GetDirectoryName(this.txtPathToEXEHC.Text);
+                            this.sConfig.objHeadlessClientProc.EXEFile = Path.GetFileName(this.ExpandPathVars(this.txtPathToEXEHC.Text));
+                            this.sConfig.objHeadlessClientProc.Path = Path.GetDirectoryName(this.ExpandPathVars(this.txtPathToEXEHC.Text));
                         }
                     );
                     return;
@@ -1242,7 +1360,7 @@ namespace skbtInstaller
                         // TEXT BOX
                         this.txtPathToEXETS,
                         // ORIGIN PATH STRING
-                        Path.Combine(this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objTeamspeakProc.Path, this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objTeamspeakProc.EXEFile),
+                        Path.Combine(this.ExpandPathVars(this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objTeamspeakProc.Path), this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objTeamspeakProc.EXEFile),
                         // REF TO CURRENT PATH STRING
                         ref this.sConfig.objTeamspeakProc.Path,
                         // DIALOG
@@ -1258,7 +1376,7 @@ namespace skbtInstaller
                         // VALIDATION
                         (userPathValidation)delegate(String newPathStr)
                         {
-                            var current = this.ExpandPathVars(Path.Combine(this.sConfig.objTeamspeakProc.Path, this.sConfig.objTeamspeakProc.EXEFile));
+                            var current = Path.Combine(this.ExpandPathVars(this.sConfig.objTeamspeakProc.Path), this.sConfig.objTeamspeakProc.EXEFile);
                             var newP = this.ExpandPathVars(newPathStr);
 
                             if (current == newP || !System.IO.File.Exists(newP)) { return "silent"; }
@@ -1268,8 +1386,8 @@ namespace skbtInstaller
                         (userPathSetWithCondition)delegate(String newPathStr)
                         {
                             this.txtPathToEXETS.Text = newPathStr;
-                            this.sConfig.objTeamspeakProc.EXEFile = Path.GetFileName(this.txtPathToEXETS.Text);
-                            this.sConfig.objTeamspeakProc.Path = Path.GetDirectoryName(this.txtPathToEXETS.Text);
+                            this.sConfig.objTeamspeakProc.EXEFile = Path.GetFileName(this.ExpandPathVars(this.txtPathToEXETS.Text));
+                            this.sConfig.objTeamspeakProc.Path = Path.GetDirectoryName(this.ExpandPathVars(this.txtPathToEXETS.Text));
                         }
                     );
                     return;
@@ -1280,7 +1398,7 @@ namespace skbtInstaller
                         // TEXT BOX
                         this.txtPathToEXEASM,
                         // ORIGIN PATH STRING
-                        Path.Combine(this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objASMProc.Path, this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objASMProc.EXEFile),
+                        Path.Combine(this.ExpandPathVars(this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objASMProc.Path), this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objASMProc.EXEFile),
                         // REF TO CURRENT PATH STRING
                         ref this.sConfig.objASMProc.Path,
                         // DIALOG
@@ -1296,7 +1414,7 @@ namespace skbtInstaller
                         // VALIDATION
                         (userPathValidation)delegate(String newPathStr)
                         {
-                            var current = this.ExpandPathVars(Path.Combine(this.sConfig.objASMProc.Path, this.sConfig.objASMProc.EXEFile));
+                            var current = Path.Combine(this.ExpandPathVars(this.sConfig.objASMProc.Path), this.sConfig.objASMProc.EXEFile);
                             var newP = this.ExpandPathVars(newPathStr);
 
                             if (current == newP || !System.IO.File.Exists(newP)) { return "silent"; }
@@ -1306,8 +1424,8 @@ namespace skbtInstaller
                         (userPathSetWithCondition)delegate(String newPathStr)
                         {
                             this.txtPathToEXEASM.Text = newPathStr;
-                            this.sConfig.objASMProc.EXEFile = Path.GetFileName(this.txtPathToEXEASM.Text);
-                            this.sConfig.objASMProc.Path = Path.GetDirectoryName(this.txtPathToEXEASM.Text);
+                            this.sConfig.objASMProc.EXEFile = Path.GetFileName(this.ExpandPathVars(this.txtPathToEXEASM.Text));
+                            this.sConfig.objASMProc.Path = Path.GetDirectoryName(this.ExpandPathVars(this.txtPathToEXEASM.Text));
                         }
                     );
                     return;
@@ -1674,6 +1792,7 @@ namespace skbtInstaller
             this.chkUseZipBackups.ForeColor = cbForeCol;
             this.chkBecUseDsc.ForeColor = cbForeCol;
             this.chkUseZipLogs.ForeColor = cbForeCol;
+            this.chkCleanWERs.ForeColor = cbForeCol;
 
             // List Boxes (priorites)
             Color cBoxBackCol = Color.FromArgb(40, 40, 40);
@@ -1907,11 +2026,18 @@ namespace skbtInstaller
             {
                 // Return Chosen Path/Filename
                 newFilePath = this.saveFileDialog.FileName;
+
+                if (newFilePath == Path.Combine(startFolder, defaultFileName))
+                {
+                    // No Change
+                    return null;
+                }
             }
             else
             {
                 // User Cancelled
                 newFilePath = Path.Combine(startFolder, defaultFileName);
+                return null;
             }
 
             return newFilePath;
@@ -1929,7 +2055,20 @@ namespace skbtInstaller
             String armapath = Path.GetDirectoryName(this.sMeta.PathToEXE);
             return path.Replace(armapath, "%armapath:\"=%");
         }
-
+        private String getDebugLevelTextFromInt(UInt16 dLevel)
+        {
+            String StringOfInt = Convert.ToString(dLevel);
+            foreach (String item in this.cBoxDebugLevel.Items)
+            {
+                char a = StringOfInt[0];
+                char b = item[0];
+                if (a == b)
+                {
+                    return item;
+                }
+            }
+            return null;
+        }
     }
 
     // Custom Tabless Container

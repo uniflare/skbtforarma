@@ -46,9 +46,11 @@ namespace skbtInstaller
         public UInt16 Port;
 
         // Keepalive Settings
+        public UInt16 skbtDebugLevel;
         public Int32 ServerStartTimeout;
         public Int32 ManualTimeoutLength;
         public Int32 AutoTimeoutLength;
+        public Int32 AutoRestartDelay;
 
         /*  skbtServerConfig(String configPath)
          * 
@@ -75,9 +77,11 @@ namespace skbtInstaller
 
         public skbtServerConfig(skbtServerConfig origin)
         {
+            this.skbtDebugLevel = origin.skbtDebugLevel;
             this.AutoTimeoutLength = origin.AutoTimeoutLength;
             this.BindToIP = origin.BindToIP;
             this.CleanWER = origin.CleanWER;
+            this.AutoRestartDelay = origin.AutoRestartDelay;
             this.IP = origin.IP;
             this.ManualTimeoutLength = origin.ManualTimeoutLength;
             this.objASMProc = new skbtProcessConfigASM(
@@ -156,13 +160,15 @@ namespace skbtInstaller
         public void loadDefaultsForEpoch()
         {
 
-            this.CleanWER = false;
+            this.CleanWER = true;
             this.BindToIP = false;
             this.IP = "127.0.0.1";
-            this.Port = (UInt16) 2302;
+            this.Port = (UInt16)2302;
+            this.skbtDebugLevel = 1;   // 1 to keep logs clean
             this.ServerStartTimeout = 30;   // 30 sec for retry
             this.ManualTimeoutLength = 300; // 5 minutes
             this.AutoTimeoutLength = 25; // 25 sec for graceful shutdown
+            this.AutoRestartDelay = 5; // 1 sec just cause
 
             this.objServerProc = new skbtProcessConfigServer(
                 Path.GetFileName(refPathToEXE),
@@ -288,7 +294,7 @@ namespace skbtInstaller
             // Setup this Object using array contents
 
             // Make sure config is correctly formatted with all values defined
-            if(
+            if (
                 skbtConfigArray.ContainsKey("keepalive_database") &&
                 skbtConfigArray.ContainsKey("keepalive_bec") &&
                 skbtConfigArray.ContainsKey("keepalive_asm") &&
@@ -351,16 +357,38 @@ namespace skbtInstaller
                 if (skbtConfigArray.ContainsKey("bec_flag_dsc")){
                     useDSC = (skbtConfigArray["bec_flag_dsc"].ToString() == "0") ? false : true;
                 }
+                else
+                {
+                    // Older Version
+                    // Tell user maybe?
+                }
+
+                UInt16 skbt_debug = 1; // Default events only
+                int auto_restart_delay = 0; // Default no delay
+                if(skbtConfigArray.ContainsKey("skbt_debug") &&
+                skbtConfigArray.ContainsKey("auto_restart_delay"))
+                {
+                    skbt_debug = Convert.ToUInt16(skbtConfigArray["skbt_debug"].ToString());
+                    auto_restart_delay = Convert.ToInt32(skbtConfigArray["auto_restart_delay"].ToString());
+                }
+                else
+                {
+                    // older version
+                    // Tell user maybe?
+                }
+                // end backwards compatibility
 
 
-                this.CleanWER = (skbtConfigArray["cleanWerDialogs"] == "true")? true : false;
+                this.CleanWER = (skbtConfigArray["cleanWerDialogs"] == "1")? true : false;
                 this.BindToIP = (skbtConfigArray["bindtoip"] == "1")? true : false;
                 this.IP = skbtConfigArray["serverip"];
                 this.Port = Convert.ToUInt16(skbtConfigArray["serverport"]);
 
+                this.skbtDebugLevel = skbt_debug;
                 this.ServerStartTimeout = Convert.ToInt32(skbtConfigArray["serverStartTimeout"]);
                 this.ManualTimeoutLength = Convert.ToInt32(skbtConfigArray["manual_timeout_length"]);
                 this.AutoTimeoutLength = Convert.ToInt32(skbtConfigArray["auto_timeout_length"]);
+                this.AutoRestartDelay = auto_restart_delay;
 
                 String exePath = Path.Combine(skbtConfigArray["armapath"], skbtConfigArray["armaserverexe"]);
 

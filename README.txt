@@ -1,26 +1,26 @@
 ==================
-ARMA SERVER KEEPALIVE TOOL 1.0.3 RELEASE
+ARMA SERVER KEEPALIVE TOOL 1.1.0 RELEASE
 ==================
-This release includes the updated template files from updates of the SKBT core.
-And some bug fixes.
-
-**Reccommended to "Uninstall" your previous configs and remake them using the Gui tool.
+Added some new config variables and Fixed a typo that broke ASM Start Procedure.
+Merged changes with GUI version.
+Several bug fixes for GUI.
 
 ==================
 == NEW CHANGES  ==
 ==================
+Added tooltips to all configuration options.
+Fixed settings save dialog bugs (Would ask to remove old file even when its the same file) (Fixed cancel)
+Added backwards compatibility for batch settings.
 
-Template files updated to reflect new changes in nogui version.
-Fixed a bug where the path to the database EXE was used as backup target instead of dump file.
+Known Issue: Some paths aren't collapsed to shorter variables in the batch settings. Not really a priority.
 
-SKBT Template changes:
+(Merged from NonGui v1.1.0)
+Fixed: ASM not starting unless keepalive_hc was 1, typo
+Added: New config variable "skbt_debug". Change log detail level
+Added: New config "auto_restart_delay". Forcefully delays between ONLY restart events
+Added: 3 batch files in custom folder to aid in hooking code before certain events, more info inside those files
 
-Speed: Less processor intensive. (was loading settings 12 times/sec ...)
-Added: New config setting: bec_flag_dsc , if 1 will launch BEC with the --dsc option (fix BEC auto closing due to no update signal)
-Added: Prevent database backup if database dump file not found.
-Fixed: Usage of parenthesis and spaces in path names fully! (hopefully).
-Fixed: Arma Launch parameters weren't quoted correctly.
-Fixed: A few more bugs related to config settings.
+Note; Check GUI on how to use these new settings.
 
 ==================
 == INSTALLATION ==
@@ -68,8 +68,15 @@ NOTE: The logfile is called "batchrun.log" and is placed in the batch_lib direct
 = OLD CHANGELOGS =
 ==================
 
+== Version 1.0.3.1 HOTIFIX:
+Merged new changes from 1.0.3.1 NonGui Hotfix
+
+== Version 1.0.3:
+Merged new changes from 1.0.3 NonGui
+
 == Version 1.0.2
 Fixed config editing issues after saving a config.
+-Minor Fixes, skipped public release
 
 == Version 1.0.1
 FIXED: template files, no more batch_settings errors spamming the screen.

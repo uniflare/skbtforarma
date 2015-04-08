@@ -3,6 +3,7 @@ if "%configdone%"=="1" (
 	GOTO :EOF
 )
 set configdone=0
+set skbt_debug={DEBUG_LEVEL}
 set keepalive_database={KEEPALIVE_DATABASE}
 set keepalive_bec={KEEPALIVE_BEC}
 set keepalive_asm={KEEPALIVE_ASM}
@@ -22,6 +23,7 @@ set databasebackupfolder="{DATABASE_BACKUP_FOLDER}"
 set logfilebackupfolder="{LOG_BACKUP_FOLDER}"
 set manual_timeout_length={MANUAL_TIMEOUT_LENGTH}
 set auto_timeout_length={AUTO_TIMEOUT_LENGTH}
+set auto_restart_delay={AUTO_RESTART_DELAY_LENGTH}
 set cleanWerDialogs={CLEAN_WER_DIALOGS}
 set hclaunchparams={HC_LAUNCH_PARAMS}
 set armaserverexe={ARMA_SERVER_EXE}
