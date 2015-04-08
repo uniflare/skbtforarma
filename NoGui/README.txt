@@ -77,6 +77,7 @@ Added a new config setting: bec_flag_dsc, (fix BEC auto closing due to no update
 Fixed database backup if database dump file not found related errors.
 
 == Version 1.0.2:
+Fixed config editing issues after saving a config.
 -Minor Fixes, skipped public release
 
 == Version 1.0.1:
