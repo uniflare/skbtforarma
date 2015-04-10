@@ -1,18 +1,14 @@
 ==================
-ARMA SERVER KEEPALIVE TOOL 1.1.0 RELEASE
+ARMA SERVER KEEPALIVE TOOL 1.1.0.1 HOTFIX RELEASE
 ==================
+*HOTFIX: Fixed exception when chaning db file location on first install.
+
 Added some new config variables and Fixed a typo that broke ASM Start Procedure.
-Merged changes with GUI version.
-Several bug fixes for GUI.
 
 ==================
 == NEW CHANGES  ==
 ==================
-Added tooltips to all configuration options.
-Fixed settings save dialog bugs (Would ask to remove old file even when its the same file) (Fixed cancel)
-Added backwards compatibility for batch settings.
-
-Known Issue: Some paths aren't collapsed to shorter variables in the batch settings. Not really a priority.
+*HOTFIX: Fixed exception when chaning db file location on first install.
 
 (Merged from NonGui v1.1.0)
 Fixed: ASM not starting unless keepalive_hc was 1, typo

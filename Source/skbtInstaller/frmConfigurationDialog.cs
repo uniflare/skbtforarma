@@ -1133,7 +1133,10 @@ namespace skbtInstaller
                         // TEXT BOX
                         this.txtPathToDBFile,
                         // ORIGIN PATH STRING
-                        Path.Combine(this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objDatabaseProc.DatabaseDumpFilePath, this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objDatabaseProc.DatabaseDumpFileName),
+                        Path.Combine(
+                            this.ExpandPathVars(this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objDatabaseProc.DatabaseDumpFilePath), 
+                            this.ExpandPathVars(this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objDatabaseProc.DatabaseDumpFileName)
+                        ),
                         // REF TO CURRENT PATH STRING
                         ref this.sConfig.objDatabaseProc.DatabaseDumpFilePath,
                         // DIALOG
@@ -1151,8 +1154,8 @@ namespace skbtInstaller
                         {
                             if (
                                 Path.Combine(
-                                    this.sConfig.objDatabaseProc.DatabaseDumpFilePath, 
-                                    this.sConfig.objDatabaseProc.DatabaseDumpFileName) 
+                                    this.ExpandPathVars(this.sConfig.objDatabaseProc.DatabaseDumpFilePath), 
+                                    this.ExpandPathVars(this.sConfig.objDatabaseProc.DatabaseDumpFileName)) 
                                 == newPathStr
                                 || !System.IO.File.Exists(this.ExpandPathVars(newPathStr)))
                             {

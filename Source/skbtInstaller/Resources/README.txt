@@ -1,11 +1,15 @@
 ==================
-ARMA SERVER KEEPALIVE TOOL 1.1.0 RELEASE
+ARMA SERVER KEEPALIVE TOOL 1.1.0.1 HOTFIX RELEASE
 ==================
+*HOTFIX: Fixed exception when chaning db file location on first install.
+
 Added some new config variables and Fixed a typo that broke ASM Start Procedure.
 
 ==================
 == NEW CHANGES  ==
 ==================
+*HOTFIX: Fixed exception when chaning db file location on first install.
+
 (Merged from NonGui v1.1.0)
 Fixed: ASM not starting unless keepalive_hc was 1, typo
 Added: New config variable "skbt_debug". Change log detail level
