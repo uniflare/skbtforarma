@@ -1819,6 +1819,9 @@ namespace skbtInstaller
         }
         private void resetAllAffinityCheckboxes()
         {
+            int procCount = Environment.ProcessorCount;
+            if (procCount > 8) { procCount = 8; }
+
             String[] tabNames = new String[] {
                 "Server",
                 "Database",
@@ -1838,7 +1841,8 @@ namespace skbtInstaller
                     this.setAffinityChkColor(tChk, true);
 
                     // Only for the cores we can use
-                    if(i < Environment.ProcessorCount - 1){
+                    if (i < procCount - 1)
+                    {
                         tChk.Enabled = true;
                     }else{
                         tChk.Enabled = false;
@@ -1850,9 +1854,11 @@ namespace skbtInstaller
         private void setAffinityChkBoxes(String ctrlSuffix, String affinityStr)
         {
 
+            int procCount = Environment.ProcessorCount;
+            if (procCount > 8) { procCount = 8; }
             String[] selCores = affinityStr.Split(',');
 
-            for (int i = 0; i < Environment.ProcessorCount; i++)
+            for (int i = 0; i < procCount; i++)
             {
                 CheckBox tmpChkHandle = (CheckBox)this.Controls.Find("chkAffinity" + ctrlSuffix + (i).ToString(), true)[0];
 

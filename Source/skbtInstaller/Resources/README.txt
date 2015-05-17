@@ -1,14 +1,16 @@
 ==================
-ARMA SERVER KEEPALIVE TOOL 1.1.0.1 HOTFIX RELEASE
+ARMA SERVER KEEPALIVE TOOL 1.1.0.2 (HOTFIX RELEASE 2)
 ==================
-*HOTFIX: Fixed exception when chaning db file location on first install.
+*HOTFIX 1: Fixed exception when chaning db file location on first install.
+*HOTFIX 2: Patched application crash when number of virtual machine cores are greater than 8.
 
 Added some new config variables and Fixed a typo that broke ASM Start Procedure.
 
 ==================
 == NEW CHANGES  ==
 ==================
-*HOTFIX: Fixed exception when chaning db file location on first install.
+*HOTFIX 1: Fixed exception when chaning db file location on first install.
+*HOTFIX 2: Patched application crash when number of virtual machine cores are greater than 8.
 
 (Merged from NonGui v1.1.0)
 Fixed: ASM not starting unless keepalive_hc was 1, typo
