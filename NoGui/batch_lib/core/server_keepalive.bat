@@ -49,7 +49,7 @@ goto :EOF
 :draw_display
 cls
 echo ===========================================             %TIMESTR:@= @ %
-echo    Server Keepalive 1.1.0_NoGui by Uniflare (AKA) Chemical Bliss
+echo    Server Keepalive 1.2.0_NoGui by Uniflare (AKA) Chemical Bliss
 echo.
 echo    Armapath: %armapath%
 echo.
@@ -293,6 +293,25 @@ call :FUNC sleeprtn sleep 1
 if %checkTimeout% LEQ 0 goto server_check
 
 goto :doloop
+REM // Check CProcess Crash Loop
+:mloop_cproc_crashed
+set i=0
+set maxcproc=99
+:mloop_cproc_main
+if !keepalive_cusproc[%i%]!==1 (
+	set crashval=false
+	call :FUNC crashval processHasCrashed !cusproc_filename[%i%]!
+	if !crashval!==true (
+		set "%1=true"
+		set "%2=%i%"
+		set "%3=!cusproc_filename[%i%]!"
+		goto :EOF
+	)
+	set /a i=%i%+1
+	if i==99 goto :EOF
+	goto :mloop_cproc_main
+)
+goto :EOF
 
 :server_check
 set current_message=Checking if server processes are running...
@@ -306,6 +325,9 @@ set DB_CRASHED=false
 set BEC_CRASHED=false
 set TS_CRASHED=false
 set ASM_CRASHED=false
+set CPROC_CRASHED=false
+set CPROCID=
+set CPROCFN=
 set crashed=0
 
 if exist "batch_lib\wrkdir\laststarted.txt" (
@@ -320,6 +342,7 @@ if exist "batch_lib\wrkdir\laststarted.txt" (
 		call :FUNC BEC_CRASHED processHasCrashed %becexename%
 		call :FUNC TS_CRASHED processHasCrashed %teamspeakfilename%
 		call :FUNC ASM_CRASHED processHasCrashed %asmexename%
+		call :mloop_cproc_crashed CPROC_CRASHED CPROCID CPROCFN
 		
 		if !SERVER_CRASHED!==true (
 			REM // Make Sure (wait a second)
@@ -403,8 +426,23 @@ if exist "batch_lib\wrkdir\laststarted.txt" (
 			)
 		)
 		
+		if !CPROC_CRASHED!==true (
+			if !crashed!==0 (
+				REM // Make Sure (wait a second)
+				call :FUNC sleeprtn sleep 2
+				set CPROC_CRASHED=false
+				call :FUNC CPROC_CRASHED processHasCrashed !CPROCFN!
+				set fname_t=!CPROCFN!
+				if !CPROC_CRASHED!==true (
+					set crashed=1
+					call :CProcCrashEvent !CPROCID! & call :draw_display
+					call :FUNC RETURNVAR stop !CPROCFN! force
+				)
+			)
+		)
+		
 		if !crashed!==1 (
-			if "%cleanWerDialogs%"=="true" (
+			if "%cleanWerDialogs%"=="1" (
 				call :FUNC RETURNVAR stop werfault.exe force
 			)
 		)
@@ -456,9 +494,9 @@ if "%keepalive_ts%"=="1" (
 
 :Stage4
 if "%keepalive_hc%"=="1" (
-	REM CHECK IF CLIENT Headless Client IS ACTIVE
+	REM CHECK IF Headless Client IS ACTIVE
 	tasklist /FI "IMAGENAME eq %hcexename%" 2>NUL | find /I /N "%hcexename%">NUL
-	if "!ERRORLEVEL!"=="0"  goto Stage5
+	if "!ERRORLEVEL!"=="0"  goto Stage4_2
 	if %redis_down%==0 (
 		if %in_manual_routine%==false (
 			if %in_auto_routine%==false (
@@ -468,6 +506,27 @@ if "%keepalive_hc%"=="1" (
 	)
 	call "batch_lib/lib/start_hc.bat" & set taskresult=SUCCESS || set taskresult=FAILURE
 )
+
+:Stage4_2
+REM // For Custom Processes, loop and check each
+set i=0
+set j=99
+:mloop_cproc_active
+if %i%==100 goto Stage5
+if "!keepalive_cusproc[%i%]!"=="1" (
+	tasklist /FI "IMAGENAME eq !cusproc_filename[%i%]!" 2>NUL | find /I /N "!cusproc_filename[%i%]!">NUL
+	if "!ERRORLEVEL!"=="0" (
+		set /a i=%i%+1
+		goto :mloop_cproc_active
+	)
+	if %firstloop%==0 call :CProcInactiveEvent %i% & call :draw_display
+	call "batch_lib/lib/start_cproc.bat" %i% & set taskresult=SUCCESS || set taskresult=FAILURE
+	call :FUNC NOVAR BatchLogWrite 3__KEEPALIVE__START_CPROC[%i%]__%taskresult%
+)
+if %i%==99 goto Stage5
+set /a i=%i%+1
+goto :mloop_cproc_active
+
 
 :Stage5
 call :FUNC isRunning serverIsRunning
@@ -685,6 +744,20 @@ set current_message=ERROR - DATABASE WASN'T BACKED UP
 set /a checkTimeout=0
 goto :EOF
 
+:CProcInactiveEvent
+set CProcID=%1
+call :EventDetected CPROC[%CProcID%]_NOT_ACTIVE
+set current_message=CUSTOM PROCESS !cusproc_name[%CProcID%]! NOT ACTIVE
+set /a checkTimeout=0
+goto :EOF
+
+:CProcCrashEvent
+set CProcID=%1
+call :EventDetected CPROC[%CProcID%]_CRASH
+set current_message=CPROC[%CProcID%] CRASH DETECTED
+set /a checkTimeout=0
+goto :EOF
+
 :doSanityCheck
 REM // Check files exist
 set criticalconfigerror=0
@@ -807,6 +880,19 @@ if %keepalive_ts%==1 (
 		goto :EndSanity
 	)
 )
+REM // Multi HC Array Check
+set maxCusProc=99
+set i=0
+:mloop_2
+if "!keepalive_cusproc[%i%]!"=="1" (
+	set returnVal=
+	call :Method_CusProcSanity returnVal %i%
+)
+if %i%==99 goto :end_mloop2
+set /a i=%i%+1
+goto :mloop_2
+:end_mloop2
+
 set check7za=0
 if "%use_zip_logs%"=="1" (
 	set check7za==1
@@ -834,6 +920,30 @@ if "%criticalconfigerror%"=="1" (
 ) else (
 	goto :EOF
 )
+
+:Method_CusProcSanity
+set cprocID=%2
+set "%1=true"
+if not exist "!cusproc_path[%cprocID%]!" (
+	set criticalconfigerror=1
+	set current_message=CRITICAL ERROR^(s^) - REVIEW BELOW
+	call :draw_display
+	echo.CONFIG ERROR: Cannot find the path to a Custom Defined Process
+	echo."!cusproc_path[%cprocID%]!"
+	echo. --- make sure the path exists.
+	set "%1=false"
+) else (
+	if not exist "!cusproc_path[%cprocID%]!\!cusproc_filename[%cprocID%]!" (
+		set criticalconfigerror=1
+		set current_message=CRITICAL ERROR^(s^) - REVIEW BELOW
+		call :draw_display
+		echo.CONFIG ERROR: Cannot find the file for a Custom Defined Process
+		echo."!cusproc_path[%cprocID%]!\!cusproc_filename[%cprocID%]!"
+		echo. --- make sure the file exists at the specified path.
+		set "%1=false"
+	)
+)
+goto :EOF
 
 :FUNC
 set currentDir=%CD%

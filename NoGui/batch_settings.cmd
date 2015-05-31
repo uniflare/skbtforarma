@@ -212,6 +212,47 @@ set redisPriority=normal
 set teamspeakPriority=normal
 set asmPriority=normal
 
+REM \\ // ===================================================== \\ //
+REM // \\              CUSTOM EXECUTABLE PROCESSES              // \\
+REM \\ // ===================================================== \\ //
+REM //    NOTE: Maximum of 100 custom processes (index 0-99)
+REM //    IMPORTANT: All process _file names_ must be _UNIQUE_! Or errors will ensue!
+
+REM // Keepalive Switches
+set keepalive_cusproc[0]=0
+set keepalive_cusproc[1]=0
+set keepalive_cusproc[2]=0
+
+REM // Process Names (Just for Logging etc)
+set cusproc_name[0]=Custom Process 1
+set cusproc_name[1]=Custom Process 2
+set cusproc_name[2]=Custom Process 3
+
+REM // Process Executable Paths
+set cusproc_path[0]=C:/some/path1
+set cusproc_path[1]=C:/some/path/to/process/folder2/
+set cusproc_path[2]=C:/some/path3
+
+REM // Process Executable Filenames
+set cusproc_filename[0]=process1.exe
+set cusproc_filename[1]=process2.exe
+set cusproc_filename[2]=process3.exe
+
+REM // Process Launch Parameters
+set cusproc_params[0]=-withcustomflag "with flag data" -windowed
+set cusproc_params[1]=-withcustomflag "with flag data" -windowed
+set cusproc_params[2]=-withcustomflag "with flag data" -windowed
+
+REM // Process Affinities
+set cusproc_affinity[0]=0
+set cusproc_affinity[1]=0,3
+set cusproc_affinity[2]=0,1,2,3
+
+REM // Process Priorities
+set cusproc_priority[0]=normal
+set cusproc_priority[1]=normal
+set cusproc_priority[2]=high
+
 REM \\ // ====================================== \\ //
 REM // \\  FIX FOR LONG PATH NAMES WITH SPACES   // \\
 REM \\ // ====================================== \\ //

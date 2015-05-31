@@ -26,9 +26,13 @@ if %debuglevel% GTR %skbt_debug% goto :SkipLog
 set section=%section:.-.= %
 set section=%section:._.=\*%
 set section=%section:.+.=,%
+
+if "%result%"=="" goto skipres
 set result=%result:.+.=,%
 set result=%result:.-.= %
 set result=%result:._.=\*%
+set result=%result:.+_.="%
+:skipres
 
 for /f "delims=" %%I in ('getTimeStr.cmd') do (
 	set "val1=%%I"

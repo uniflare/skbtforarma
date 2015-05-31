@@ -1,17 +1,14 @@
 ==================
-ARMA SERVER KEEPALIVE TOOL 1.1.0 (NoGui)
+ARMA SERVER KEEPALIVE TOOL 1.2.0 (NoGui)
 ==================
-Added some new config variables and Fixed a typo that broke ASM Start Procedure.
+New custom process feature! Have a look near the end of the config file for a new section!
+Just follow the same format for new processes.
 
 ==================
 == NEW CHANGES  ==
 ==================
-Fixed: ASM not starting unless keepalive_hc was 1, typo
-Added: New config variable "skbt_debug". Change log detail level
-Added: New config "auto_restart_delay". Forcefully delays between ONLY restart events
-Added: 3 batch files in custom folder to aid in hooking code before certain events, more info inside those files
-
-Note; Check config file for details on how to use these new settings.
+Fixed typo preventing wer dialogs from being closed when requested to automatically (true to 1)
+Added custom process feature, keep up to 100 extra custom processes alive complete with affinity,priority and command line parameters)
 
 ==================
 == INSTALLATION ==
@@ -62,6 +59,12 @@ The logfile is called "batchrun.log" and is placed in the batch_lib directory
 ==================
 = OLD CHANGELOGS =
 ==================
+
+== Version 1.1.0:
+Fixed ASM not starting unless keepalive_hc was 1, typo
+Added New config variable "skbt_debug". Change log detail level
+Added New config "auto_restart_delay". Forcefully delays between ONLY restart events
+Added 3 batch files in custom folder to aid in hooking code before certain events, more info inside those files
 
 == Version 1.0.3.1 HOTIFIX:
 Fixed modline problem (Wasn't loading mods properly).
