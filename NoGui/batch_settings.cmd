@@ -4,7 +4,7 @@ if "%configdone%"=="1" (
 )
 set configdone=0
 REM // skbt_debug; 0=no log; 1=events; 2=events+errors; 3+=verbose(everything)
-set skbt_debug=1
+set skbt_debug=3
 
 REM \\ // ===================================================== \\ //
 REM // \\             INTRODUCTION AND INFORMATION              // \\
@@ -39,7 +39,7 @@ REM \\ // ===================================================== \\ //
 
 
 REM // Keep database alive?
-set keepalive_database=1
+set keepalive_database=0
 REM // Keep BEC alive?
 set keepalive_bec=0
 REM // Keep an Arma Server Monitor alive? (@ASM)
@@ -145,7 +145,7 @@ set asm_log_file=asm_performance.log
 
 
 REM // Full path to your Arma Server Directory (With the Arma EXE File Inside)
-set armapath="C:\A3Master"
+set armapath="C:\ArmaServer\Master"
 REM // Headless Client path (if using)
 set hcarmapath="%armapath:"=%"
 REM // Teamspeak Path (if using)
@@ -217,6 +217,7 @@ REM // \\              CUSTOM EXECUTABLE PROCESSES              // \\
 REM \\ // ===================================================== \\ //
 REM //    NOTE: Maximum of 100 custom processes (index 0-99)
 REM //    IMPORTANT: All process _file names_ must be _UNIQUE_! Or errors will ensue!
+REM //    Also make sure each index ([0], [1], ...) is unique for each process! (And corresponds to each entry like the examples)
 
 REM // Keepalive Switches
 set keepalive_cusproc[0]=0
@@ -229,14 +230,14 @@ set cusproc_name[1]=Custom Process 2
 set cusproc_name[2]=Custom Process 3
 
 REM // Process Executable Paths
-set cusproc_path[0]=C:/some/path1
+set cusproc_path[0]=C:/some/path
 set cusproc_path[1]=C:/some/path/to/process/folder2/
-set cusproc_path[2]=C:/some/path3
+set cusproc_path[2]=C:/some/path
 
 REM // Process Executable Filenames
-set cusproc_filename[0]=process1.exe
+set cusproc_filename[0]=TestWER64.exe
 set cusproc_filename[1]=process2.exe
-set cusproc_filename[2]=process3.exe
+set cusproc_filename[2]=TestWER64.exe
 
 REM // Process Launch Parameters
 set cusproc_params[0]=-withcustomflag "with flag data" -windowed
@@ -245,13 +246,14 @@ set cusproc_params[2]=-withcustomflag "with flag data" -windowed
 
 REM // Process Affinities
 set cusproc_affinity[0]=0
-set cusproc_affinity[1]=0,3
+set cusproc_affinity[1]=0
 set cusproc_affinity[2]=0,1,2,3
 
 REM // Process Priorities
 set cusproc_priority[0]=normal
 set cusproc_priority[1]=normal
 set cusproc_priority[2]=high
+
 
 REM \\ // ====================================== \\ //
 REM // \\  FIX FOR LONG PATH NAMES WITH SPACES   // \\
