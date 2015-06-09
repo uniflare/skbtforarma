@@ -41,6 +41,36 @@ namespace skbtInstaller
 
         }
 
+        public bool IsKeepaliveActive(skbtServerConfig SrvConfig)
+        {
+            // Get Work Directory
+            string heartbeatTxtPath = Path.Combine(SrvConfig.objServerProc.Path, @"batch_lib\wrkdir\heartbeat.txt");
+
+            if (File.Exists(heartbeatTxtPath))
+            {
+                // Read heartbeat
+                using (StreamReader sr = File.OpenText(heartbeatTxtPath))
+                {
+                    // Get First Line
+                    string stamp = sr.ReadLine();
+
+                    // Convert to Int32
+                    Int32 stampBeat = Convert.ToInt32(stamp);
+
+                    // Get Current Time
+                    Int32 stampNow = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+
+                    // Compare
+                    if ((stampNow - stampBeat) <= 15)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         /*  btnNewServer_Click(object sender, EventArgs e)
          * 
          * USER ACTION: Add New Server Config Path (Installed or Uninstalled)
@@ -75,14 +105,19 @@ namespace skbtInstaller
 
         private void btnUninstall_Click(object sender, EventArgs e)
         {
-            // TODO: Check if SKBT is running.
 
             String thisIdentifier = this.getSelectedPathValue();
-            // Show small dialog containing:
+            // TODO: Show small dialog containing:
                 // - ChkBox Delete Batch_Lib Folder
                 // - ChkBox Delete Batch_Settings File
                 // (unchecked = Keep both)
-                // DEFAULT: Delete Both
+            // DEFAULT: Delete Both
+
+            if (this.IsKeepaliveActive(this.sc.CoreConfig.getServerConfigList()[thisIdentifier]))
+            {
+                MessageBox.Show("KEEPALIVE ACTIVE" + Environment.NewLine + "You must close the keepalive for this config and wait 15 seconds before uninstalling it.");
+                return;
+            }
 
             // To Push first release, quick n dirty
             if (MessageBox.Show("Are you sure you wish to delete your config for this server?\nThis will also delete your batch_lib folder, and remove this config from your installer.", "Are you sure?", MessageBoxButtons.YesNo) == DialogResult.Yes)

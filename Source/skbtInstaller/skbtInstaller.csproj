@@ -92,6 +92,7 @@
     </Compile>
     <Compile Include="skbtProcessConfig.cs" />
     <Compile Include="skbtProcessConfigBEC.cs" />
+    <Compile Include="skbtProcessConfigCustom.cs" />
     <Compile Include="skbtProcessConfigServer.cs" />
     <Compile Include="skbtProcessConfigHC.cs" />
     <Compile Include="skbtProcessConfigTeamspeak.cs" />

@@ -21,7 +21,7 @@ namespace skbtInstaller
     {
         // STRINGS
         public const String strAuthor = "Uniflare (AKA) Chemical Bliss";    // {AUTHOR}
-        public const String strVersion = "1.1.0.2";    // {VERSION}
+        public const String strVersion = "1.2.0.0";    // {VERSION}
         public const String strKeepaliveTitle = "Server Keepalive Tools v" + strVersion + " by " + strAuthor;  // {KEEPALIVE_TITLE}
         public const String strLauncherTitle = "Keepalive Launcher v1.1";   // {KALAUNCHER_TITLE}
         public const String strKeepaliveHead = "Server Keepalive " + strVersion + " by " + strAuthor; // {DISPLAY_HEADER}
@@ -165,7 +165,9 @@ namespace skbtInstaller
                             e.Message + Environment.NewLine + 
                             Environment.NewLine + 
                             e.StackTrace);
-                        this.cleanXMLConfig();
+
+                        // change to backup or something disabled for debug
+                        // this.cleanXMLConfig();
                     }
                 }
             }

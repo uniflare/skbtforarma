@@ -1,24 +1,16 @@
 ==================
-ARMA SERVER KEEPALIVE TOOL 1.1.0.2 (HOTFIX RELEASE 2)
+ARMA SERVER KEEPALIVE TOOL 1.2 (HOTFIX RELEASE 2)
 ==================
-*HOTFIX 1: Fixed exception when chaning db file location on first install.
-*HOTFIX 2: Patched application crash when number of virtual machine cores are greater than 8.
-
-Added some new config variables and Fixed a typo that broke ASM Start Procedure.
+Merged NonGUI 1.2
+Updated GUI to accomodate new features
+Some bug fixes as usual
 
 ==================
 == NEW CHANGES  ==
 ==================
-*HOTFIX 1: Fixed exception when chaning db file location on first install.
-*HOTFIX 2: Patched application crash when number of virtual machine cores are greater than 8.
-
-(Merged from NonGui v1.1.0)
-Fixed: ASM not starting unless keepalive_hc was 1, typo
-Added: New config variable "skbt_debug". Change log detail level
-Added: New config "auto_restart_delay". Forcefully delays between ONLY restart events
-Added: 3 batch files in custom folder to aid in hooking code before certain events, more info inside those files
-
-Note; Check GUI on how to use these new settings.
+Added check before uninstalling if keepalive is active
+Added new "Custom" Tab. You can now create your own keepalive processes!
+Cleaned exception when trying to delete batch_lib folder while it is in use
 
 ==================
 == INSTALLATION ==
@@ -65,6 +57,11 @@ NOTE: The logfile is called "batchrun.log" and is placed in the batch_lib direct
 ==================
 = OLD CHANGELOGS =
 ==================
+
+== Version 1.1.0.2
+*HOTFIX 1: Fixed exception when changing db file location on first install.
+*HOTFIX 2: Patched application crash when number of virtual machine cores are greater than 8.
+Merged changes from NonGui v1.1.0
 
 == Version 1.0.3.1 HOTIFIX:
 Merged new changes from 1.0.3.1 NonGui Hotfix

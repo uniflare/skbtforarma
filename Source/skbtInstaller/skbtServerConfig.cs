@@ -20,22 +20,23 @@ namespace skbtInstaller
         public String skbtConfigPath; // move to CoreConfig
 
         // Process Config Objects
-        public skbtProcessConfigServer objServerProc       // Server Process
+        public skbtProcessConfigServer objServerProc                        // Server Process
         { get; private set; }
-        public skbtProcessConfigASM objASMProc             // ASM Process
+        public skbtProcessConfigASM objASMProc                              // ASM Process
         { get; private set; }
-        public skbtProcessConfigDatabase objDatabaseProc   // Database Process
+        public skbtProcessConfigDatabase objDatabaseProc                    // Database Process
         { get; private set; }
-        public skbtProcessConfigTeamspeak objTeamspeakProc // Teamspeak Process
+        public skbtProcessConfigTeamspeak objTeamspeakProc                  // Teamspeak Process
         { get; private set; }
-        public skbtProcessConfigHC objHeadlessClientProc   // Headless Client Process
+        public skbtProcessConfigHC objHeadlessClientProc                    // Headless Client Process
         { get; private set; }
-        public skbtProcessConfigBEC objBECProc             // BEC Process
+        public skbtProcessConfigBEC objBECProc                              // BEC Process
+        { get; private set; }
+        public Dictionary<short, skbtProcessConfigCustom> objCustomProc     // Custom Process Array
         { get; private set; }
 
         // Ref Prop
         String refPathToEXE;
-
 
         // Keepalive Flags
         public bool CleanWER;
@@ -147,6 +148,23 @@ namespace skbtInstaller
                 origin.objTeamspeakProc.Affinity,
                 origin.objTeamspeakProc.PortNumber
             );
+            this.objCustomProc = new Dictionary<short, skbtProcessConfigCustom>();
+            if (origin.objCustomProc != null)
+            {
+                foreach (KeyValuePair<short, skbtProcessConfigCustom> cc in origin.objCustomProc)
+                {
+                    this.objCustomProc.Add(cc.Key, new skbtProcessConfigCustom(
+                        cc.Value.EXEFile,
+                        cc.Value.Path,
+                        cc.Value.Keepalive,
+                        cc.Value.Priority,
+                        cc.Value.Affinity,
+                        cc.Value.ID,
+                        cc.Value.Name,
+                        cc.Value.LaunchParams
+                    ));
+                }
+            }
             this.Port = origin.Port;
             this.ServerStartTimeout = origin.ServerStartTimeout;
             this.skbtConfigPath = origin.skbtConfigPath;
@@ -251,6 +269,7 @@ namespace skbtInstaller
 
             // Settings Array
             var skbtConfigArray = new Dictionary<String, String>();
+            var skbtConfigCustomProc = new Dictionary<Int16, Dictionary<String, String>>(); // List of cproc arrays by cproc id's
 
             var skbtConfigStream = new StreamReader(this.skbtConfigPath);
             String line;
@@ -262,19 +281,55 @@ namespace skbtInstaller
                     {
                         if (line.Substring(0, 3) == "set")
                         {
+
                             // Find Property to save
                             String propString = line.Substring(4);
                             String[] propStringSplit = propString.Split(new char[] { '=' }, 2);
 
+                            // Make sure a value exists
                             if (propStringSplit.Count<String>() > 1)
                             {
-                                if (skbtConfigArray.ContainsKey(propStringSplit[0]))
+
+                                // New Custom Process Array
+                                if (propStringSplit[0].Contains("cusproc"))
                                 {
-                                    skbtConfigArray[propStringSplit[0]] = expandPathVar(propStringSplit[1].Trim(' ', '"'));
+                                    // Custom Process Lines
+                                    short temp_subIndexOf = Convert.ToInt16(propStringSplit[0].LastIndexOf('['));
+                                    short temp_subIndex = Convert.ToInt16(
+                                        propStringSplit[0].Substring(temp_subIndexOf, (propStringSplit[0].Length - (temp_subIndexOf+1))).Trim(new char[] {'[',']'}));
+                                    string temp_subName = propStringSplit[0].Substring(0, propStringSplit[0].Length - (propStringSplit[0].Length - (temp_subIndexOf)));
+
+                                    if (!skbtConfigCustomProc.ContainsKey(temp_subIndex))
+                                    {
+                                        // Add Keys
+                                        skbtConfigCustomProc[temp_subIndex] = new Dictionary<string, string>() { 
+                                            { "keepalive_cusproc", "" },
+                                            { "cusproc_name", "" },
+                                            { "cusproc_path", "" },
+                                            { "cusproc_filename", "" },
+                                            { "cusproc_params", "" },
+                                            { "cusproc_affinity", "" },
+                                            { "cusproc_priority", "" }
+                                        };
+                                    }
+
+                                    // Add/Overwrite Value
+                                    skbtConfigCustomProc[temp_subIndex][temp_subName] = propStringSplit[1];
                                 }
                                 else
                                 {
-                                    skbtConfigArray.Add(propStringSplit[0], expandPathVar(propStringSplit[1].Trim(' ', '"')));
+                                    // Other Lines
+
+
+                                    // Overwrite previous value if necessary.
+                                    if (skbtConfigArray.ContainsKey(propStringSplit[0]))
+                                    {
+                                        skbtConfigArray[propStringSplit[0]] = expandPathVar(propStringSplit[1].Trim(' ', '"'));
+                                    }
+                                    else
+                                    {
+                                        skbtConfigArray.Add(propStringSplit[0], expandPathVar(propStringSplit[1].Trim(' ', '"')));
+                                    }
                                 }
                             }
                         }
@@ -290,9 +345,11 @@ namespace skbtInstaller
                 return;
             }
 
+            // debug
+            // skbtCoreExtensions.showDebugMessage(skbtConfigCustomProc);
+
 
             // Setup this Object using array contents
-
             // Make sure config is correctly formatted with all values defined
             if (
                 skbtConfigArray.ContainsKey("keepalive_database") &&
@@ -375,7 +432,33 @@ namespace skbtInstaller
                 {
                     // older version
                     // Tell user maybe?
+                    MessageBox.Show("The config associated with this installation appears to be an older version. Some new features will be set to their defaults.");
                 }
+
+                // Check for custom processes
+                if (skbtConfigCustomProc.Count() > 0)
+                {
+                    // Custom processes found. Parse them into objects
+                    this.objCustomProc = new Dictionary<short, skbtProcessConfigCustom>();
+
+                    foreach (KeyValuePair<short, Dictionary<String, String>> cproc in skbtConfigCustomProc)
+                    {
+                        var temp_obj = new skbtProcessConfigCustom(
+                            cproc.Value["cusproc_filename"],
+                            cproc.Value["cusproc_path"],
+                            (cproc.Value["keepalive_cusproc"] == "1") ? true : false,
+                            cproc.Value["cusproc_priority"],
+                            cproc.Value["cusproc_affinity"],
+                            cproc.Key,
+                            cproc.Value["cusproc_name"],
+                            cproc.Value["cusproc_params"]
+                        );
+
+                        this.objCustomProc.Add(cproc.Key, temp_obj);
+                    }
+
+                }
+
                 // end backwards compatibility
 
 
@@ -480,4 +563,5 @@ namespace skbtInstaller
             return path;
         }
     }
+
 }

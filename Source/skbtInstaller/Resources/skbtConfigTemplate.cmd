@@ -66,6 +66,7 @@ set hcPriority={PRIORITY_HC}
 set redisPriority={PRIORITY_DB}
 set teamspeakPriority={PRIORITY_TS}
 set asmPriority={PRIORITY_ASM}
+{CUSTOM_PROCESS_ENTRIES}
 
 REM Clean Paths?
 cd /D %armapath%

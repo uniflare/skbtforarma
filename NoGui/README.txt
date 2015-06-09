@@ -3,6 +3,7 @@ ARMA SERVER KEEPALIVE TOOL 1.2.0 (NoGui)
 ==================
 New custom process feature! Have a look near the end of the config file for a new section!
 Just follow the same format for new processes.
+And fix for closing Error dialogs on crash.
 
 ==================
 == NEW CHANGES  ==

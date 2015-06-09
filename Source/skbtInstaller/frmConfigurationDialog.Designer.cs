@@ -50,6 +50,7 @@
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btnTabSelectCustom = new System.Windows.Forms.Button();
             this.numStartTimeout = new System.Windows.Forms.NumericUpDown();
             this.numManualTimeout = new System.Windows.Forms.NumericUpDown();
             this.numAutoTimeout = new System.Windows.Forms.NumericUpDown();
@@ -186,6 +187,27 @@
             this.btnProcessKeepaliveASM = new System.Windows.Forms.Button();
             this.lblASMPathToExe = new System.Windows.Forms.Label();
             this.txtPathToEXEASM = new System.Windows.Forms.TextBox();
+            this.btnCustomProcessDelete = new System.Windows.Forms.Button();
+            this.btnCustomProcessAdd = new System.Windows.Forms.Button();
+            this.cBoxCustomProcessSelector = new System.Windows.Forms.ComboBox();
+            this.lblCustomProcessLaunchParams = new System.Windows.Forms.Label();
+            this.txtCustomProcessLaunchParams = new System.Windows.Forms.TextBox();
+            this.lblCustomProcessName = new System.Windows.Forms.Label();
+            this.txtCustomProcessName = new System.Windows.Forms.TextBox();
+            this.chkAffinityCustom7 = new System.Windows.Forms.CheckBox();
+            this.chkAffinityCustom6 = new System.Windows.Forms.CheckBox();
+            this.chkAffinityCustom5 = new System.Windows.Forms.CheckBox();
+            this.chkAffinityCustom4 = new System.Windows.Forms.CheckBox();
+            this.chkAffinityCustom3 = new System.Windows.Forms.CheckBox();
+            this.chkAffinityCustom2 = new System.Windows.Forms.CheckBox();
+            this.chkAffinityCustom1 = new System.Windows.Forms.CheckBox();
+            this.chkAffinityCustom0 = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cBoxPriorityCustom = new System.Windows.Forms.ComboBox();
+            this.btnProcessKeepaliveCustom = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtPathToEXECustom = new System.Windows.Forms.TextBox();
             this.tabControlMainConfig = new skbtInstaller.TablessControl();
             this.tabPageProcessServer = new System.Windows.Forms.TabPage();
             this.grpKeepaliveOptions = new System.Windows.Forms.GroupBox();
@@ -218,6 +240,9 @@
             this.grpConfigASMLaunch = new System.Windows.Forms.GroupBox();
             this.btnFortxtASMLogName = new System.Windows.Forms.Button();
             this.btnFortxtPathToEXEASM = new System.Windows.Forms.Button();
+            this.tabPageProcessCustom = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnCustomProcessBrowseEXE = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numStartTimeout)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numManualTimeout)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAutoTimeout)).BeginInit();
@@ -245,6 +270,8 @@
             this.grpconfigTeamspeakLaunch.SuspendLayout();
             this.tabPageProcessASM.SuspendLayout();
             this.grpConfigASMLaunch.SuspendLayout();
+            this.tabPageProcessCustom.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnCancelConfig
@@ -299,7 +326,7 @@
             this.btnTabSelectServer.Location = new System.Drawing.Point(16, 162);
             this.btnTabSelectServer.Margin = new System.Windows.Forms.Padding(0);
             this.btnTabSelectServer.Name = "btnTabSelectServer";
-            this.btnTabSelectServer.Size = new System.Drawing.Size(110, 22);
+            this.btnTabSelectServer.Size = new System.Drawing.Size(102, 22);
             this.btnTabSelectServer.TabIndex = 27;
             this.btnTabSelectServer.Text = "Arma Server";
             this.btnTabSelectServer.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
@@ -318,10 +345,10 @@
             this.btnTabSelectDatabase.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTabSelectDatabase.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
             this.btnTabSelectDatabase.ForeColor = System.Drawing.Color.Black;
-            this.btnTabSelectDatabase.Location = new System.Drawing.Point(140, 162);
+            this.btnTabSelectDatabase.Location = new System.Drawing.Point(121, 162);
             this.btnTabSelectDatabase.Margin = new System.Windows.Forms.Padding(0);
             this.btnTabSelectDatabase.Name = "btnTabSelectDatabase";
-            this.btnTabSelectDatabase.Size = new System.Drawing.Size(86, 22);
+            this.btnTabSelectDatabase.Size = new System.Drawing.Size(84, 22);
             this.btnTabSelectDatabase.TabIndex = 28;
             this.btnTabSelectDatabase.Text = "Database";
             this.btnTabSelectDatabase.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
@@ -340,10 +367,10 @@
             this.btnTabSelectBEC.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTabSelectBEC.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
             this.btnTabSelectBEC.ForeColor = System.Drawing.Color.Black;
-            this.btnTabSelectBEC.Location = new System.Drawing.Point(240, 162);
+            this.btnTabSelectBEC.Location = new System.Drawing.Point(208, 162);
             this.btnTabSelectBEC.Margin = new System.Windows.Forms.Padding(0);
             this.btnTabSelectBEC.Name = "btnTabSelectBEC";
-            this.btnTabSelectBEC.Size = new System.Drawing.Size(51, 22);
+            this.btnTabSelectBEC.Size = new System.Drawing.Size(46, 22);
             this.btnTabSelectBEC.TabIndex = 29;
             this.btnTabSelectBEC.Text = "BEC";
             this.btnTabSelectBEC.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
@@ -362,7 +389,7 @@
             this.btnTabSelectHC.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTabSelectHC.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
             this.btnTabSelectHC.ForeColor = System.Drawing.Color.Black;
-            this.btnTabSelectHC.Location = new System.Drawing.Point(305, 162);
+            this.btnTabSelectHC.Location = new System.Drawing.Point(257, 162);
             this.btnTabSelectHC.Margin = new System.Windows.Forms.Padding(0);
             this.btnTabSelectHC.Name = "btnTabSelectHC";
             this.btnTabSelectHC.Size = new System.Drawing.Size(126, 22);
@@ -384,7 +411,7 @@
             this.btnTabSelectTS.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTabSelectTS.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
             this.btnTabSelectTS.ForeColor = System.Drawing.Color.Black;
-            this.btnTabSelectTS.Location = new System.Drawing.Point(445, 162);
+            this.btnTabSelectTS.Location = new System.Drawing.Point(386, 162);
             this.btnTabSelectTS.Margin = new System.Windows.Forms.Padding(0);
             this.btnTabSelectTS.Name = "btnTabSelectTS";
             this.btnTabSelectTS.Size = new System.Drawing.Size(102, 22);
@@ -406,10 +433,10 @@
             this.btnTabSelectASM.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTabSelectASM.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
             this.btnTabSelectASM.ForeColor = System.Drawing.Color.Black;
-            this.btnTabSelectASM.Location = new System.Drawing.Point(561, 162);
+            this.btnTabSelectASM.Location = new System.Drawing.Point(491, 162);
             this.btnTabSelectASM.Margin = new System.Windows.Forms.Padding(0);
             this.btnTabSelectASM.Name = "btnTabSelectASM";
-            this.btnTabSelectASM.Size = new System.Drawing.Size(50, 22);
+            this.btnTabSelectASM.Size = new System.Drawing.Size(49, 22);
             this.btnTabSelectASM.TabIndex = 32;
             this.btnTabSelectASM.Text = "ASM";
             this.btnTabSelectASM.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
@@ -554,6 +581,28 @@
             // 
             this.openFileDialog.FileName = "openFileDialog1";
             // 
+            // btnTabSelectCustom
+            // 
+            this.btnTabSelectCustom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnTabSelectCustom.BackColor = System.Drawing.Color.Gray;
+            this.btnTabSelectCustom.FlatAppearance.BorderSize = 0;
+            this.btnTabSelectCustom.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnTabSelectCustom.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.btnTabSelectCustom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTabSelectCustom.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
+            this.btnTabSelectCustom.ForeColor = System.Drawing.Color.Black;
+            this.btnTabSelectCustom.Location = new System.Drawing.Point(543, 162);
+            this.btnTabSelectCustom.Margin = new System.Windows.Forms.Padding(0);
+            this.btnTabSelectCustom.Name = "btnTabSelectCustom";
+            this.btnTabSelectCustom.Size = new System.Drawing.Size(69, 22);
+            this.btnTabSelectCustom.TabIndex = 33;
+            this.btnTabSelectCustom.Text = "Custom";
+            this.btnTabSelectCustom.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.toolTip1.SetToolTip(this.btnTabSelectCustom, "Custom Process Manager Tab");
+            this.btnTabSelectCustom.UseVisualStyleBackColor = false;
+            this.btnTabSelectCustom.Click += new System.EventHandler(this.actionSelectTabButton);
+            // 
             // numStartTimeout
             // 
             this.numStartTimeout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
@@ -566,7 +615,7 @@
             0,
             0});
             this.numStartTimeout.Name = "numStartTimeout";
-            this.numStartTimeout.Size = new System.Drawing.Size(72, 18);
+            this.numStartTimeout.Size = new System.Drawing.Size(72, 16);
             this.numStartTimeout.TabIndex = 56;
             this.toolTip1.SetToolTip(this.numStartTimeout, "Number of secodns to wait before assuming the server has crashed on startup. (Mak" +
         "e sure to set this long than it takes your server to start! 60 should be safe)");
@@ -589,7 +638,7 @@
             0,
             0});
             this.numManualTimeout.Name = "numManualTimeout";
-            this.numManualTimeout.Size = new System.Drawing.Size(67, 18);
+            this.numManualTimeout.Size = new System.Drawing.Size(67, 16);
             this.numManualTimeout.TabIndex = 55;
             this.toolTip1.SetToolTip(this.numManualTimeout, "Number of seconds ti wait before assuming the server has crashed after trying to " +
         "stop services during a Manual event");
@@ -612,7 +661,7 @@
             0,
             0});
             this.numAutoTimeout.Name = "numAutoTimeout";
-            this.numAutoTimeout.Size = new System.Drawing.Size(72, 18);
+            this.numAutoTimeout.Size = new System.Drawing.Size(72, 16);
             this.numAutoTimeout.TabIndex = 54;
             this.toolTip1.SetToolTip(this.numAutoTimeout, "Number of seconds to wait before assuming the server has crashed after trying to " +
         "stop services during an automatic event");
@@ -635,7 +684,7 @@
             0,
             0});
             this.numAutoDelay.Name = "numAutoDelay";
-            this.numAutoDelay.Size = new System.Drawing.Size(67, 18);
+            this.numAutoDelay.Size = new System.Drawing.Size(67, 16);
             this.numAutoDelay.TabIndex = 53;
             this.toolTip1.SetToolTip(this.numAutoDelay, "Time in seconds to delay the restarting of services after a shutdown from an auto" +
         "matic event");
@@ -2794,6 +2843,350 @@
             this.txtPathToEXEASM.TabIndex = 26;
             this.toolTip1.SetToolTip(this.txtPathToEXEASM, "Full path to process executable");
             // 
+            // btnCustomProcessDelete
+            // 
+            this.btnCustomProcessDelete.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnCustomProcessDelete.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnCustomProcessDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCustomProcessDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCustomProcessDelete.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.btnCustomProcessDelete.Location = new System.Drawing.Point(469, 30);
+            this.btnCustomProcessDelete.Margin = new System.Windows.Forms.Padding(0);
+            this.btnCustomProcessDelete.Name = "btnCustomProcessDelete";
+            this.btnCustomProcessDelete.Size = new System.Drawing.Size(97, 22);
+            this.btnCustomProcessDelete.TabIndex = 63;
+            this.btnCustomProcessDelete.Text = "Delete/Remove";
+            this.btnCustomProcessDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.toolTip1.SetToolTip(this.btnCustomProcessDelete, "Delete the currently selected custom process config");
+            this.btnCustomProcessDelete.UseVisualStyleBackColor = true;
+            this.btnCustomProcessDelete.Click += new System.EventHandler(this.actionCustomProcDel);
+            // 
+            // btnCustomProcessAdd
+            // 
+            this.btnCustomProcessAdd.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnCustomProcessAdd.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnCustomProcessAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCustomProcessAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCustomProcessAdd.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.btnCustomProcessAdd.Location = new System.Drawing.Point(3, 30);
+            this.btnCustomProcessAdd.Margin = new System.Windows.Forms.Padding(0);
+            this.btnCustomProcessAdd.Name = "btnCustomProcessAdd";
+            this.btnCustomProcessAdd.Size = new System.Drawing.Size(64, 22);
+            this.btnCustomProcessAdd.TabIndex = 62;
+            this.btnCustomProcessAdd.Text = "Add New";
+            this.btnCustomProcessAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.toolTip1.SetToolTip(this.btnCustomProcessAdd, "Add a new custom process");
+            this.btnCustomProcessAdd.UseVisualStyleBackColor = true;
+            this.btnCustomProcessAdd.Click += new System.EventHandler(this.actionCustomProcAdd);
+            // 
+            // cBoxCustomProcessSelector
+            // 
+            this.cBoxCustomProcessSelector.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
+            this.cBoxCustomProcessSelector.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.cBoxCustomProcessSelector.Dock = System.Windows.Forms.DockStyle.Top;
+            this.cBoxCustomProcessSelector.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cBoxCustomProcessSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBoxCustomProcessSelector.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cBoxCustomProcessSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cBoxCustomProcessSelector.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.cBoxCustomProcessSelector.FormattingEnabled = true;
+            this.cBoxCustomProcessSelector.Location = new System.Drawing.Point(3, 3);
+            this.cBoxCustomProcessSelector.Name = "cBoxCustomProcessSelector";
+            this.cBoxCustomProcessSelector.Size = new System.Drawing.Size(563, 24);
+            this.cBoxCustomProcessSelector.TabIndex = 59;
+            this.toolTip1.SetToolTip(this.cBoxCustomProcessSelector, "Custom Process Selection List, Choose from one of the items to edit. \r\n(Max 100 C" +
+        "ustom Entries)");
+            this.cBoxCustomProcessSelector.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.customProcessListDrawItem);
+            this.cBoxCustomProcessSelector.SelectedIndexChanged += new System.EventHandler(this.actionCustomProcSelector);
+            // 
+            // lblCustomProcessLaunchParams
+            // 
+            this.lblCustomProcessLaunchParams.AutoSize = true;
+            this.lblCustomProcessLaunchParams.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCustomProcessLaunchParams.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.lblCustomProcessLaunchParams.Location = new System.Drawing.Point(7, 181);
+            this.lblCustomProcessLaunchParams.Name = "lblCustomProcessLaunchParams";
+            this.lblCustomProcessLaunchParams.Size = new System.Drawing.Size(124, 16);
+            this.lblCustomProcessLaunchParams.TabIndex = 74;
+            this.lblCustomProcessLaunchParams.Text = "Launch Parameters";
+            this.toolTip1.SetToolTip(this.lblCustomProcessLaunchParams, "Full path to process executable");
+            // 
+            // txtCustomProcessLaunchParams
+            // 
+            this.txtCustomProcessLaunchParams.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.txtCustomProcessLaunchParams.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtCustomProcessLaunchParams.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCustomProcessLaunchParams.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.txtCustomProcessLaunchParams.HideSelection = false;
+            this.txtCustomProcessLaunchParams.Location = new System.Drawing.Point(10, 200);
+            this.txtCustomProcessLaunchParams.Name = "txtCustomProcessLaunchParams";
+            this.txtCustomProcessLaunchParams.Size = new System.Drawing.Size(538, 22);
+            this.txtCustomProcessLaunchParams.TabIndex = 73;
+            this.toolTip1.SetToolTip(this.txtCustomProcessLaunchParams, "Launch parameters assiciated with the execution of this process");
+            this.txtCustomProcessLaunchParams.Leave += new System.EventHandler(this.actionCustomProcessLPTouched);
+            // 
+            // lblCustomProcessName
+            // 
+            this.lblCustomProcessName.AutoSize = true;
+            this.lblCustomProcessName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCustomProcessName.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.lblCustomProcessName.Location = new System.Drawing.Point(7, 128);
+            this.lblCustomProcessName.Name = "lblCustomProcessName";
+            this.lblCustomProcessName.Size = new System.Drawing.Size(95, 16);
+            this.lblCustomProcessName.TabIndex = 72;
+            this.lblCustomProcessName.Text = "Process Label";
+            this.toolTip1.SetToolTip(this.lblCustomProcessName, "Full path to process executable");
+            // 
+            // txtCustomProcessName
+            // 
+            this.txtCustomProcessName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.txtCustomProcessName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtCustomProcessName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCustomProcessName.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.txtCustomProcessName.HideSelection = false;
+            this.txtCustomProcessName.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.txtCustomProcessName.Location = new System.Drawing.Point(10, 147);
+            this.txtCustomProcessName.Name = "txtCustomProcessName";
+            this.txtCustomProcessName.Size = new System.Drawing.Size(538, 22);
+            this.txtCustomProcessName.TabIndex = 71;
+            this.toolTip1.SetToolTip(this.txtCustomProcessName, "A name given as a label o the seelcted custom process");
+            this.txtCustomProcessName.KeyUp += new System.Windows.Forms.KeyEventHandler(this.actionCustomProcessNameTouched);
+            // 
+            // chkAffinityCustom7
+            // 
+            this.chkAffinityCustom7.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chkAffinityCustom7.AutoSize = true;
+            this.chkAffinityCustom7.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.chkAffinityCustom7.FlatAppearance.CheckedBackColor = System.Drawing.Color.Transparent;
+            this.chkAffinityCustom7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chkAffinityCustom7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkAffinityCustom7.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.chkAffinityCustom7.Location = new System.Drawing.Point(467, 95);
+            this.chkAffinityCustom7.Name = "chkAffinityCustom7";
+            this.chkAffinityCustom7.Size = new System.Drawing.Size(30, 23);
+            this.chkAffinityCustom7.TabIndex = 70;
+            this.chkAffinityCustom7.Text = "#7";
+            this.toolTip1.SetToolTip(this.chkAffinityCustom7, "Process EXE Affinity. The cores with which this process can utilize.");
+            this.chkAffinityCustom7.UseVisualStyleBackColor = true;
+            this.chkAffinityCustom7.CheckedChanged += new System.EventHandler(this.evntChkAffinityChange);
+            // 
+            // chkAffinityCustom6
+            // 
+            this.chkAffinityCustom6.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chkAffinityCustom6.AutoSize = true;
+            this.chkAffinityCustom6.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.chkAffinityCustom6.FlatAppearance.CheckedBackColor = System.Drawing.Color.Transparent;
+            this.chkAffinityCustom6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chkAffinityCustom6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkAffinityCustom6.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.chkAffinityCustom6.Location = new System.Drawing.Point(431, 95);
+            this.chkAffinityCustom6.Name = "chkAffinityCustom6";
+            this.chkAffinityCustom6.Size = new System.Drawing.Size(30, 23);
+            this.chkAffinityCustom6.TabIndex = 69;
+            this.chkAffinityCustom6.Text = "#6";
+            this.toolTip1.SetToolTip(this.chkAffinityCustom6, "Process EXE Affinity. The cores with which this process can utilize.");
+            this.chkAffinityCustom6.UseVisualStyleBackColor = true;
+            this.chkAffinityCustom6.CheckedChanged += new System.EventHandler(this.evntChkAffinityChange);
+            // 
+            // chkAffinityCustom5
+            // 
+            this.chkAffinityCustom5.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chkAffinityCustom5.AutoSize = true;
+            this.chkAffinityCustom5.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.chkAffinityCustom5.FlatAppearance.CheckedBackColor = System.Drawing.Color.Transparent;
+            this.chkAffinityCustom5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chkAffinityCustom5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkAffinityCustom5.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.chkAffinityCustom5.Location = new System.Drawing.Point(395, 95);
+            this.chkAffinityCustom5.Name = "chkAffinityCustom5";
+            this.chkAffinityCustom5.Size = new System.Drawing.Size(30, 23);
+            this.chkAffinityCustom5.TabIndex = 68;
+            this.chkAffinityCustom5.Text = "#5";
+            this.toolTip1.SetToolTip(this.chkAffinityCustom5, "Process EXE Affinity. The cores with which this process can utilize.");
+            this.chkAffinityCustom5.UseVisualStyleBackColor = true;
+            this.chkAffinityCustom5.CheckedChanged += new System.EventHandler(this.evntChkAffinityChange);
+            // 
+            // chkAffinityCustom4
+            // 
+            this.chkAffinityCustom4.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chkAffinityCustom4.AutoSize = true;
+            this.chkAffinityCustom4.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.chkAffinityCustom4.FlatAppearance.CheckedBackColor = System.Drawing.Color.Transparent;
+            this.chkAffinityCustom4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chkAffinityCustom4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkAffinityCustom4.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.chkAffinityCustom4.Location = new System.Drawing.Point(359, 95);
+            this.chkAffinityCustom4.Name = "chkAffinityCustom4";
+            this.chkAffinityCustom4.Size = new System.Drawing.Size(30, 23);
+            this.chkAffinityCustom4.TabIndex = 67;
+            this.chkAffinityCustom4.Text = "#4";
+            this.toolTip1.SetToolTip(this.chkAffinityCustom4, "Process EXE Affinity. The cores with which this process can utilize.");
+            this.chkAffinityCustom4.UseVisualStyleBackColor = true;
+            this.chkAffinityCustom4.CheckedChanged += new System.EventHandler(this.evntChkAffinityChange);
+            // 
+            // chkAffinityCustom3
+            // 
+            this.chkAffinityCustom3.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chkAffinityCustom3.AutoSize = true;
+            this.chkAffinityCustom3.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.chkAffinityCustom3.FlatAppearance.CheckedBackColor = System.Drawing.Color.Transparent;
+            this.chkAffinityCustom3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chkAffinityCustom3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkAffinityCustom3.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.chkAffinityCustom3.Location = new System.Drawing.Point(322, 95);
+            this.chkAffinityCustom3.Name = "chkAffinityCustom3";
+            this.chkAffinityCustom3.Size = new System.Drawing.Size(30, 23);
+            this.chkAffinityCustom3.TabIndex = 66;
+            this.chkAffinityCustom3.Text = "#3";
+            this.toolTip1.SetToolTip(this.chkAffinityCustom3, "Process EXE Affinity. The cores with which this process can utilize.");
+            this.chkAffinityCustom3.UseVisualStyleBackColor = true;
+            this.chkAffinityCustom3.CheckedChanged += new System.EventHandler(this.evntChkAffinityChange);
+            // 
+            // chkAffinityCustom2
+            // 
+            this.chkAffinityCustom2.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chkAffinityCustom2.AutoSize = true;
+            this.chkAffinityCustom2.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.chkAffinityCustom2.FlatAppearance.CheckedBackColor = System.Drawing.Color.Transparent;
+            this.chkAffinityCustom2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chkAffinityCustom2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkAffinityCustom2.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.chkAffinityCustom2.Location = new System.Drawing.Point(283, 95);
+            this.chkAffinityCustom2.Name = "chkAffinityCustom2";
+            this.chkAffinityCustom2.Size = new System.Drawing.Size(30, 23);
+            this.chkAffinityCustom2.TabIndex = 65;
+            this.chkAffinityCustom2.Text = "#2";
+            this.toolTip1.SetToolTip(this.chkAffinityCustom2, "Process EXE Affinity. The cores with which this process can utilize.");
+            this.chkAffinityCustom2.UseVisualStyleBackColor = true;
+            this.chkAffinityCustom2.CheckedChanged += new System.EventHandler(this.evntChkAffinityChange);
+            // 
+            // chkAffinityCustom1
+            // 
+            this.chkAffinityCustom1.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chkAffinityCustom1.AutoSize = true;
+            this.chkAffinityCustom1.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.chkAffinityCustom1.FlatAppearance.CheckedBackColor = System.Drawing.Color.Transparent;
+            this.chkAffinityCustom1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chkAffinityCustom1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkAffinityCustom1.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.chkAffinityCustom1.Location = new System.Drawing.Point(247, 95);
+            this.chkAffinityCustom1.Name = "chkAffinityCustom1";
+            this.chkAffinityCustom1.Size = new System.Drawing.Size(30, 23);
+            this.chkAffinityCustom1.TabIndex = 64;
+            this.chkAffinityCustom1.Text = "#1";
+            this.toolTip1.SetToolTip(this.chkAffinityCustom1, "Process EXE Affinity. The cores with which this process can utilize.");
+            this.chkAffinityCustom1.UseVisualStyleBackColor = true;
+            this.chkAffinityCustom1.CheckedChanged += new System.EventHandler(this.evntChkAffinityChange);
+            // 
+            // chkAffinityCustom0
+            // 
+            this.chkAffinityCustom0.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chkAffinityCustom0.AutoSize = true;
+            this.chkAffinityCustom0.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.chkAffinityCustom0.FlatAppearance.CheckedBackColor = System.Drawing.Color.Transparent;
+            this.chkAffinityCustom0.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chkAffinityCustom0.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkAffinityCustom0.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.chkAffinityCustom0.Location = new System.Drawing.Point(211, 95);
+            this.chkAffinityCustom0.Name = "chkAffinityCustom0";
+            this.chkAffinityCustom0.Size = new System.Drawing.Size(30, 23);
+            this.chkAffinityCustom0.TabIndex = 63;
+            this.chkAffinityCustom0.Text = "#0";
+            this.toolTip1.SetToolTip(this.chkAffinityCustom0, "Process EXE Affinity. The cores with which this process can utilize.");
+            this.chkAffinityCustom0.UseVisualStyleBackColor = true;
+            this.chkAffinityCustom0.CheckedChanged += new System.EventHandler(this.evntChkAffinityChange);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label1.Location = new System.Drawing.Point(208, 73);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(144, 16);
+            this.label1.TabIndex = 62;
+            this.label1.Text = "Process Affinity (cores)";
+            this.toolTip1.SetToolTip(this.label1, "Process EXE Affinity. The cores with which this process can utilize.");
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label2.Location = new System.Drawing.Point(7, 73);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(102, 16);
+            this.label2.TabIndex = 61;
+            this.label2.Text = "Process Priority";
+            this.toolTip1.SetToolTip(this.label2, "Process Priority (Only change if you notice a performance change when doing so)");
+            // 
+            // cBoxPriorityCustom
+            // 
+            this.cBoxPriorityCustom.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
+            this.cBoxPriorityCustom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.cBoxPriorityCustom.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBoxPriorityCustom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cBoxPriorityCustom.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cBoxPriorityCustom.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.cBoxPriorityCustom.FormattingEnabled = true;
+            this.cBoxPriorityCustom.Items.AddRange(new object[] {
+            "Realtime",
+            "High",
+            "AboveNormal",
+            "Normal",
+            "BelowNormal",
+            "Low"});
+            this.cBoxPriorityCustom.Location = new System.Drawing.Point(10, 92);
+            this.cBoxPriorityCustom.Name = "cBoxPriorityCustom";
+            this.cBoxPriorityCustom.Size = new System.Drawing.Size(184, 24);
+            this.cBoxPriorityCustom.TabIndex = 60;
+            this.toolTip1.SetToolTip(this.cBoxPriorityCustom, "Process Priority (Only change if you notice a performance change when doing so)");
+            this.cBoxPriorityCustom.SelectedIndexChanged += new System.EventHandler(this.actionPriorityChanged);
+            // 
+            // btnProcessKeepaliveCustom
+            // 
+            this.btnProcessKeepaliveCustom.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.btnProcessKeepaliveCustom.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.btnProcessKeepaliveCustom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnProcessKeepaliveCustom.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnProcessKeepaliveCustom.ForeColor = System.Drawing.Color.Green;
+            this.btnProcessKeepaliveCustom.Location = new System.Drawing.Point(10, 21);
+            this.btnProcessKeepaliveCustom.Name = "btnProcessKeepaliveCustom";
+            this.btnProcessKeepaliveCustom.Size = new System.Drawing.Size(184, 41);
+            this.btnProcessKeepaliveCustom.TabIndex = 59;
+            this.btnProcessKeepaliveCustom.Text = "Keep Process Alive";
+            this.toolTip1.SetToolTip(this.btnProcessKeepaliveCustom, "Toggle the keepalive for this process.");
+            this.btnProcessKeepaliveCustom.UseVisualStyleBackColor = true;
+            this.btnProcessKeepaliveCustom.Click += new System.EventHandler(this.actionProcessKeepaliveToggle);
+            this.btnProcessKeepaliveCustom.Leave += new System.EventHandler(this.evntKeepProcessAlive_Leave);
+            this.btnProcessKeepaliveCustom.MouseLeave += new System.EventHandler(this.evntKeepProcessAlive_MouseLeave);
+            this.btnProcessKeepaliveCustom.MouseMove += new System.Windows.Forms.MouseEventHandler(this.evntKeepProcessAlive_MouseMove);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label3.Location = new System.Drawing.Point(208, 21);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(119, 16);
+            this.label3.TabIndex = 57;
+            this.label3.Text = "Path to Executable";
+            this.toolTip1.SetToolTip(this.label3, "Full path to process executable");
+            // 
+            // txtPathToEXECustom
+            // 
+            this.txtPathToEXECustom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.txtPathToEXECustom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtPathToEXECustom.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPathToEXECustom.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.txtPathToEXECustom.Location = new System.Drawing.Point(211, 40);
+            this.txtPathToEXECustom.Name = "txtPathToEXECustom";
+            this.txtPathToEXECustom.ReadOnly = true;
+            this.txtPathToEXECustom.Size = new System.Drawing.Size(270, 22);
+            this.txtPathToEXECustom.TabIndex = 56;
+            this.toolTip1.SetToolTip(this.txtPathToEXECustom, "Full path to process executable");
+            // 
             // tabControlMainConfig
             // 
             this.tabControlMainConfig.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -2805,7 +3198,8 @@
             this.tabControlMainConfig.Controls.Add(this.tabPageProcessHC);
             this.tabControlMainConfig.Controls.Add(this.tabPageProcessTS);
             this.tabControlMainConfig.Controls.Add(this.tabPageProcessASM);
-            this.tabControlMainConfig.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabControlMainConfig.Controls.Add(this.tabPageProcessCustom);
+            this.tabControlMainConfig.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControlMainConfig.ItemSize = new System.Drawing.Size(125, 21);
             this.tabControlMainConfig.Location = new System.Drawing.Point(16, 187);
             this.tabControlMainConfig.Name = "tabControlMainConfig";
@@ -3407,12 +3801,75 @@
             this.btnFortxtPathToEXEASM.UseVisualStyleBackColor = true;
             this.btnFortxtPathToEXEASM.Click += new System.EventHandler(this.actionBrowseButtonForFilePath);
             // 
+            // tabPageProcessCustom
+            // 
+            this.tabPageProcessCustom.AutoScroll = true;
+            this.tabPageProcessCustom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.tabPageProcessCustom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tabPageProcessCustom.Controls.Add(this.btnCustomProcessDelete);
+            this.tabPageProcessCustom.Controls.Add(this.btnCustomProcessAdd);
+            this.tabPageProcessCustom.Controls.Add(this.cBoxCustomProcessSelector);
+            this.tabPageProcessCustom.Controls.Add(this.groupBox2);
+            this.tabPageProcessCustom.Location = new System.Drawing.Point(4, 25);
+            this.tabPageProcessCustom.Name = "tabPageProcessCustom";
+            this.tabPageProcessCustom.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageProcessCustom.Size = new System.Drawing.Size(588, 266);
+            this.tabPageProcessCustom.TabIndex = 6;
+            this.tabPageProcessCustom.Text = "Custom";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.lblCustomProcessLaunchParams);
+            this.groupBox2.Controls.Add(this.txtCustomProcessLaunchParams);
+            this.groupBox2.Controls.Add(this.lblCustomProcessName);
+            this.groupBox2.Controls.Add(this.txtCustomProcessName);
+            this.groupBox2.Controls.Add(this.chkAffinityCustom7);
+            this.groupBox2.Controls.Add(this.chkAffinityCustom6);
+            this.groupBox2.Controls.Add(this.chkAffinityCustom5);
+            this.groupBox2.Controls.Add(this.chkAffinityCustom4);
+            this.groupBox2.Controls.Add(this.chkAffinityCustom3);
+            this.groupBox2.Controls.Add(this.chkAffinityCustom2);
+            this.groupBox2.Controls.Add(this.chkAffinityCustom1);
+            this.groupBox2.Controls.Add(this.chkAffinityCustom0);
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.cBoxPriorityCustom);
+            this.groupBox2.Controls.Add(this.btnProcessKeepaliveCustom);
+            this.groupBox2.Controls.Add(this.btnCustomProcessBrowseEXE);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.txtPathToEXECustom);
+            this.groupBox2.ForeColor = System.Drawing.Color.White;
+            this.groupBox2.Location = new System.Drawing.Point(6, 64);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(555, 230);
+            this.groupBox2.TabIndex = 57;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "(Process EXE Name)";
+            // 
+            // btnCustomProcessBrowseEXE
+            // 
+            this.btnCustomProcessBrowseEXE.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnCustomProcessBrowseEXE.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnCustomProcessBrowseEXE.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCustomProcessBrowseEXE.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCustomProcessBrowseEXE.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.btnCustomProcessBrowseEXE.Location = new System.Drawing.Point(484, 40);
+            this.btnCustomProcessBrowseEXE.Margin = new System.Windows.Forms.Padding(0);
+            this.btnCustomProcessBrowseEXE.Name = "btnCustomProcessBrowseEXE";
+            this.btnCustomProcessBrowseEXE.Size = new System.Drawing.Size(64, 22);
+            this.btnCustomProcessBrowseEXE.TabIndex = 58;
+            this.btnCustomProcessBrowseEXE.Text = "Browse";
+            this.btnCustomProcessBrowseEXE.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.btnCustomProcessBrowseEXE.UseVisualStyleBackColor = true;
+            this.btnCustomProcessBrowseEXE.Click += new System.EventHandler(this.actionBrowseButtonForFilePath);
+            // 
             // frmConfigWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
             this.ClientSize = new System.Drawing.Size(630, 572);
+            this.Controls.Add(this.btnTabSelectCustom);
             this.Controls.Add(this.btnTabSelectASM);
             this.Controls.Add(this.btnTabSelectTS);
             this.Controls.Add(this.btnTabSelectHC);
@@ -3438,6 +3895,8 @@
             this.Name = "frmConfigWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Configure your SKBT installation";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.configFormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.configFormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.numStartTimeout)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numManualTimeout)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAutoTimeout)).EndInit();
@@ -3479,6 +3938,9 @@
             this.tabPageProcessASM.PerformLayout();
             this.grpConfigASMLaunch.ResumeLayout(false);
             this.grpConfigASMLaunch.PerformLayout();
+            this.tabPageProcessCustom.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3595,7 +4057,6 @@
         private System.Windows.Forms.CheckBox chkAffinityASM0;
         private System.Windows.Forms.Label lblASMAffinity;
         private System.Windows.Forms.Label lblASMPriority;
-        private System.Windows.Forms.ComboBox cBoxPriorityASM;
         private System.Windows.Forms.Button btnProcessKeepaliveASM;
         private System.Windows.Forms.Button btnFortxtPathToEXEASM;
         private System.Windows.Forms.Label lblASMPathToExe;
@@ -3675,5 +4136,31 @@
         private System.Windows.Forms.NumericUpDown numAutoTimeout;
         private System.Windows.Forms.NumericUpDown numAutoDelay;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.TabPage tabPageProcessCustom;
+        private System.Windows.Forms.Button btnTabSelectCustom;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label lblCustomProcessName;
+        private System.Windows.Forms.TextBox txtCustomProcessName;
+        private System.Windows.Forms.CheckBox chkAffinityCustom7;
+        private System.Windows.Forms.CheckBox chkAffinityCustom6;
+        private System.Windows.Forms.CheckBox chkAffinityCustom5;
+        private System.Windows.Forms.CheckBox chkAffinityCustom4;
+        private System.Windows.Forms.CheckBox chkAffinityCustom3;
+        private System.Windows.Forms.CheckBox chkAffinityCustom2;
+        private System.Windows.Forms.CheckBox chkAffinityCustom1;
+        private System.Windows.Forms.CheckBox chkAffinityCustom0;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox cBoxPriorityCustom;
+        private System.Windows.Forms.Button btnProcessKeepaliveCustom;
+        private System.Windows.Forms.Button btnCustomProcessBrowseEXE;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtPathToEXECustom;
+        private System.Windows.Forms.Label lblCustomProcessLaunchParams;
+        private System.Windows.Forms.TextBox txtCustomProcessLaunchParams;
+        private System.Windows.Forms.ComboBox cBoxCustomProcessSelector;
+        private System.Windows.Forms.Button btnCustomProcessDelete;
+        private System.Windows.Forms.Button btnCustomProcessAdd;
+        private System.Windows.Forms.ComboBox cBoxPriorityASM;
     }
 }

@@ -87,7 +87,7 @@ namespace skbtInstaller
             // Initialize
             String textualName;
 
-            // TODO: Check if path is already in use
+            // Check if path is already in use
             if (this.CoreConfig.ServerPathInUse(PathToEXE))
             {
                 // get name 
@@ -380,7 +380,14 @@ namespace skbtInstaller
             // Check and/or delete batch_lib
             if (Directory.Exists(blPath))
             {
-                Directory.Delete(blPath, true);
+                try
+                {
+                    Directory.Delete(blPath, true);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("There was an error deleting the old batch_lib folder. Please locate and manually delete this folder before proceeding.");
+                }
             }
 
             // Extract Zip to Batch Lib Folder

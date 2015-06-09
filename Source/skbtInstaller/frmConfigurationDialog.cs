@@ -19,6 +19,13 @@ namespace skbtInstaller
         // Reference to the Server Control Object
         skbtServerControl sc;
 
+
+        // Current Selected Process ID
+        short? selectedCustomID = null;
+
+        // Saved Flag
+        Boolean formSaved = false;
+
         // colors :)
         Color redForeGround = Color.FromArgb(132, 0, 0);
         Color greenForeGround = Color.FromName("Green");
@@ -30,15 +37,22 @@ namespace skbtInstaller
         Color changedBack = Color.FromArgb(28, 43, 43);
         Color changedFore = Color.FromArgb(95, 146, 146);
 
+        // New Process Originals
+        Dictionary<short, skbtProcessConfigCustom> objOriginalCusProc = new Dictionary<short, skbtProcessConfigCustom>() { };
+
         // Copies of Originals (NOT ref)
         skbtServerConfig sConfig;
         skbtServerMeta sMeta;
 
         // Design Flag
         Boolean pageLoaded;
+        Boolean pageLoadedCustom;
 
         // If Batch Settings Path Changed
         Boolean onSaveRenameConfig;
+
+        // Current Tab
+        String tabPageCurrent;
 
         // Delegates
         delegate String profilePathProcessor(String profilePath);
@@ -53,7 +67,9 @@ namespace skbtInstaller
         }
         public void DisplayConfigWindow(skbtServerMeta thisConfigMeta, skbtServerConfig thisConfigObject)
         {
+            this.formSaved = false;
             this.pageLoaded = false;
+            this.pageLoadedCustom = false;
 
             if (!System.IO.File.Exists(thisConfigMeta.PathToConfig))
             {
@@ -83,6 +99,9 @@ namespace skbtInstaller
             this.txtConfigName.Text = this.sMeta.textualName;
             this.txtArmaExePath.Text = this.sMeta.PathToEXE;
             this.txtBatchSettingsPath.Text = this.sMeta.PathToConfig;
+
+            // Build Affinity Checkbox Area
+            this.buildAffinityBoxes();
 
             // Select First Tab (fire events needed)
             this.selectAndDisplayTab("btnTabSelectServer");
@@ -293,12 +312,22 @@ namespace skbtInstaller
             // ASM Log File Name
             this.txtASMLogName.Text = this.sConfig.objASMProc.LogFileName;
 
+            // Custom Proc Tab
+            this.resetTabCustom();
+
             this.pageLoaded = true;
 
             // Show Dialog
             this.ShowDialog();
 
         }
+
+        private void buildAffinityBoxes()
+        {
+            // TODO: finish this (infinite affinity)
+            // loop for each affinity available, reposition form elements accordingly, repeat for each tab. (Move a container)
+        }
+
         private void actionSaveConfig(object sender, EventArgs e)
         {
             String newFile = this.sMeta.PathToConfig;
@@ -341,6 +370,25 @@ namespace skbtInstaller
 
             // quik fix
             this.sConfig.objServerProc.ModLine = this.sConfig.objServerProc.ModLine.Trim(' ');
+
+            string cusProcLines = "";
+            // Build Custom Process Lines
+            if (this.sConfig.objCustomProc.Count() >= 1)
+            {
+                foreach (KeyValuePair<short, skbtProcessConfigCustom> cProc in this.sConfig.objCustomProc)
+                {
+                    cusProcLines +=
+                        "set keepalive_cusproc["+cProc.Key+"]="+((cProc.Value.Keepalive==true)? "1":"0")+Environment.NewLine+
+                        "set cusproc_name[" + cProc.Key + "]=" + cProc.Value.Name + Environment.NewLine +
+                        "set cusproc_path[" + cProc.Key + "]=" + cProc.Value.Path + Environment.NewLine +
+                        "set cusproc_filename[" + cProc.Key + "]=" + cProc.Value.EXEFile + Environment.NewLine +
+                        "set cusproc_params[" + cProc.Key + "]=" + cProc.Value.LaunchParams + Environment.NewLine +
+                        "set cusproc_affinity[" + cProc.Key + "]=" + cProc.Value.Affinity + Environment.NewLine +
+                        "set cusproc_priority[" + cProc.Key + "]=" + cProc.Value.Priority+Environment.NewLine+
+                        Environment.NewLine
+                    ;
+                }
+            }
 
             // Map of replacement strings to values
             Dictionary<String, String> replacements = new Dictionary<string, string>()
@@ -403,7 +451,8 @@ namespace skbtInstaller
                 {"{PRIORITY_HC}", this.sConfig.objHeadlessClientProc.Priority},
                 {"{PRIORITY_DB}", this.sConfig.objDatabaseProc.Priority},
                 {"{PRIORITY_TS}", this.sConfig.objTeamspeakProc.Priority},
-                {"{PRIORITY_ASM}", this.sConfig.objASMProc.Priority}
+                {"{PRIORITY_ASM}", this.sConfig.objASMProc.Priority},
+                {"{CUSTOM_PROCESS_ENTRIES}", cusProcLines}
             };
             this.sMeta.textualName = this.txtConfigName.Text;
 
@@ -490,6 +539,9 @@ namespace skbtInstaller
             // Save core Config Changes
             this.sc.CoreConfig.saveCoreConfig();
 
+            // Saved Flag
+            this.formSaved = true;
+
             // Close Configuration Window
             this.Close();
         }
@@ -535,6 +587,12 @@ namespace skbtInstaller
                 this.getProcessFromButtonName(((Button)sender).Name).Keepalive = true;
                 this.setKeepaliveButtonColor(sender, false);
             }
+
+            // Force listbox redraw
+            if (this.tabPageCurrent == "Custom")
+            {
+                this.cBoxCustomProcessSelector.Invalidate();
+            }
         }
         private void actionCancelConfig(object sender, EventArgs e)
         {
@@ -549,14 +607,39 @@ namespace skbtInstaller
             String objectName = cBox.Name.Substring(12);
             String selPriority = cBox.SelectedItem.ToString().ToLower();
 
+            skbtProcessConfigBasic thisObj = null;
+
             // Reflect Process Object by Name
-            skbtProcessConfigBasic thisObj = (skbtProcessConfigBasic)this.sConfig.GetType().GetProperty("obj" + objectName + "Proc").GetValue(this.sConfig, null);
+            thisObj = (objectName == "Custom") ?
+                ((Dictionary<short, skbtProcessConfigCustom>)this.sConfig.GetType().GetProperty("obj" + objectName + "Proc").GetValue(this.sConfig, null))[(short)this.selectedCustomID]
+                :
+                (skbtProcessConfigBasic)this.sConfig.GetType().GetProperty("obj" + objectName + "Proc").GetValue(this.sConfig, null);
 
             // Set new Priority
             thisObj.Priority = selPriority;
 
+            skbtProcessConfigBasic origin = null;
+            if (objectName == "Custom")
+            {
+                // Custom routine for these processes
+                var cProcDict = ((Dictionary<short, skbtProcessConfigCustom>)this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].GetType().GetProperty("obj" + objectName + "Proc").GetValue(this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier], null));
+                if (cProcDict.ContainsKey((short)this.selectedCustomID))
+                {
+                    origin = (skbtProcessConfigBasic)cProcDict[(short)this.selectedCustomID];
+                }
+                else
+                {
+                    // For new custom processes
+                    origin = (skbtProcessConfigBasic)this.objOriginalCusProc[(short)this.selectedCustomID];
+                }
+            }
+            else
+            {
+                origin = (skbtProcessConfigBasic) this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].GetType().GetProperty("obj" + objectName + "Proc").GetValue(this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier], null);
+            }
+
+
             // origin
-            skbtProcessConfigBasic origin = (skbtProcessConfigBasic)this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].GetType().GetProperty("obj" + objectName + "Proc").GetValue(this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier], null);
             if (origin.Priority.ToLower() != thisObj.Priority.ToLower())
             {
                 cBox.BackColor = changedBack;
@@ -564,6 +647,12 @@ namespace skbtInstaller
             else
             {
                 cBox.BackColor = Color.FromArgb(40, 40, 40);
+            }
+
+            // Force Redraw
+            if (objectName == "Custom")
+            {
+                this.cBoxCustomProcessSelector.Invalidate();
             }
         }
         private void actionDebugChanged(object sender, EventArgs e)
@@ -806,6 +895,77 @@ namespace skbtInstaller
             {
                 ((TextBox)sender).BackColor = Color.FromArgb(64, 64, 64);
             }
+        }
+        private void actionCustomProcessNameTouched(object sender, KeyEventArgs e)
+        {
+            if (((TextBox)sender).Text.Length < 1)
+            {
+                MessageBox.Show("Please choose a name with 1 or more characters.",
+                    "Name too short",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning,
+                    MessageBoxDefaultButton.Button1);
+                ((TextBox)sender).Text = this.sConfig.objCustomProc[(short)this.selectedCustomID].Name;
+                return;
+            }
+            this.sConfig.objCustomProc[(short)this.selectedCustomID].Name = ((TextBox)sender).Text;
+
+            string name;
+            // origin name
+            if (this.objOriginalCusProc.ContainsKey((short)this.selectedCustomID))
+            {
+                // new process
+                name = this.objOriginalCusProc[(short)this.selectedCustomID].Name;
+            }
+            else
+            {
+                name = this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objCustomProc[(short)this.selectedCustomID].Name;
+            }
+
+            if (name != ((TextBox)sender).Text)
+            {
+                ((TextBox)sender).BackColor = this.changedBack;
+            }
+            else
+            {
+                ((TextBox)sender).BackColor = Color.FromArgb(64, 64, 64);
+            }
+
+            // Update Listbox Value
+            ComboboxItem cBox = new ComboboxItem();
+            cBox.Text = ((TextBox)sender).Text;
+            cBox.Value = (short)this.selectedCustomID;
+            this.cBoxCustomProcessSelector.Items[this.cBoxCustomProcessSelector.SelectedIndex] = cBox;
+        }
+        private void actionCustomProcessNameKeyDown(object sender, EventArgs e)
+        {
+            // Updates Listbox Value in Realtime
+
+        }
+        private void actionCustomProcessLPTouched(object sender, EventArgs e)
+        {
+            this.sConfig.objCustomProc[(short)this.selectedCustomID].LaunchParams = ((TextBox)sender).Text;
+
+            // origin
+            string lp;
+            if (this.objOriginalCusProc.ContainsKey((short)this.selectedCustomID))
+            {
+                lp = this.objOriginalCusProc[(short)this.selectedCustomID].LaunchParams;
+            }
+            else
+            {
+                lp = this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objCustomProc[(short)this.selectedCustomID].LaunchParams;
+            }
+
+            if (lp != ((TextBox)sender).Text)
+            {
+                ((TextBox)sender).BackColor = this.changedBack;
+            }
+            else
+            {
+                ((TextBox)sender).BackColor = Color.FromArgb(64, 64, 64);
+            }
+            this.cBoxCustomProcessSelector.Invalidate();
         }
         private void actionHeadlessClientParamsTouched(object sender, EventArgs e)
         {
@@ -1433,6 +1593,78 @@ namespace skbtInstaller
                     );
                     return;
 
+                case "btnCustomProcessBrowseEXE":       // Open File Custom Process (*.exe)
+
+                    var origin = Path.Combine(this.ExpandPathVars(this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objCustomProc[(short)this.selectedCustomID].Path), this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objCustomProc[(short)this.selectedCustomID].EXEFile);
+
+                    this.actionDelegateBrowseAction(
+                        // TEXT BOX
+                        this.txtPathToEXECustom,
+                        // ORIGIN PATH STRING
+                        Path.Combine(this.ExpandPathVars(this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objCustomProc[(short)this.selectedCustomID].Path), this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objCustomProc[(short)this.selectedCustomID].EXEFile),
+                        // REF TO CURRENT PATH STRING
+                        ref this.sConfig.objCustomProc[(short)this.selectedCustomID].Path,
+                        // DIALOG
+                        (userPathHandleDialog)delegate()
+                        {
+                            return showOpenFileDialog(
+                                "Select the custom process executable",
+                                this.sConfig.objCustomProc[(short)this.selectedCustomID].EXEFile,
+                                "CUSTOM EXE|*.exe",
+                                this.ExpandPathVars(this.sConfig.objCustomProc[(short)this.selectedCustomID].Path)
+                           );
+                        },
+                        // VALIDATION
+                        (userPathValidation)delegate(String newPathStr)
+                        {
+                            var current = Path.GetFullPath(Path.Combine(this.ExpandPathVars(this.sConfig.objCustomProc[(short)this.selectedCustomID].Path), this.sConfig.objCustomProc[(short)this.selectedCustomID].EXEFile)).ToLower();
+                            var newP = Path.GetFullPath(this.ExpandPathVars(newPathStr)).ToLower();
+
+                            if (current.ToLower() == newP.ToLower() || !System.IO.File.Exists(newP)) { return "silent"; }
+
+                            // Check if used elsewhere (returns null if OK/Error Message if not)
+                            return this.isPathInUse(newP);
+                        },
+                        // SET WITH CONDITION
+                        (userPathSetWithCondition)delegate(String newPathStr)
+                        {
+                            this.txtPathToEXECustom.Text = newPathStr;
+                            this.sConfig.objCustomProc[(short)this.selectedCustomID].EXEFile = Path.GetFileName(this.ExpandPathVars(this.txtPathToEXECustom.Text));
+                            this.sConfig.objCustomProc[(short)this.selectedCustomID].Path = Path.GetDirectoryName(this.ExpandPathVars(this.txtPathToEXECustom.Text));
+                        },
+                        // SET TEXTBOX COLOR (if Valid)
+                        (userPathColorCheck)delegate(String newPathStr)
+                        {
+                            // get origin
+                            skbtProcessConfigCustom cProc;
+                            if (this.objOriginalCusProc.ContainsKey((short) this.selectedCustomID))
+                            {
+                                // New Process
+                                cProc = this.objOriginalCusProc[(short)this.selectedCustomID];
+                            }
+                            else
+                            {
+                                // Get Obj
+                                cProc = this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objCustomProc[(short)this.selectedCustomID];
+                            }
+
+                            // get current
+                            skbtProcessConfigCustom cProcNow = this.sConfig.objCustomProc[(short)this.selectedCustomID];
+
+                            // Default Colors
+                            this.txtPathToEXECustom.BackColor = Color.FromArgb(64, 64, 64);
+
+                            // Check if Value same as Origin Value
+                            if (Path.GetFullPath(Path.Combine(cProc.Path, cProc.EXEFile)).ToLower() != Path.GetFullPath(Path.Combine(cProcNow.Path, cProcNow.EXEFile)).ToLower())
+                            {
+                                this.txtPathToEXECustom.BackColor = this.changedBack;
+                            }
+                            this.cBoxCustomProcessSelector.Invalidate();
+                        }
+                    );
+
+                    return;
+
                 // DISABLED
                 case "btnFortxtArmaExePath":        // Open File Server EXE (*.exe) -- not used
                     // Need to check if this path is in use.
@@ -1566,6 +1798,202 @@ namespace skbtInstaller
             }
 
         }
+        private string isPathInUse(string newP)
+        {
+
+            string thisPath;
+            // Check if the path is in use anywhere else
+            foreach (KeyValuePair<short, skbtProcessConfigCustom> cProc in this.sConfig.objCustomProc)
+            {
+                thisPath = Path.GetFullPath(this.ExpandPathVars(Path.Combine(cProc.Value.Path, cProc.Value.EXEFile)));
+                if (thisPath.ToLower() == newP.ToLower()) { return "The path is currently in use by another custom process (" + cProc.Value.Name + ")"; }
+            }
+            // Check default Processes
+            skbtProcessConfigBasic[] pArr = 
+                            { 
+                                this.sConfig.objServerProc,
+                                this.sConfig.objDatabaseProc,
+                                this.sConfig.objBECProc,
+                                this.sConfig.objHeadlessClientProc,
+                                this.sConfig.objTeamspeakProc,
+                                this.sConfig.objASMProc
+                            };
+
+            foreach (skbtProcessConfigBasic p in pArr)
+            {
+                thisPath = Path.GetFullPath(this.ExpandPathVars(Path.Combine(p.Path, p.EXEFile)));
+                if (thisPath.ToLower() == newP.ToLower()) { return "This exe path is already in use by a main process config (" + thisPath + ")"; }
+            }
+
+            return null;
+        }
+        private void actionCustomProcSelector(object sender, EventArgs e)
+        {
+            if (this.pageLoaded == false) { return; }
+            this.pageLoadedCustom = false;
+
+            // Get/Set Selected Index
+            ComboboxItem item = (ComboboxItem) ((ComboBox)sender).SelectedItem;
+            short idx = (short) item.Value;
+            this.selectedCustomID = idx;
+
+            // Get Custom Process Object via Index
+            skbtProcessConfigCustom cProcObj = (skbtProcessConfigCustom)this.sConfig.objCustomProc[idx];
+
+            // Get original process object via index
+            // (Check if its a new process)
+            skbtProcessConfigCustom cProcOrigin = null;
+            if (!objOriginalCusProc.ContainsKey(idx))
+            {
+                cProcOrigin = this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objCustomProc[idx];
+            }
+            else
+            {
+                cProcOrigin = this.objOriginalCusProc[idx];
+            }
+
+            // Load Data to controls (Reset Tab)
+
+            // Keepalive Button State
+            this.setKeepaliveButtonColor(
+                btnProcessKeepaliveCustom,
+                cProcObj.Keepalive ? false : true);
+
+            // Path to Process EXE
+            this.txtPathToEXECustom.Text = Path.Combine(this.ExpandPathVars(cProcObj.Path), cProcObj.EXEFile);
+
+            // Selected Priority Setting
+            this.cBoxPriorityCustom.SelectedItem = this.getPriorityNameByLowercase(cProcObj.Priority.ToLower());
+
+            // Selected Affinity Settings
+            this.setAffinityChkBoxes("Custom", cProcObj.Affinity);
+
+            // Name of Custom Process
+            this.txtCustomProcessName.Text = cProcObj.Name;
+
+            // Process Launch Parameters
+            this.txtCustomProcessLaunchParams.Text = cProcObj.LaunchParams;
+
+            // Enable Controls
+
+            this.cBoxCustomProcessSelector.Enabled  = true;
+            this.btnProcessKeepaliveCustom.Enabled  = true;
+            this.btnCustomProcessDelete.Enabled     = true;
+            this.btnCustomProcessBrowseEXE.Enabled  = true;
+            this.cBoxPriorityCustom.Enabled         = true;
+            this.txtCustomProcessName.Enabled       = true;
+            this.txtCustomProcessLaunchParams.Enabled = true;
+            this.pageLoadedCustom = true;
+
+            // Reset Colors
+            this.txtCustomProcessName.BackColor = (cProcOrigin.Name != cProcObj.Name) ?
+                this.changedBack
+                :
+                this.txtCustomProcessName.BackColor = Color.FromArgb(64, 64, 64);
+
+            this.txtCustomProcessLaunchParams.BackColor = (cProcOrigin.LaunchParams != cProcObj.LaunchParams) ?
+                this.changedBack
+                :
+                this.txtCustomProcessLaunchParams.BackColor = Color.FromArgb(64, 64, 64);
+
+            this.txtPathToEXECustom.BackColor = (Path.GetFullPath(Path.Combine(cProcOrigin.Path, cProcOrigin.EXEFile)).ToLower() != Path.GetFullPath(Path.Combine(cProcObj.Path, cProcObj.EXEFile)).ToLower()) ?
+                this.changedBack
+                :
+                this.txtPathToEXECustom.BackColor = Color.FromArgb(64, 64, 64);
+
+            this.cBoxPriorityCustom.BackColor = (cProcOrigin.Priority != cProcObj.Priority) ?
+                this.changedBack
+                :
+                this.cBoxPriorityCustom.BackColor = Color.FromArgb(40, 40, 40);
+        }
+        private short getUnusedCustomProcessID()
+        {
+            bool[] usedIDs = new bool[100];
+
+            foreach (KeyValuePair<short, skbtProcessConfigCustom> cProc in this.sConfig.objCustomProc)
+            {
+                usedIDs[cProc.Key] = true;
+            }
+            short keyIndex = (short) Array.FindIndex(usedIDs, w => w == false);
+
+            return keyIndex;
+        }
+        private void actionCustomProcAdd(object sender, EventArgs e){
+            // Ask for new EXE path to custom process / check if that EXE path is used by another process.
+
+            if (this.sConfig.objCustomProc.Count == 100)
+            {
+                MessageBox.Show("There are already 100 custom process entries! Cannot add any more, edit or delete some existing custom processes!");
+                return;
+            }
+
+            string exePath = this.showOpenFileDialog("Add new custom process", "", "Executable Files|*.exe", @"C:\");
+            if (exePath == null)
+            {
+                // Canceled /?
+                return;
+            }
+            else
+            {
+                // Check if path is used elsewhere
+                var isInUse = this.isPathInUse(exePath);
+                if (isInUse == null)
+                {
+                    // Get another unused ID
+                    short newID;
+                    newID = this.getUnusedCustomProcessID();
+
+
+                    // Populate new Data/New Object
+                    skbtProcessConfigCustom newCProcObj = new skbtProcessConfigCustom(Path.GetFileName(exePath), Path.GetDirectoryName(exePath), true, "normal", "0", newID, "New Custom Process " + newID, "");
+                    this.sConfig.objCustomProc.Add(newID, newCProcObj);
+                    this.objOriginalCusProc.Add(newID, new skbtProcessConfigCustom(Path.GetFileName(exePath), Path.GetDirectoryName(exePath), true, "normal", "0", newID, "New Custom Process " + newID, "")); // Create an Origin Template (for diff gui colors)
+
+                    // Add to combolist/select
+                    ComboboxItem cBoxItem = new ComboboxItem();
+                    cBoxItem.Text = newCProcObj.Name;
+                    cBoxItem.Value = newCProcObj.ID;
+
+                    this.cBoxCustomProcessSelector.Items.Add(cBoxItem);
+                    this.cBoxCustomProcessSelector.SelectedItem = cBoxItem;
+
+                    // Fill in default values for rest of fields
+
+
+
+                    // Enable/disable/change colors etc.
+
+                    return;
+                }
+                else
+                {
+                    // Error
+                    MessageBox.Show(isInUse);
+                    this.actionCustomProcAdd(sender, e);
+                    return;
+                }
+            }
+        }
+        private void actionCustomProcDel(object sender, EventArgs e)
+        {
+            if(this.selectedCustomID == null) return;
+
+            DialogResult r = MessageBox.Show("Are you sure you wish to delete this custom process config?" + Environment.NewLine + "Changes will only take effect when clicking the save button", "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (r == DialogResult.Yes)
+            {
+                short id = (short) this.selectedCustomID;
+                // delete it!
+                if (this.objOriginalCusProc.ContainsKey(id))
+                {
+                    this.objOriginalCusProc.Remove(id);
+                }
+                this.sConfig.objCustomProc.Remove(id);
+
+                // update custom tab
+                this.resetTabCustom();
+            }
+            return;
+        }
         private void onMouseOverKeepalive(object sender)
         {
             Button thisBtn = (Button)sender;
@@ -1628,13 +2056,48 @@ namespace skbtInstaller
         }
         private void evntChkAffinityChange(object sender, EventArgs e)
         {
+            // quik fix
+            if (this.tabPageCurrent == "Custom" && this.pageLoadedCustom == false)
+            {
+                return;
+            }
+
+
             CheckBox thisChk = (CheckBox)sender;
             String thisName = thisChk.Name;
             String thisTabPage = thisChk.Name.Substring(11, (thisChk.Name.Length - 11) - 1);
             String thisCoreNum = thisChk.Name.Substring(thisChk.Name.Length - 1);
+            skbtProcessConfigBasic obj = null;
 
-            skbtProcessConfigBasic obj = (skbtProcessConfigBasic)this.sConfig.GetType().GetProperty("obj" + thisTabPage + "Proc").GetValue(this.sConfig, null);
+            // For Custom Process
+            if(thisTabPage == "Custom"){
+                var t = (Dictionary<short, skbtProcessConfigCustom>)this.sConfig.GetType().GetProperty("obj" + thisTabPage + "Proc").GetValue(this.sConfig, null);
+                if(t.Count >= 1){
+                    if(this.selectedCustomID == null){
+                        // Get first element
+                        foreach(KeyValuePair<short, skbtProcessConfigCustom> kvp in this.sConfig.objCustomProc){
+                            this.selectedCustomID = kvp.Key;
+                            obj = kvp.Value;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        obj = t[(short) this.selectedCustomID];
+                    }
+                }
+                else
+                {
+                    // No Processes
+                    return;
+                }
+            }
+            else
+            {
+                obj = (skbtProcessConfigBasic)this.sConfig.GetType().GetProperty("obj" + thisTabPage + "Proc").GetValue(this.sConfig, null);
+            }
 
+            // hmmm... strange...
             // First run (setup)
             if (this.pageLoaded == false) 
             {
@@ -1685,6 +2148,105 @@ namespace skbtInstaller
                 // Add this core to the affinity string
                 obj.Affinity = obj.Affinity + "," + thisCoreNum;
             }
+
+            // Force Redraw
+            if (this.tabPageCurrent == "Custom")
+            {
+                this.cBoxCustomProcessSelector.Invalidate();
+            }
+        }
+        private void resetTabCustom()
+        {
+            // Load current selected (or default) custom process from object map in coreconfig instance.
+            // if no objects in map, disable all function except add.
+            // If no selected tab, default to first process item in list (whichever read first from config)
+
+            if (this.sConfig.objCustomProc.Count() > 0)
+            {
+                // default
+                skbtProcessConfigCustom selProc_ref = this.sConfig.objCustomProc.First().Value;
+
+                // keep same process between config open/close for this session
+                if (this.selectedCustomID != null)
+                {
+                    if (this.sConfig.objCustomProc.ContainsKey((short)this.selectedCustomID))
+                    {
+                        selProc_ref = this.sConfig.objCustomProc[(short)this.selectedCustomID];
+                    }
+                }
+
+                bool temp_first = false;
+                this.cBoxCustomProcessSelector.Items.Clear();
+                // iterate custom processes and populate controls with data
+                foreach(KeyValuePair<short, skbtProcessConfigCustom> kvp in this.sConfig.objCustomProc){
+
+                    // Add to drop down
+                    ComboboxItem item = new ComboboxItem();
+                    item.Text = kvp.Value.Name;
+                    item.Value = kvp.Key;
+
+                    this.cBoxCustomProcessSelector.Items.Add(item);
+
+                    if (temp_first == false)
+                    {
+                        // Populate Controls
+                        this.cBoxCustomProcessSelector.SelectedIndex = 0;
+                        selProc_ref = kvp.Value;
+
+                        // Keepalive Button State
+                        this.setKeepaliveButtonColor(
+                            btnProcessKeepaliveCustom,
+                            kvp.Value.Keepalive ? false : true);
+
+                        // Path to Process EXE
+                        this.txtPathToEXECustom.Text = Path.Combine(this.ExpandPathVars(kvp.Value.Path), kvp.Value.EXEFile);
+
+                        // Selected Priority Setting
+                        this.cBoxPriorityCustom.SelectedItem = this.getPriorityNameByLowercase(kvp.Value.Priority.ToLower());
+
+                        // Selected Affinity Settings
+                        this.setAffinityChkBoxes("Custom", kvp.Value.Affinity);
+
+                        // Name of Custom Process
+                        this.txtCustomProcessName.Text = kvp.Value.Name;
+
+                        // Process Launch Parameters
+                        this.txtCustomProcessLaunchParams.Text = kvp.Value.LaunchParams;
+
+                        // Set Selected Index
+                        this.selectedCustomID = kvp.Key;
+
+                        this.actionCustomProcSelector(this.cBoxCustomProcessSelector, new EventArgs() { });
+
+                        // TODO: Save Logic
+                        // : Publish
+
+                        // Flag
+                        temp_first = true;
+                    }
+                }
+            }
+            else
+            {
+                // Disable all but add btn
+
+                this.cBoxCustomProcessSelector.Enabled = false;
+                this.btnProcessKeepaliveCustom.Enabled = false;
+                this.btnCustomProcessDelete.Enabled = false;
+                this.btnCustomProcessBrowseEXE.Enabled = false;
+                this.cBoxPriorityCustom.Enabled = false;
+                this.chkAffinityCustom0.Enabled = false;
+                this.chkAffinityCustom1.Enabled = false;
+                this.chkAffinityCustom2.Enabled = false;
+                this.chkAffinityCustom3.Enabled = false;
+                this.chkAffinityCustom4.Enabled = false;
+                this.chkAffinityCustom5.Enabled = false;
+                this.chkAffinityCustom6.Enabled = false;
+                this.chkAffinityCustom7.Enabled = false;
+                this.txtCustomProcessName.Enabled = false;
+                this.txtCustomProcessLaunchParams.Enabled = false;
+            }
+            this.pageLoadedCustom = true;
         }
         private void selectAndDisplayTab(String btnName)
         {
@@ -1696,6 +2258,7 @@ namespace skbtInstaller
                     this.tabControlMainConfig.SelectTab("tabPageProcessServer");
                     this.btnTabSelectServer.Enabled = false;
                     this.btnTabSelectServer.BackColor = System.Drawing.Color.FromArgb(64, 0, 0);
+                    this.tabPageCurrent = "Server";
                     break;
 
                 case "btnTabSelectBEC":
@@ -1704,6 +2267,7 @@ namespace skbtInstaller
                     this.tabControlMainConfig.SelectTab("tabPageProcessBEC");
                     this.btnTabSelectBEC.Enabled = false;
                     this.btnTabSelectBEC.BackColor = System.Drawing.Color.FromArgb(64, 0, 0);
+                    this.tabPageCurrent = "BEC";
                     break;
 
                 case "btnTabSelectDatabase":
@@ -1712,6 +2276,7 @@ namespace skbtInstaller
                     this.tabControlMainConfig.SelectTab("tabPageProcessDatabase");
                     this.btnTabSelectDatabase.Enabled = false;
                     this.btnTabSelectDatabase.BackColor = System.Drawing.Color.FromArgb(64, 0, 0);
+                    this.tabPageCurrent = "Database";
                     break;
 
                 case "btnTabSelectHC":
@@ -1720,6 +2285,7 @@ namespace skbtInstaller
                     this.tabControlMainConfig.SelectTab("tabPageProcessHC");
                     this.btnTabSelectHC.Enabled = false;
                     this.btnTabSelectHC.BackColor = System.Drawing.Color.FromArgb(64, 0, 0);
+                    this.tabPageCurrent = "HC";
                     break;
 
                 case "btnTabSelectTS":
@@ -1728,6 +2294,7 @@ namespace skbtInstaller
                     this.tabControlMainConfig.SelectTab("tabPageProcessTS");
                     this.btnTabSelectTS.Enabled = false;
                     this.btnTabSelectTS.BackColor = System.Drawing.Color.FromArgb(64, 0, 0);
+                    this.tabPageCurrent = "TS";
                     break;
 
                 case "btnTabSelectASM":
@@ -1736,6 +2303,16 @@ namespace skbtInstaller
                     this.tabControlMainConfig.SelectTab("tabPageProcessASM");
                     this.btnTabSelectASM.Enabled = false;
                     this.btnTabSelectASM.BackColor = System.Drawing.Color.FromArgb(64, 0, 0);
+                    this.tabPageCurrent = "ASM";
+                    break;
+
+                case "btnTabSelectCustom":
+                    this.resetTabSelectButtons();
+
+                    this.tabControlMainConfig.SelectTab("tabPageProcessCustom");
+                    this.btnTabSelectCustom.Enabled = false;
+                    this.btnTabSelectCustom.BackColor = System.Drawing.Color.FromArgb(64, 0, 0);
+                    this.tabPageCurrent = "Custom";
                     break;
 
                 default:
@@ -1751,6 +2328,7 @@ namespace skbtInstaller
             this.btnTabSelectBEC.Enabled = true;
             this.btnTabSelectHC.Enabled = true;
             this.btnTabSelectASM.Enabled = true;
+            this.btnTabSelectCustom.Enabled = true;
             this.btnTabSelectTS.Enabled = true;
 
             // Reset Color States
@@ -1759,6 +2337,7 @@ namespace skbtInstaller
             this.btnTabSelectBEC.BackColor = System.Drawing.Color.FromName("Gray");
             this.btnTabSelectHC.BackColor = System.Drawing.Color.FromName("Gray");
             this.btnTabSelectASM.BackColor = System.Drawing.Color.FromName("Gray");
+            this.btnTabSelectCustom.BackColor = System.Drawing.Color.FromName("Gray");
             this.btnTabSelectTS.BackColor = System.Drawing.Color.FromName("Gray");
 
         }
@@ -1788,6 +2367,9 @@ namespace skbtInstaller
             this.txtProfileName.BackColor = tbBackCol;
             this.txtServerCommand.BackColor = tbBackCol;
             this.txtServerModline.BackColor = tbBackCol;
+            this.txtCustomProcessName.BackColor = tbBackCol;
+            this.txtCustomProcessLaunchParams.BackColor = tbBackCol;
+            this.txtPathToEXECustom.BackColor = tbBackCol;
 
             // Lone Checkboxes
             Color cbForeCol = Color.FromKnownColor(KnownColor.ScrollBar);
@@ -1805,6 +2387,7 @@ namespace skbtInstaller
             this.cBoxPriorityHeadlessClient.BackColor = cBoxBackCol;
             this.cBoxPriorityServer.BackColor = cBoxBackCol;
             this.cBoxPriorityTeamspeak.BackColor = cBoxBackCol;
+            this.cBoxPriorityCustom.BackColor = cBoxBackCol;
 
             // Num Selectors
             this.numBackupInterval.ForeColor = Color.FromKnownColor(KnownColor.ScrollBar);
@@ -1828,7 +2411,8 @@ namespace skbtInstaller
                 "BEC",
                 "HeadlessClient",
                 "Teamspeak",
-                "ASM"
+                "ASM",
+                "Custom"
             };
 
             foreach (String tabName in tabNames)
@@ -1841,7 +2425,7 @@ namespace skbtInstaller
                     this.setAffinityChkColor(tChk, true);
 
                     // Only for the cores we can use
-                    if (i < procCount - 1)
+                    if (i <= procCount - 1)
                     {
                         tChk.Enabled = true;
                     }else{
@@ -1918,6 +2502,7 @@ namespace skbtInstaller
                 ((Button)sender).FlatAppearance.MouseDownBackColor = redMouseDown;
             }
         }
+
         private skbtProcessConfigBasic getProcessFromButtonName(String n)
         {
             switch (n)
@@ -1934,6 +2519,15 @@ namespace skbtInstaller
                     return this.sConfig.objTeamspeakProc;
                 case "btnProcessKeepaliveASM":
                     return this.sConfig.objASMProc;
+                case "btnProcessKeepaliveCustom":
+                    if (this.selectedCustomID != null)
+                    {
+                        if (this.sConfig.objCustomProc.ContainsKey((short)this.selectedCustomID))
+                        {
+                            return this.sConfig.objCustomProc[(short)this.selectedCustomID];
+                        }
+                    }
+                    return null;
 
                 default:
                     return null;
@@ -1966,7 +2560,8 @@ namespace skbtInstaller
             // Launch Open File Dialog
             this.openFileDialog.Title = title;
             this.openFileDialog.FileName = defaultFileName;
-            this.openFileDialog.InitialDirectory = Directory.Exists(startFolder) ? startFolder : Path.GetDirectoryName(this.sMeta.PathToEXE);
+            this.openFileDialog.InitialDirectory = Directory.Exists(startFolder) ? startFolder.Replace("/", @"\").TrimEnd('\\') : Path.GetDirectoryName(this.sMeta.PathToEXE).Replace("/", @"\").TrimEnd('\\');
+            
             this.openFileDialog.CheckFileExists = true;
             this.openFileDialog.Filter = filter;
 
@@ -2078,6 +2673,69 @@ namespace skbtInstaller
             }
             return null;
         }
+
+        private void configFormClosed(object sender, FormClosedEventArgs e)
+        {
+            // Cleanup
+            this.objOriginalCusProc.Clear();
+            this.selectedCustomID = null;
+        }
+
+        private void customProcessListDrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index == -1)
+                return;
+            ComboBox combo = ((ComboBox)sender);
+
+            ComboboxItem item = (ComboboxItem) combo.Items[e.Index];
+            skbtProcessConfigCustom origin = null;
+            if (this.objOriginalCusProc.ContainsKey((short) item.Value))
+            {
+                origin = this.objOriginalCusProc[(short) item.Value];
+            }
+            else
+            {
+                origin = this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objCustomProc[(short) item.Value];
+            }
+
+            using (SolidBrush brush = new SolidBrush(e.ForeColor))
+            {
+                Font font = e.Font;
+                if (!checkIsCustomObjectsEqual(origin, this.sConfig.objCustomProc[(short) item.Value]))
+                    font = new System.Drawing.Font(font, FontStyle.Bold);
+                e.DrawBackground();
+                e.Graphics.DrawString(combo.Items[e.Index].ToString(), font, brush, e.Bounds);
+                e.DrawFocusRectangle();
+            }
+        }
+
+        private bool checkIsCustomObjectsEqual(skbtProcessConfigCustom a, skbtProcessConfigCustom b)
+        {
+            string apath = Path.GetFullPath(a.Path).ToLower();
+            string bpath = Path.GetFullPath(b.Path).ToLower();
+
+            if (a.EXEFile.ToLower() != b.EXEFile.ToLower()) return false;
+            if (a.Affinity != b.Affinity) return false;
+            if (a.ID != b.ID) return false;
+            if (a.Keepalive != b.Keepalive) return false;
+            if (a.LaunchParams != b.LaunchParams) return false;
+            if (a.Name != b.Name) return false;
+            if (apath.TrimEnd('\\') != bpath.TrimEnd('\\')) return false;
+            if (a.Priority.ToLower() != b.Priority.ToLower()) return false;
+
+            return true;
+        }
+
+        // New confirm close/cancel dialog
+        private void configFormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (this.formSaved == false)
+            {
+                var window = MessageBox.Show("Are you sure you want to close the configuration manager? " + Environment.NewLine + "Any changes made will be lost!", "You are about to lose config data", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (window == DialogResult.No) e.Cancel = true;
+                else e.Cancel = false;
+            }
+        }
     }
 
     // Custom Tabless Container
@@ -2090,6 +2748,18 @@ namespace skbtInstaller
             // Hide tabs by trapping the TCM_ADJUSTRECT message
             if (m.Msg == 0x1328 && !DesignMode) m.Result = (IntPtr)1;
             else base.WndProc(ref m);
+        }
+    }
+
+    // Custom Combo Items
+    public class ComboboxItem
+    {
+        public string Text { get; set; }
+        public object Value { get; set; }
+
+        public override string ToString()
+        {
+            return Text;
         }
     }
 }

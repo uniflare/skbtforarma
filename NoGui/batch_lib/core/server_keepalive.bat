@@ -81,6 +81,9 @@ call :FUNC datetimestr_cur getTimeStr
 set %in_auto_routine%=%in_auto_routine%
 set %in_manual_routine%=%in_manual_routine%
 call :FUNC TIMESTR getTimeStr
+set UNIX_TIME_CUR=
+call :FUNC UNIX_TIME_CUR GetUnixTime
+@echo %UNIX_TIME_CUR%>"%armapath%\batch_lib\wrkdir\heartbeat.txt"
 
 if exist "%armapath%\batch_lib\wrkdir\lastauto.txt" (
 	set /p lastauto=<batch_lib\wrkdir\lastauto.txt
