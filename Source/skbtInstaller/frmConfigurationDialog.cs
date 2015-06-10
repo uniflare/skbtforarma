@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using IWshRuntimeLibrary;
+using System.Threading;
 
 namespace skbtInstaller
 {
@@ -47,6 +48,7 @@ namespace skbtInstaller
         // Design Flag
         Boolean pageLoaded;
         Boolean pageLoadedCustom;
+        Boolean pageCustomLoading;
 
         // If Batch Settings Path Changed
         Boolean onSaveRenameConfig;
@@ -70,6 +72,7 @@ namespace skbtInstaller
             this.formSaved = false;
             this.pageLoaded = false;
             this.pageLoadedCustom = false;
+            this.pageCustomLoading = false;
 
             if (!System.IO.File.Exists(thisConfigMeta.PathToConfig))
             {
@@ -330,10 +333,28 @@ namespace skbtInstaller
 
         private void actionSaveConfig(object sender, EventArgs e)
         {
+
+            if (this.sc.frmMainWindowHandle.IsKeepaliveActive(this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier]))
+            {
+                MessageBox.Show("KEEPALIVE ACTIVE" + Environment.NewLine + "You must close the keepalive for this config and wait 15 seconds before saving this config.");
+                return;
+            }
+
             String newFile = this.sMeta.PathToConfig;
             String oldFile = this.sc.CoreConfig.getServerMetaObject(this.sMeta.Identifier).PathToConfig;
 
             bool showChangePathDialog = false;
+
+            // Check if config name is in use by another config
+            if (this.sc.CoreConfig.getServerMetaObject(this.sMeta.Identifier).textualName != this.sMeta.textualName)
+            {
+                if (this.sc.configNameInUse(this.txtConfigName.Text))
+                {
+                    MessageBox.Show("The configuration name you set is already in use by another config!");
+                    return;
+                }
+            }
+
             // Check if config path is in use by another config
             if (this.sc.CoreConfig.ServerConfigInUse(newFile, this.sMeta.Identifier))
             {
@@ -473,11 +494,50 @@ namespace skbtInstaller
                 this.sc.doBatchLibFiles(newFile, this.ExpandPathVars(this.sConfig.objServerProc.Path));
             }
 
-            // Check if first time installation. If so, add shortcuts.
-            if (this.sMeta.isInstalled == false)
+            // Config Name Change Flag
+            Boolean configNamechanged = false;
+            if (this.sMeta.textualName != this.sc.CoreConfig.getServerMetaObject(this.sMeta.Identifier).textualName)
             {
+                configNamechanged = true;
+            }
+            // Show saving dialog
+            dlgSavingConfig dlg = new dlgSavingConfig();
+            dlg.StartPosition = FormStartPosition.CenterScreen;
+            dlg.Show();
+            dlg.Update();
+
+            // Check if first time installation. If so, add shortcuts.
+            if (this.sMeta.isInstalled == false || configNamechanged)
+            {
+                // Old Name
+                String StartMenuProgName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), "Programs", skbtServerControl.ProgramGroupName, this.sc.CoreConfig.getServerMetaObject(this.sMeta.Identifier).textualName);
+
+                if (configNamechanged)
+                {
+                    // Delete Shrotcuts/Program Group
+                    Dictionary<UInt32, String> Shortcuts = new Dictionary<uint, string>() {
+                        {0,Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Start Keepalive (" + this.sc.CoreConfig.getServerMetaObject(this.sMeta.Identifier).textualName + ").lnk")},
+                        {1,Path.Combine(StartMenuProgName, "Start Keepalive.lnk")},
+                        {2,Path.Combine(StartMenuProgName, "Auto Restart Test.lnk")},
+                        {3,Path.Combine(StartMenuProgName, "Manual Restart.lnk")},
+                        {4,Path.Combine(StartMenuProgName, "Manual Start.lnk")},
+                        {5,Path.Combine(StartMenuProgName, "Manual Stop.lnk")},
+                        {6,Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "README.txt")}
+                    };
+                    foreach (KeyValuePair<UInt32, String> shortcut in Shortcuts)
+                    {
+                        while (System.IO.File.Exists(Path.GetFullPath(shortcut.Value.ToString())))
+                        {
+                            System.IO.File.Delete(Path.GetFullPath(shortcut.Value.ToString()));
+                        }
+                    }
+                    if (Directory.Exists(StartMenuProgName)) { Directory.Delete(StartMenuProgName, true); }
+                }
+
+                // Current Name
+                StartMenuProgName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), "Programs", skbtServerControl.ProgramGroupName, this.sMeta.textualName);
+
                 // Create Shortcuts on desktop / add to programs start menu
-                String StartMenuProgName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), "Programs", skbtServerControl.ProgramGroupName, this.sMeta.textualName);
                 String BatchLibPath = Path.Combine(this.sConfig.objServerProc.Path, "batch_lib");
 
                 if (!addShortcut(
@@ -542,6 +602,9 @@ namespace skbtInstaller
             // Saved Flag
             this.formSaved = true;
 
+            // close Saving Dialog
+            dlg.Close();
+
             // Close Configuration Window
             this.Close();
         }
@@ -601,6 +664,7 @@ namespace skbtInstaller
         private void actionPriorityChanged(object sender, EventArgs e)
         {
             if (this.pageLoaded == false) return;
+            if (this.pageLoadedCustom == false) return;
 
             // Get object from list name
             ComboBox cBox = ((ComboBox)sender);
@@ -622,15 +686,13 @@ namespace skbtInstaller
             if (objectName == "Custom")
             {
                 // Custom routine for these processes
-                var cProcDict = ((Dictionary<short, skbtProcessConfigCustom>)this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].GetType().GetProperty("obj" + objectName + "Proc").GetValue(this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier], null));
-                if (cProcDict.ContainsKey((short)this.selectedCustomID))
+                if (this.objOriginalCusProc.ContainsKey((short)this.selectedCustomID))
                 {
-                    origin = (skbtProcessConfigBasic)cProcDict[(short)this.selectedCustomID];
+                    origin = (skbtProcessConfigBasic)this.objOriginalCusProc[(short)this.selectedCustomID];
                 }
                 else
                 {
-                    // For new custom processes
-                    origin = (skbtProcessConfigBasic)this.objOriginalCusProc[(short)this.selectedCustomID];
+                    origin = (skbtProcessConfigBasic)((Dictionary<short, skbtProcessConfigCustom>)this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].GetType().GetProperty("obj" + objectName + "Proc").GetValue(this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier], null))[(short)this.selectedCustomID];
                 }
             }
             else
@@ -1595,13 +1657,23 @@ namespace skbtInstaller
 
                 case "btnCustomProcessBrowseEXE":       // Open File Custom Process (*.exe)
 
-                    var origin = Path.Combine(this.ExpandPathVars(this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objCustomProc[(short)this.selectedCustomID].Path), this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objCustomProc[(short)this.selectedCustomID].EXEFile);
+                    skbtProcessConfigCustom originObj;
+                    if (this.objOriginalCusProc.ContainsKey((short)this.selectedCustomID))
+                    {
+                        originObj = this.objOriginalCusProc[(short)this.selectedCustomID];
+                    }
+                    else
+                    {
+                        originObj = this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objCustomProc[(short)this.selectedCustomID];
+                    }
+
+                   string origin = Path.GetFullPath(Path.Combine(this.ExpandPathVars(originObj.Path), originObj.EXEFile));
 
                     this.actionDelegateBrowseAction(
                         // TEXT BOX
                         this.txtPathToEXECustom,
                         // ORIGIN PATH STRING
-                        Path.Combine(this.ExpandPathVars(this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objCustomProc[(short)this.selectedCustomID].Path), this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].objCustomProc[(short)this.selectedCustomID].EXEFile),
+                        origin,
                         // REF TO CURRENT PATH STRING
                         ref this.sConfig.objCustomProc[(short)this.selectedCustomID].Path,
                         // DIALOG
@@ -1617,7 +1689,7 @@ namespace skbtInstaller
                         // VALIDATION
                         (userPathValidation)delegate(String newPathStr)
                         {
-                            var current = Path.GetFullPath(Path.Combine(this.ExpandPathVars(this.sConfig.objCustomProc[(short)this.selectedCustomID].Path), this.sConfig.objCustomProc[(short)this.selectedCustomID].EXEFile)).ToLower();
+                            var current = Path.GetFullPath(this.sConfig.objCustomProc[(short)this.selectedCustomID].Path).ToLower();
                             var newP = Path.GetFullPath(this.ExpandPathVars(newPathStr)).ToLower();
 
                             if (current.ToLower() == newP.ToLower() || !System.IO.File.Exists(newP)) { return "silent"; }
@@ -1805,7 +1877,7 @@ namespace skbtInstaller
             // Check if the path is in use anywhere else
             foreach (KeyValuePair<short, skbtProcessConfigCustom> cProc in this.sConfig.objCustomProc)
             {
-                thisPath = Path.GetFullPath(this.ExpandPathVars(Path.Combine(cProc.Value.Path, cProc.Value.EXEFile)));
+                thisPath = Path.GetFullPath(Path.Combine(this.ExpandPathVars(cProc.Value.Path), cProc.Value.EXEFile));
                 if (thisPath.ToLower() == newP.ToLower()) { return "The path is currently in use by another custom process (" + cProc.Value.Name + ")"; }
             }
             // Check default Processes
@@ -1821,7 +1893,7 @@ namespace skbtInstaller
 
             foreach (skbtProcessConfigBasic p in pArr)
             {
-                thisPath = Path.GetFullPath(this.ExpandPathVars(Path.Combine(p.Path, p.EXEFile)));
+                thisPath = Path.GetFullPath(Path.Combine(this.ExpandPathVars(p.Path), p.EXEFile));
                 if (thisPath.ToLower() == newP.ToLower()) { return "This exe path is already in use by a main process config (" + thisPath + ")"; }
             }
 
@@ -2057,7 +2129,7 @@ namespace skbtInstaller
         private void evntChkAffinityChange(object sender, EventArgs e)
         {
             // quik fix
-            if (this.tabPageCurrent == "Custom" && this.pageLoadedCustom == false)
+            if ((this.tabPageCurrent == "Custom" && this.pageLoadedCustom == false) || this.pageCustomLoading == true)
             {
                 return;
             }
@@ -2161,6 +2233,8 @@ namespace skbtInstaller
             // if no objects in map, disable all function except add.
             // If no selected tab, default to first process item in list (whichever read first from config)
 
+            this.pageCustomLoading = true;
+
             if (this.sConfig.objCustomProc.Count() > 0)
             {
                 // default
@@ -2246,6 +2320,7 @@ namespace skbtInstaller
                 this.txtCustomProcessName.Enabled = false;
                 this.txtCustomProcessLaunchParams.Enabled = false;
             }
+            this.pageCustomLoading = false;
             this.pageLoadedCustom = true;
         }
         private void selectAndDisplayTab(String btnName)
@@ -2654,6 +2729,8 @@ namespace skbtInstaller
         }
         private String CollapsePathVars(String path)
         {
+            // maybe re activate if i have time to fix
+            return path;
             if (path == null) { return null; }
             // %armapaths%
             String armapath = Path.GetDirectoryName(this.sMeta.PathToEXE);
@@ -2735,6 +2812,7 @@ namespace skbtInstaller
                 if (window == DialogResult.No) e.Cancel = true;
                 else e.Cancel = false;
             }
+            // this.configFormClosed(sender, new FormClosedEventArgs(CloseReason.UserClosing));
         }
     }
 

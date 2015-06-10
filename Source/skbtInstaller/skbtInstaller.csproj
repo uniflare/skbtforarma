@@ -69,6 +69,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="dlgSavingConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dlgSavingConfig.Designer.cs">
+      <DependentUpon>dlgSavingConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="skbtCoreConfig.cs" />
     <Compile Include="skbtCoreExtensions.cs" />
     <Compile Include="CustomCheckbox.cs">
@@ -101,6 +107,9 @@
     <Compile Include="skbtServerConfig.cs" />
     <Compile Include="skbtControl.cs" />
     <Compile Include="skbtServerMeta.cs" />
+    <EmbeddedResource Include="dlgSavingConfig.resx">
+      <DependentUpon>dlgSavingConfig.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMainWindow.resx">
       <DependentUpon>frmMainWindow.cs</DependentUpon>
     </EmbeddedResource>

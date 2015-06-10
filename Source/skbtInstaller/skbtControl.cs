@@ -113,6 +113,16 @@ namespace skbtInstaller
                     }
                     else
                     {
+                        // Check if config name is in use by another config
+                        while (this.configNameInUse(textualName))
+                        {
+                            MessageBox.Show("The configuration name you set is already in use by another config!");
+                            textualName = this.frmMainWindowHandle.getNewServerConfigNameFromUser();
+                            if (textualName == null)
+                            {
+                                return;
+                            }
+                        }
 
                         // Add Server config instance to core config list
                         this.CoreConfig.addServerConfig(newID, new skbtServerConfig(PathToEXE, cPath));
@@ -145,6 +155,17 @@ namespace skbtInstaller
             textualName = this.frmMainWindowHandle.getNewServerConfigNameFromUser();
             if(textualName == null){
                 return;
+            }
+
+            // Check if config name is in use by another config
+            while(this.configNameInUse(textualName))
+            {
+                MessageBox.Show("The configuration name you set is already in use by another config!");
+                textualName = this.frmMainWindowHandle.getNewServerConfigNameFromUser();
+                if (textualName == null)
+                {
+                    return;
+                }
             }
 
             MessageBox.Show("There was no installation found. Please install.");
@@ -466,6 +487,19 @@ namespace skbtInstaller
             {
                 System.IO.File.Delete(newConfigName);
             }
+        }
+
+        public bool configNameInUse(string name)
+        {
+            foreach (KeyValuePair<string, skbtServerConfig> cfg in CoreConfig.getServerConfigList())
+            {
+                string thisName = CoreConfig.getServerMetaObject(cfg.Key).textualName;
+                if (thisName == name)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 

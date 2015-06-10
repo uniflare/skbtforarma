@@ -1,16 +1,17 @@
 ==================
-ARMA SERVER KEEPALIVE TOOL 1.2 (HOTFIX RELEASE 2)
+ARMA SERVER KEEPALIVE TOOL 1.2.1
 ==================
-Merged NonGUI 1.2
-Updated GUI to accomodate new features
-Some bug fixes as usual
+Merged NonGUI 1.2.1
+Fixed shortcuts/renaming configs and fixedthe new custom process feature
+also added some checks and fixed some bugs relating to settings changes conflicting with other configs
 
 ==================
 == NEW CHANGES  ==
 ==================
-Added check before uninstalling if keepalive is active
-Added new "Custom" Tab. You can now create your own keepalive processes!
-Cleaned exception when trying to delete batch_lib folder while it is in use
+Fixed error when adding a new custom process on a new default config
+Completely disabled path collapsing, all paths in batch are now in full path format
+Now changes shortcuts properly when changing name/config
+Added checks to prevent overwriting other configs (same config names)
 
 ==================
 == INSTALLATION ==
@@ -57,6 +58,12 @@ NOTE: The logfile is called "batchrun.log" and is placed in the batch_lib direct
 ==================
 = OLD CHANGELOGS =
 ==================
+
+== Version 1.2.0
+Added check before uninstalling if keepalive is active
+Added new "Custom" Tab. You can now create your own keepalive processes!
+Cleaned exception when trying to delete batch_lib folder while it is in use
+Merged changes from NonGui v1.2.0
 
 == Version 1.1.0.2
 *HOTFIX 1: Fixed exception when changing db file location on first install.

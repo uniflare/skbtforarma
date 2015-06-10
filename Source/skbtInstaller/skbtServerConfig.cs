@@ -257,6 +257,8 @@ namespace skbtInstaller
                 "-connect=%serverip% -port=%serverport% -client -nosound -mod=@Epoch;"
             );
 
+            this.objCustomProc = new Dictionary<short, skbtProcessConfigCustom>() { };
+
             // Defaults loaded
         }
 
