@@ -7,8 +7,8 @@ Fixed typo in debug logging at startup (gives version)
 ==================
 == NEW CHANGES  ==
 ==================
-Fixed typo preventing wer dialogs from being closed when requested to automatically (true to 1)
-Added custom process feature, keep up to 100 extra custom processes alive complete with affinity,priority and command line parameters)
+Added checks for Redis Server Path/EXE Name and HC Path/EXE Name
+Fixed Logging typo at start of keepalive
 
 ==================
 == INSTALLATION ==
