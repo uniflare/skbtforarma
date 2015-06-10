@@ -1,9 +1,8 @@
 ==================
-ARMA SERVER KEEPALIVE TOOL 1.2.0 (NoGui)
+ARMA SERVER KEEPALIVE TOOL 1.2.1 (NoGui)
 ==================
-New custom process feature! Have a look near the end of the config file for a new section!
-Just follow the same format for new processes.
-And fix for closing Error dialogs on crash.
+Added sanity checks for hc/database paths
+Fixed typo in debug logging at startup (gives version)
 
 ==================
 == NEW CHANGES  ==
@@ -60,6 +59,10 @@ The logfile is called "batchrun.log" and is placed in the batch_lib directory
 ==================
 = OLD CHANGELOGS =
 ==================
+
+== Version 1.2.0
+Fixed typo preventing wer dialogs from being closed when requested to automatically (true to 1)
+Added custom process feature, keep up to 100 extra custom processes alive complete with affinity,priority and command line parameters)
 
 == Version 1.1.0:
 Fixed ASM not starting unless keepalive_hc was 1, typo

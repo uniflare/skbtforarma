@@ -5,7 +5,7 @@ call :doSanityCheck
 cd "%armapath%"
 
 call :FUNC TIMESTR GetTimeStr
-call :FUNC NOVAR BatchLogWrite 1__KEEPALIVE__INITIALIZE__Starting_v1.1.0_NoGui
+call :FUNC NOVAR BatchLogWrite 1__KEEPALIVE__INITIALIZE__Starting_v1.2.1_NoGui
 set DEBUG_FLAG=0
 set /a auto_timeout=%auto_timeout_length%
 set /a manual_timeout=%manual_timeout_length%
@@ -49,7 +49,7 @@ goto :EOF
 :draw_display
 cls
 echo ===========================================             %TIMESTR:@= @ %
-echo    Server Keepalive 1.2.0_NoGui by Uniflare (AKA) Chemical Bliss
+echo    Server Keepalive 1.2.1_NoGui by Uniflare (AKA) Chemical Bliss
 echo.
 echo    Armapath: %armapath%
 echo.
@@ -837,6 +837,48 @@ if %keepalive_database%==1 (
 		echo.
 		goto :EndSanity
 	)
+	if not exist "%redispath%" (
+		set criticalconfigerror=1
+		set current_message=CRITICAL ERROR^(s^) - REVIEW BELOW
+		call :draw_display
+		echo.CONFIG ERROR: Cannot find the server Database folder at:
+		echo."%redispath%"
+		echo. --- set redispath in the config file to the correct location
+		echo.
+		goto :EndSanity
+	)
+	if not exist "%redispath%\%redisexename%" (
+		set criticalconfigerror=1
+		set current_message=CRITICAL ERROR^(s^) - REVIEW BELOW
+		call :draw_display
+		echo.CONFIG ERROR: Cannot find the server Database EXE at:
+		echo."%redispath%\%redisexename%"
+		echo. --- set redisexename in the config file to the correct name
+		echo.
+		goto :EndSanity
+	)
+)
+if %keepalive_hc%==1 (
+	if not exist "%hcarmapath%" (
+		set criticalconfigerror=1
+		set current_message=CRITICAL ERROR^(s^) - REVIEW BELOW
+		call :draw_display
+		echo.CONFIG ERROR: Cannot find the Headless Client folder at:
+		echo."%hcarmapath%"
+		echo. --- set hcarmapath in the config file to the correct location
+		echo.
+		goto :EndSanity
+	)
+	if not exist "%hcarmapath%\%hcexename%" (
+		set criticalconfigerror=1
+		set current_message=CRITICAL ERROR^(s^) - REVIEW BELOW
+		call :draw_display
+		echo.CONFIG ERROR: Cannot find -Headless Client- executable at:
+		echo."%hcarmapath%\%hcexename%"
+		echo. --- set hcarmapath AND hcexename in the config file correctly
+		echo.
+		goto :EndSanity
+	)
 )
 if %keepalive_asm%==1 (
 	if not exist "%asmpath%" (
@@ -891,6 +933,7 @@ if "!keepalive_cusproc[%i%]!"=="1" (
 	set returnVal=
 	call :Method_CusProcSanity returnVal %i%
 )
+if "returnVal"=="false" goto :EndSanity
 if %i%==99 goto :end_mloop2
 set /a i=%i%+1
 goto :mloop_2
