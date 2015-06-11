@@ -2,13 +2,15 @@
 ARMA SERVER KEEPALIVE TOOL 1.2.2
 ==================
 Added higher core support (up to 100 cores atm)
-Added a new icon showing batch status
+Added a new icons showing batch/server status
+Added a control bar in config window, make administering easier.
 
 ==================
 == NEW CHANGES  ==
 ==================
 ADDED: Higher processor core limit for affinity settings.
 ADDED: Icon in top right of config window showing keepalive batch status.
+ADDED: New Control Bar in Config Window.
 
 ==================
 == INSTALLATION ==
