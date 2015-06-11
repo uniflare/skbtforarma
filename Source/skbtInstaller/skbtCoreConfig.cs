@@ -21,10 +21,13 @@ namespace skbtInstaller
     {
         // STRINGS
         public const String strAuthor = "Uniflare (AKA) Chemical Bliss";    // {AUTHOR}
-        public const String strVersion = "1.2.1.0";    // {VERSION}
+        public const String strVersion = "1.2.2.0";    // {VERSION}
         public const String strKeepaliveTitle = "Server Keepalive Tools v" + strVersion + " by " + strAuthor;  // {KEEPALIVE_TITLE}
         public const String strLauncherTitle = "Keepalive Launcher v1.1";   // {KALAUNCHER_TITLE}
         public const String strKeepaliveHead = "Server Keepalive " + strVersion + " by " + strAuthor; // {DISPLAY_HEADER}
+
+        //public const short totalCores = (short)Environment.ProcessorCount;
+        public short totalCores = (short)Environment.ProcessorCount;
 
         // Looped ref (do i care?)
         skbtServerControl sc;

@@ -20,12 +20,16 @@ namespace skbtInstaller
         // Reference to the Server Control Object
         skbtServerControl sc;
 
+        // Affinity boxes built flag
+        Boolean affChkBuilt = false;
 
         // Current Selected Process ID
         short? selectedCustomID = null;
 
         // Saved Flag
         Boolean formSaved = false;
+
+        Dictionary<String, Dictionary<int, CheckBox>> AffinityBoxes;
 
         // colors :)
         Color redForeGround = Color.FromArgb(132, 0, 0);
@@ -327,8 +331,62 @@ namespace skbtInstaller
 
         private void buildAffinityBoxes()
         {
+            if (this.affChkBuilt == true)
+            {
+                return;
+            }
+            this.affChkBuilt = true;
             // TODO: finish this (infinite affinity)
             // loop for each affinity available, reposition form elements accordingly, repeat for each tab. (Move a container)
+
+            String[] tabs = {
+                "Server",
+                "Database",
+                "BEC",
+                "HeadlessClient",
+                "Teamspeak",
+                "ASM",
+                "Custom"
+            };
+            var tabPanels = new Dictionary<String, FlowLayoutPanel>(){
+                {"Server", this.flpServer},
+                {"Database", this.flpDatabase},
+                {"BEC", this.flpBEC},
+                {"HeadlessClient", this.flpHeadlessClient},
+                {"Teamspeak", this.flpTeamspeak},
+                {"ASM", this.flpASM},
+                {"Custom", this.flpCustom},
+            };
+            this.AffinityBoxes = new Dictionary<string,Dictionary<int,CheckBox>>();
+            foreach (String tab in tabs)
+            {
+                Dictionary<int, CheckBox> chkList = new Dictionary<int, CheckBox>();
+                for (int i = 0; i < this.sc.CoreConfig.totalCores; i++)
+                {
+                    CheckBox tChk = new CheckBox();
+                    tChk.Name = "chkAffinity"+tab.ToString()+i.ToString();
+                    tChk.Appearance = System.Windows.Forms.Appearance.Button;
+                    tChk.AutoSize = true;
+                    tChk.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+                    tChk.FlatAppearance.CheckedBackColor = System.Drawing.Color.Transparent;
+                    tChk.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+                    tChk.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                    tChk.ForeColor = System.Drawing.SystemColors.ScrollBar;
+                    tChk.Location = new System.Drawing.Point(297, 80);
+                    tChk.Size = new System.Drawing.Size(30, 23);
+                    tChk.TabIndex = 35;
+                    tChk.Text = i.ToString();
+                    this.toolTip1.SetToolTip(tChk, "Process EXE Affinity. The cores with which this process can utilize.");
+                    tChk.UseVisualStyleBackColor = true;
+                    tChk.CheckedChanged += new System.EventHandler(this.evntChkAffinityChange);
+                    tabPanels[tab].Controls.Add(tChk);
+                    chkList.Add(i, tChk);
+                }
+                this.AffinityBoxes.Add(tab, chkList);
+            }
+
+
+
         }
 
         private void actionSaveConfig(object sender, EventArgs e)
@@ -2134,11 +2192,17 @@ namespace skbtInstaller
                 return;
             }
 
-
             CheckBox thisChk = (CheckBox)sender;
             String thisName = thisChk.Name;
-            String thisTabPage = thisChk.Name.Substring(11, (thisChk.Name.Length - 11) - 1);
-            String thisCoreNum = thisChk.Name.Substring(thisChk.Name.Length - 1);
+            int dig = 1;
+            if (Char.IsNumber(thisChk.Name[thisChk.Name.Length - 2]))
+            {
+                dig = 2;
+            }
+
+            String thisTabPage = thisChk.Name.Substring(11, (thisChk.Name.Length - 11) - dig);
+            String thisCoreNum = thisChk.Name.Substring(thisChk.Name.Length - dig);
+
             skbtProcessConfigBasic obj = null;
 
             // For Custom Process
@@ -2292,9 +2356,6 @@ namespace skbtInstaller
 
                         this.actionCustomProcSelector(this.cBoxCustomProcessSelector, new EventArgs() { });
 
-                        // TODO: Save Logic
-                        // : Publish
-
                         // Flag
                         temp_first = true;
                     }
@@ -2309,14 +2370,11 @@ namespace skbtInstaller
                 this.btnCustomProcessDelete.Enabled = false;
                 this.btnCustomProcessBrowseEXE.Enabled = false;
                 this.cBoxPriorityCustom.Enabled = false;
-                this.chkAffinityCustom0.Enabled = false;
-                this.chkAffinityCustom1.Enabled = false;
-                this.chkAffinityCustom2.Enabled = false;
-                this.chkAffinityCustom3.Enabled = false;
-                this.chkAffinityCustom4.Enabled = false;
-                this.chkAffinityCustom5.Enabled = false;
-                this.chkAffinityCustom6.Enabled = false;
-                this.chkAffinityCustom7.Enabled = false;
+
+                foreach (var chkList in this.AffinityBoxes["Custom"])
+                {
+                    chkList.Value.Enabled = false;
+                }
                 this.txtCustomProcessName.Enabled = false;
                 this.txtCustomProcessLaunchParams.Enabled = false;
             }
@@ -2477,8 +2535,7 @@ namespace skbtInstaller
         }
         private void resetAllAffinityCheckboxes()
         {
-            int procCount = Environment.ProcessorCount;
-            if (procCount > 8) { procCount = 8; }
+            int procCount = this.sc.CoreConfig.totalCores;
 
             String[] tabNames = new String[] {
                 "Server",
@@ -2492,7 +2549,7 @@ namespace skbtInstaller
 
             foreach (String tabName in tabNames)
             {
-                for (int i = 0; i < 8; i++)
+                for (int i = 0; i < procCount; i++)
                 {
                     // Get checkbox
                     CheckBox tChk = (CheckBox)this.Controls.Find("chkAffinity" + tabName + (i).ToString(), true)[0];
@@ -2513,8 +2570,7 @@ namespace skbtInstaller
         private void setAffinityChkBoxes(String ctrlSuffix, String affinityStr)
         {
 
-            int procCount = Environment.ProcessorCount;
-            if (procCount > 8) { procCount = 8; }
+            int procCount = this.sc.CoreConfig.totalCores;
             String[] selCores = affinityStr.Split(',');
 
             for (int i = 0; i < procCount; i++)

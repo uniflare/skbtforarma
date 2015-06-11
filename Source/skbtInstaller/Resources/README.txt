@@ -1,17 +1,12 @@
 ==================
-ARMA SERVER KEEPALIVE TOOL 1.2.1
+ARMA SERVER KEEPALIVE TOOL 1.2.2
 ==================
-Merged NonGUI 1.2.1
-Fixed shortcuts/renaming configs and fixedthe new custom process feature
-also added some checks and fixed some bugs relating to settings changes conflicting with other configs
+Added higher core support (up to 100 cores atm)
 
 ==================
 == NEW CHANGES  ==
 ==================
-Fixed error when adding a new custom process on a new default config
-Completely disabled path collapsing, all paths in batch are now in full path format
-Now changes shortcuts properly when changing name/config
-Added checks to prevent overwriting other configs (same config names)
+ADDED: Higher processor core limit for affinity settings.
 
 ==================
 == INSTALLATION ==
@@ -58,6 +53,12 @@ NOTE: The logfile is called "batchrun.log" and is placed in the batch_lib direct
 ==================
 = OLD CHANGELOGS =
 ==================
+
+== Version 1.2.1
+Fixed error when adding a new custom process on a new default config
+Completely disabled path collapsing, all paths in batch are now in full path format
+Now changes shortcuts properly when changing name/config
+Added checks to prevent overwriting other configs (same config names)
 
 == Version 1.2.0
 Added check before uninstalling if keepalive is active

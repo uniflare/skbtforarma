@@ -312,8 +312,7 @@ namespace skbtInstaller
          */
         public String getAffinityString(String[] cores)
         {
-            int procCount = Environment.ProcessorCount;
-            if (procCount > 8) { procCount = 8; }
+            int procCount = this.CoreConfig.totalCores;
             String aStr = "";
             if (cores.Count() > 0)
             {
@@ -342,7 +341,6 @@ namespace skbtInstaller
         public static String getDefaultAffinityString()
         {
             int procCount = Environment.ProcessorCount;
-            if (procCount > 8) { procCount = 8; }
 
             UInt16 i = 0;
             String result = "";
