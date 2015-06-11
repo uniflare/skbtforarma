@@ -27,7 +27,7 @@ namespace skbtInstaller
         public const String strKeepaliveHead = "Server Keepalive " + strVersion + " by " + strAuthor; // {DISPLAY_HEADER}
 
         //public const short totalCores = (short)Environment.ProcessorCount;
-        public short totalCores = (short)Environment.ProcessorCount;
+        public short totalCores = 32;
 
         // Looped ref (do i care?)
         skbtServerControl sc;
