@@ -61,7 +61,7 @@ namespace skbtInstaller
                     Int32 stampNow = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
 
                     // Compare
-                    if ((stampNow - stampBeat) <= 15)
+                    if ((stampNow - stampBeat) <= 8)
                     {
                         return true;
                     }

@@ -5,7 +5,7 @@ call :doSanityCheck
 cd "%armapath%"
 
 call :FUNC TIMESTR GetTimeStr
-call :FUNC NOVAR BatchLogWrite 1__KEEPALIVE__INITIALIZE__Starting_v1.2.1_NoGui
+call :FUNC NOVAR BatchLogWrite 1__KEEPALIVE__INITIALIZE__Starting_v1.2.2_NoGui
 set DEBUG_FLAG=0
 set /a auto_timeout=%auto_timeout_length%
 set /a manual_timeout=%manual_timeout_length%
@@ -49,7 +49,8 @@ goto :EOF
 :draw_display
 cls
 echo ===========================================             %TIMESTR:@= @ %
-echo    Server Keepalive 1.2.1_NoGui by Uniflare (AKA) Chemical Bliss
+
+echo    Server Keepalive 1.2.2.0 NonGUI by Uniflare (AKA) Chemical Bliss
 echo.
 echo    Armapath: %armapath%
 echo.
@@ -84,6 +85,8 @@ call :FUNC TIMESTR getTimeStr
 set UNIX_TIME_CUR=
 call :FUNC UNIX_TIME_CUR GetUnixTime
 @echo %UNIX_TIME_CUR%>"%armapath%\batch_lib\wrkdir\heartbeat.txt"
+set /p quitflag=<"%armapath%\batch_lib\wrkdir\stopkeepalive.txt"
+if "%quitflag%"=="keepalivequit" exit
 
 if exist "%armapath%\batch_lib\wrkdir\lastauto.txt" (
 	set /p lastauto=<batch_lib\wrkdir\lastauto.txt

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using IWshRuntimeLibrary;
 using System.Threading;
+using System.Management;
 
 namespace skbtInstaller
 {
@@ -29,6 +30,10 @@ namespace skbtInstaller
         // Saved Flag
         Boolean formSaved = false;
 
+        // Timer for activity check
+        System.Windows.Forms.Timer activityTimer = new System.Windows.Forms.Timer();
+
+        // Affinity box list
         Dictionary<String, Dictionary<int, CheckBox>> AffinityBoxes;
 
         // colors :)
@@ -77,6 +82,11 @@ namespace skbtInstaller
             this.pageLoaded = false;
             this.pageLoadedCustom = false;
             this.pageCustomLoading = false;
+
+            this.activityTimer.Tick += new EventHandler(activityTimer_Check);
+            this.activityTimer.Interval = 5000;
+            this.activityTimer.Enabled = true;
+            this.activityTimer.Start();
 
             if (!System.IO.File.Exists(thisConfigMeta.PathToConfig))
             {
@@ -322,13 +332,162 @@ namespace skbtInstaller
             // Custom Proc Tab
             this.resetTabCustom();
 
+            // Fire first activity check
+            this.activityTimer_Check(new object(), new EventArgs());
+
             this.pageLoaded = true;
 
             // Show Dialog
             this.ShowDialog();
 
+        
         }
 
+        private void executeBatchFile(string filepath){
+            Process myProcess = new Process();
+            myProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            myProcess.StartInfo.CreateNoWindow = true;
+            myProcess.StartInfo.UseShellExecute = false;
+            myProcess.StartInfo.FileName = "cmd.exe";
+            myProcess.StartInfo.Arguments = "/c " + filepath;
+            myProcess.EnableRaisingEvents = true;
+            //myProcess.Exited += new EventHandler(process_Exited);
+            myProcess.Start();
+            // int ExitCode = myProcess.ExitCode;
+        }
+
+        public Process getProcessByPath(String path)
+        {
+            var wmiQueryString = "SELECT ProcessId, ExecutablePath, CommandLine FROM Win32_Process";
+            using (var searcher = new ManagementObjectSearcher(wmiQueryString))
+            using (var results = searcher.Get())
+            {
+                var query = from p in Process.GetProcesses()
+                            join mo in results.Cast<ManagementObject>()
+                            on p.Id equals (int)(uint)mo["ProcessId"]
+                            select new
+                            {
+                                Process = p,
+                                Path = (string)mo["ExecutablePath"],
+                                CommandLine = (string)mo["CommandLine"]
+                            };
+                foreach (var item in query)
+                {
+                    string exe = Path.GetFileName(path);
+                    if (item.Path == null)
+                    {
+                    }
+                    else
+                    {
+                        // def
+                        if (Path.GetFullPath(item.Path).ToLower() == Path.GetFullPath(path).ToLower())
+                        {
+                            return item.Process;
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+        public bool isProcessRunning(String path)
+        {
+            var wmiQueryString = "SELECT ProcessId, Name, ExecutablePath, CommandLine FROM Win32_Process";
+            using (var searcher = new ManagementObjectSearcher(wmiQueryString))
+            using (var results = searcher.Get())
+            {
+                var query = from p in Process.GetProcesses()
+                            join mo in results.Cast<ManagementObject>()
+                            on p.Id equals (int)(uint)mo["ProcessId"]
+                            select new
+                            {
+                                Process = p,
+                                Path = (string)mo["ExecutablePath"],
+                                CommandLine = (string)mo["CommandLine"],
+                                Name = (string)mo["Name"]
+                            };
+                foreach (var item in query)
+                {
+                    string exe = Path.GetFileName(path);
+                    if (item.Path == null)
+                    {
+                        // maybe
+                        if (item.Name == exe)
+                        {
+                            // maybe
+                        }
+                    }
+                    else 
+                    { 
+                        // def
+                        if (Path.GetFullPath(item.Path).ToLower() == Path.GetFullPath(path).ToLower())
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+        public void activityTimer_Check(object sender, EventArgs e)
+        {
+            // Server Process
+            Process tProc = this.getProcessByPath(Path.GetFullPath(Path.Combine(this.sConfig.objServerProc.Path, this.sConfig.objServerProc.EXEFile)));
+
+            // Active Flags
+            Boolean keepaliveRunning = this.sc.frmMainWindowHandle.IsKeepaliveActive(this.sConfig)? true : false;
+            Boolean serverProcessRunning = (tProc != null) ? true : false;
+
+            // Keepalive batch check
+            if (keepaliveRunning)
+            {
+                this.pbActive.BackColor = System.Drawing.Color.FromArgb(0, 200, 0);
+                this.toolTip1.SetToolTip(this.pbActive, "Keepalive Activity Detected. Keepalive is running (within last 15 seconds)");
+
+                // enable server controls if applicable. disable keepalive start/clean batch_lib
+                tsmConfigKeepaliveStop.Enabled = true;
+                tsmConfigKeepaliveStart.Enabled = false;
+                tsmConfigKeepaliveClean.Enabled = false;
+            }
+            else
+            {
+                tsmConfigKeepaliveStop.Enabled = false;
+                tsmConfigKeepaliveStart.Enabled = true;
+                tsmConfigKeepaliveClean.Enabled = true;
+
+                this.pbActive.BackColor = System.Drawing.Color.FromArgb(200, 0, 0);
+                this.toolTip1.SetToolTip(this.pbActive, "Keepalive Activity NOT Detected. Keepalive is not running");
+            }
+
+            // Server Process Check
+            if (!serverProcessRunning)
+            {
+                tsmConfigControlStop.Enabled = false;
+                tsmItemConfigControlStart.Enabled = (keepaliveRunning)? true : false;
+                tsmItemConfigControlRestart.Enabled = false;
+
+                this.pbConfigServer.BackColor = System.Drawing.Color.FromArgb(200, 0, 0);
+                this.toolTip1.SetToolTip(this.pbConfigServer, "Server Process Activity NOT Detected.");
+            }
+            else
+            {
+                tsmConfigControlStop.Enabled = (keepaliveRunning) ? true : false;
+                tsmItemConfigControlStart.Enabled = false;
+                tsmItemConfigControlRestart.Enabled = (keepaliveRunning) ? true : false;
+
+                if (tProc.Responding == false)
+                {
+
+                    this.pbConfigServer.BackColor = System.Drawing.Color.FromArgb(255, 255, 120);
+                    this.toolTip1.SetToolTip(this.pbConfigServer, "Server Process NOT Responding.");
+                }
+                else
+                {
+                    this.pbConfigServer.BackColor = System.Drawing.Color.FromArgb(0, 200, 0);
+                    this.toolTip1.SetToolTip(this.pbConfigServer, "Server Process Activity Detected.");
+                }
+            }
+        }
         private void buildAffinityBoxes()
         {
             if (this.affChkBuilt == true)
@@ -2870,6 +3029,110 @@ namespace skbtInstaller
             }
             // this.configFormClosed(sender, new FormClosedEventArgs(CloseReason.UserClosing));
         }
+
+        private void frmConfigWindow_Load(object sender, EventArgs e)
+        {
+            this.mStripConfig.Renderer = new ToolStripProfessionalRenderer(new TestColorTable());
+        }
+
+        private void tsmItemConfigControlStart_Click(object sender, EventArgs e)
+        {
+            this.executeBatchFile(Path.Combine(this.sConfig.objServerProc.Path, "batch_lib", "control", "manual_start.bat"));
+        }
+
+        private void tsmConfigControlStop_Click(object sender, EventArgs e)
+        {
+            this.executeBatchFile(Path.Combine(this.sConfig.objServerProc.Path, "batch_lib", "control", "manual_stop.bat"));
+        }
+
+        private void tsmItemConfigControlRestart_Click(object sender, EventArgs e)
+        {
+            this.executeBatchFile(Path.Combine(this.sConfig.objServerProc.Path, "batch_lib", "control", "manual_restart.bat"));
+        }
+
+        private void tsmConfigKeepaliveStart_Click(object sender, EventArgs e)
+        {
+            this.executeBatchFile(Path.GetFullPath(Path.Combine(this.sConfig.objServerProc.Path, "batch_lib", "start_keepalive.bat")));
+        }
+
+        private void tsmConfigKeepaliveStop_Click(object sender, EventArgs e)
+        {
+            this.executeBatchFile(Path.GetFullPath(Path.Combine(this.sConfig.objServerProc.Path, "batch_lib", "lib", "stop_keepalive.bat")));
+        }
+
+        private void tsmConfigKeepaliveLog_Click(object sender, EventArgs e)
+        {
+            string log = Path.GetFullPath(Path.Combine(this.sConfig.objServerProc.Path, "batch_lib", "batchrun.log"));
+            if (System.IO.File.Exists(log))
+            {
+                System.Diagnostics.Process.Start(log);
+            }
+            else
+            {
+                MessageBox.Show("Can't find batchrun log file. (Recently Cleaned?)");
+            }
+        }
+
+        private void tsmConfigKeepaliveOpenLib_Click(object sender, EventArgs e)
+        {
+            string batchlib = Path.GetFullPath(Path.Combine(this.sConfig.objServerProc.Path, "batch_lib"));
+            if (System.IO.Directory.Exists(batchlib))
+            {
+                System.Diagnostics.Process.Start(batchlib);
+            }
+            else
+            {
+                MessageBox.Show("Can't find batch_lib folder. (Make sure to click SAVE first)");
+            }
+        }
+
+        private void tsmConfigKeepaliveOpenSettings_Click(object sender, EventArgs e)
+        {
+            string settings = Path.GetFullPath(this.sMeta.PathToConfig);
+            if (System.IO.File.Exists(settings))
+            {
+                System.Diagnostics.Process.Start("notepad.exe", settings);
+            }
+            else
+            {
+                MessageBox.Show("Can't find batch settings file. (Make sure to click SAVE first)");
+            }
+        }
+
+        private void tsmConfigKeepaliveClean_Click(object sender, EventArgs e)
+        {
+            // Delete logs/wrkdir items
+            System.IO.File.Delete(Path.GetFullPath(Path.Combine(this.sConfig.objServerProc.Path, "batch_lib", "batchrun.log")));
+            System.IO.File.Delete(Path.GetFullPath(Path.Combine(this.sConfig.objServerProc.Path, "batch_lib", "wrkdir", "lastauto.txt")));
+            System.IO.File.Delete(Path.GetFullPath(Path.Combine(this.sConfig.objServerProc.Path, "batch_lib", "wrkdir", "lastdb_backup.txt")));
+            System.IO.File.Delete(Path.GetFullPath(Path.Combine(this.sConfig.objServerProc.Path, "batch_lib", "wrkdir", "lastmanual.txt")));
+            System.IO.File.Delete(Path.GetFullPath(Path.Combine(this.sConfig.objServerProc.Path, "batch_lib", "wrkdir", "laststarted.txt")));
+            System.IO.File.Delete(Path.GetFullPath(Path.Combine(this.sConfig.objServerProc.Path, "batch_lib", "wrkdir", "stopkeepalive.txt")));
+
+            string[] kaClones = Directory.GetFiles(Path.GetFullPath(Path.Combine(this.sConfig.objServerProc.Path, "batch_lib", "core")), "server_keepalive.*.bat");
+            foreach (string clone in kaClones)
+            {
+                System.IO.File.Delete(clone);
+            }
+        }
+
+        private void viewReadmeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string readme = Properties.Resources.README.ToString();
+            string tempFile = System.IO.Path.GetTempPath() + "README" + ".txt";
+            if (System.IO.File.Exists(tempFile))
+            {
+                System.IO.File.Delete(tempFile);
+            }
+            System.IO.File.WriteAllText(tempFile, readme);
+            System.Diagnostics.Process.Start(tempFile);
+        }
+
+        private void tsmConfigAbout_Click(object sender, EventArgs e)
+        {
+            AboutDialog abt = new AboutDialog();
+            abt.ShowDialog();
+        }
     }
 
     // Custom Tabless Container
@@ -2894,6 +3157,144 @@ namespace skbtInstaller
         public override string ToString()
         {
             return Text;
+        }
+    }
+
+    public class TestColorTable : ProfessionalColorTable
+    {
+        public override Color MenuItemSelected
+        {
+            get { return Color.FromArgb(25,150,25); }
+        }
+
+        public override Color MenuBorder  //added for changing the menu border
+        {
+            get { return Color.Green; }
+        }
+
+        public override Color MenuItemBorder
+        {
+            get { return Color.Green; }
+        }
+
+        public override Color MenuItemPressedGradientBegin
+        {
+            get { return Color.Green; }
+        }
+
+        public override Color MenuItemPressedGradientEnd
+        {
+            get { return Color.Green; }
+        }
+
+        public override Color MenuItemPressedGradientMiddle
+        {
+            get { return Color.Green; }
+        }
+
+        public override Color MenuItemSelectedGradientBegin
+        {
+            get { return Color.FromArgb(100,190,80); }
+        }
+
+        public override Color MenuItemSelectedGradientEnd
+        {
+            get { return Color.FromArgb(90, 90, 90); ; }
+        }
+
+        public override Color MenuStripGradientBegin
+        {
+            get { return Color.Green; }
+        }
+
+        public override Color MenuStripGradientEnd
+        {
+            get { return Color.Green; }
+        }
+
+        public override Color ButtonCheckedGradientBegin
+        {
+            get { return Color.Green; }
+        }
+
+        public override Color ButtonCheckedGradientEnd
+        {
+            get { return Color.Green; }
+        }
+
+        public override Color ButtonCheckedGradientMiddle
+        {
+            get { return Color.Green; }
+        }
+
+        public override Color ButtonCheckedHighlight
+        {
+            get { return Color.Green; }
+        }
+
+        public override Color ButtonCheckedHighlightBorder
+        {
+            get { return Color.Green; }
+        }
+
+        public override Color ButtonPressedBorder
+        {
+            get { return Color.Green; }
+        }
+
+        public override Color ButtonPressedGradientBegin
+        {
+            get { return Color.Green; }
+        }
+
+        public override Color ButtonPressedGradientEnd
+        {
+            get { return Color.Green; }
+        }
+
+        public override Color ButtonPressedGradientMiddle
+        {
+            get { return Color.Green; }
+        }
+
+        public override Color ButtonPressedHighlight
+        {
+            get { return Color.Green; }
+        }
+
+        public override Color ButtonPressedHighlightBorder
+        {
+            get { return Color.Green; }
+        }
+
+        public override Color ButtonSelectedBorder
+        {
+            get { return Color.Black; }
+        }
+
+        public override Color ButtonSelectedGradientBegin
+        {
+            get { return Color.Green; }
+        }
+
+        public override Color ButtonSelectedGradientEnd
+        {
+            get { return Color.Green; }
+        }
+
+        public override Color ButtonSelectedGradientMiddle
+        {
+            get { return Color.Green; }
+        }
+
+        public override Color ButtonSelectedHighlight
+        {
+            get { return Color.Green; }
+        }
+
+        public override Color ButtonSelectedHighlightBorder
+        {
+            get { return Color.Green; }
         }
     }
 }

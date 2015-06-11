@@ -1,14 +1,12 @@
 ==================
-ARMA SERVER KEEPALIVE TOOL 1.2.1 (NoGui)
+ARMA SERVER KEEPALIVE TOOL 1.2.2 (NoGui)
 ==================
-Added sanity checks for hc/database paths
-Fixed typo in debug logging at startup (gives version)
+Added an exit batch check and new file to set this flag externally to close the keepalive.
 
 ==================
 == NEW CHANGES  ==
 ==================
-Added checks for Redis Server Path/EXE Name and HC Path/EXE Name
-Fixed Logging typo at start of keepalive
+ADDED: Keepalive_Quit Flag/Batch File
 
 ==================
 == INSTALLATION ==
@@ -59,6 +57,10 @@ The logfile is called "batchrun.log" and is placed in the batch_lib directory
 ==================
 = OLD CHANGELOGS =
 ==================
+
+== Version 1.2.1
+Added checks for Redis Server Path/EXE Name and HC Path/EXE Name
+Fixed Logging typo at start of keepalive
 
 == Version 1.2.0
 Fixed typo preventing wer dialogs from being closed when requested to automatically (true to 1)
