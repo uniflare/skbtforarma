@@ -1,12 +1,12 @@
 ==================
-ARMA SERVER KEEPALIVE TOOL 1.2.2 (NoGui)
+ARMA SERVER KEEPALIVE TOOL 1.2.2.1 (NoGui)
 ==================
-Added an exit batch check and new file to set this flag externally to close the keepalive.
+Added more specific process identification routine. (In beta, checkign for stability)
 
 ==================
 == NEW CHANGES  ==
 ==================
-ADDED: Keepalive_Quit Flag/Batch File
+ADDED: More Specific Process ID Routine
 
 ==================
 == INSTALLATION ==

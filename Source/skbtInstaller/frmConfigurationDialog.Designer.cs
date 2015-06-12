@@ -53,6 +53,107 @@
             this.btnTabSelectCustom = new System.Windows.Forms.Button();
             this.pbActive = new System.Windows.Forms.PictureBox();
             this.pbConfigServer = new System.Windows.Forms.PictureBox();
+            this.chkUseZipLogs = new System.Windows.Forms.CheckBox();
+            this.lblServerPathToLogBackup = new System.Windows.Forms.Label();
+            this.txtPathToBackupLog = new System.Windows.Forms.TextBox();
+            this.lblServerPathToLog = new System.Windows.Forms.Label();
+            this.txtPathToServerLog = new System.Windows.Forms.TextBox();
+            this.numStartTimeout = new System.Windows.Forms.NumericUpDown();
+            this.numManualTimeout = new System.Windows.Forms.NumericUpDown();
+            this.numAutoTimeout = new System.Windows.Forms.NumericUpDown();
+            this.numAutoDelay = new System.Windows.Forms.NumericUpDown();
+            this.cBoxDebugLevel = new System.Windows.Forms.ComboBox();
+            this.lblStartTimeout = new System.Windows.Forms.Label();
+            this.chkCleanWERs = new System.Windows.Forms.CheckBox();
+            this.lblManualTimeout = new System.Windows.Forms.Label();
+            this.lblAutoTimeout = new System.Windows.Forms.Label();
+            this.lblAutoDelay = new System.Windows.Forms.Label();
+            this.lblDebugLevel = new System.Windows.Forms.Label();
+            this.chkServerBindToIP = new System.Windows.Forms.CheckBox();
+            this.numServerIP4 = new System.Windows.Forms.NumericUpDown();
+            this.numServerIP3 = new System.Windows.Forms.NumericUpDown();
+            this.numServerIP2 = new System.Windows.Forms.NumericUpDown();
+            this.numServerIP1 = new System.Windows.Forms.NumericUpDown();
+            this.lvlServerIP = new System.Windows.Forms.Label();
+            this.numServerPort = new System.Windows.Forms.NumericUpDown();
+            this.txtProfileName = new System.Windows.Forms.TextBox();
+            this.lblServerProfileName = new System.Windows.Forms.Label();
+            this.lblPathToProfile = new System.Windows.Forms.Label();
+            this.txtPathToProfile = new System.Windows.Forms.TextBox();
+            this.txtPathToBasicCFG = new System.Windows.Forms.TextBox();
+            this.lblServerPathToConfig = new System.Windows.Forms.Label();
+            this.txtPathToConfigCFG = new System.Windows.Forms.TextBox();
+            this.txtServerModline = new System.Windows.Forms.TextBox();
+            this.lblServerModline = new System.Windows.Forms.Label();
+            this.txtServerCommand = new System.Windows.Forms.TextBox();
+            this.lblServerCommand = new System.Windows.Forms.Label();
+            this.lblServerPort = new System.Windows.Forms.Label();
+            this.lblServerAffinity = new System.Windows.Forms.Label();
+            this.cBoxPriorityServer = new System.Windows.Forms.ComboBox();
+            this.btnProcessKeepaliveServer = new System.Windows.Forms.Button();
+            this.lblServerPathToEXE = new System.Windows.Forms.Label();
+            this.txtPathToEXEServer = new System.Windows.Forms.TextBox();
+            this.numBackupInterval = new System.Windows.Forms.NumericUpDown();
+            this.lblDatabaseBackupInterval = new System.Windows.Forms.Label();
+            this.chkUseZipBackups = new System.Windows.Forms.CheckBox();
+            this.lblDatabaseBackupFolder = new System.Windows.Forms.Label();
+            this.txtPathToBackupFolder = new System.Windows.Forms.TextBox();
+            this.lblDatabaseDumpFile = new System.Windows.Forms.Label();
+            this.txtPathToDBFile = new System.Windows.Forms.TextBox();
+            this.lvlDatabaseAffinity = new System.Windows.Forms.Label();
+            this.lblDatabasePriority = new System.Windows.Forms.Label();
+            this.cBoxPriorityDatabase = new System.Windows.Forms.ComboBox();
+            this.btnProcessKeepaliveDatabase = new System.Windows.Forms.Button();
+            this.lblDatabasePathToExe = new System.Windows.Forms.Label();
+            this.txtPathToEXEDB = new System.Windows.Forms.TextBox();
+            this.chkBecUseDsc = new System.Windows.Forms.CheckBox();
+            this.txtPathToBattleye = new System.Windows.Forms.TextBox();
+            this.lblBECBEPath = new System.Windows.Forms.Label();
+            this.lblBECAffinity = new System.Windows.Forms.Label();
+            this.lblBECPriority = new System.Windows.Forms.Label();
+            this.cBoxPriorityBEC = new System.Windows.Forms.ComboBox();
+            this.btnProcessKeepaliveBEC = new System.Windows.Forms.Button();
+            this.lblBECPathToExe = new System.Windows.Forms.Label();
+            this.txtPathToEXEBEC = new System.Windows.Forms.TextBox();
+            this.lblHCLaunchArgs = new System.Windows.Forms.Label();
+            this.txtHeadlessClientLaunchArgs = new System.Windows.Forms.TextBox();
+            this.lblHCAffinity = new System.Windows.Forms.Label();
+            this.lblHCPriority = new System.Windows.Forms.Label();
+            this.cBoxPriorityHeadlessClient = new System.Windows.Forms.ComboBox();
+            this.btnProcessKeepaliveHC = new System.Windows.Forms.Button();
+            this.lblHCPathToExe = new System.Windows.Forms.Label();
+            this.txtPathToEXEHC = new System.Windows.Forms.TextBox();
+            this.numTeamspeakPortNumber = new System.Windows.Forms.NumericUpDown();
+            this.lblTSPort = new System.Windows.Forms.Label();
+            this.lblTSAffinity = new System.Windows.Forms.Label();
+            this.lblTSPriority = new System.Windows.Forms.Label();
+            this.cBoxPriorityTeamspeak = new System.Windows.Forms.ComboBox();
+            this.btnProcessKeepaliveTS = new System.Windows.Forms.Button();
+            this.lblTSPathToExe = new System.Windows.Forms.Label();
+            this.txtPathToEXETS = new System.Windows.Forms.TextBox();
+            this.numASMLogInterval = new System.Windows.Forms.NumericUpDown();
+            this.lblASMLoggingInterval = new System.Windows.Forms.Label();
+            this.txtASMLogName = new System.Windows.Forms.TextBox();
+            this.lblASMLogName = new System.Windows.Forms.Label();
+            this.lblASMAffinity = new System.Windows.Forms.Label();
+            this.lblASMPriority = new System.Windows.Forms.Label();
+            this.cBoxPriorityASM = new System.Windows.Forms.ComboBox();
+            this.btnProcessKeepaliveASM = new System.Windows.Forms.Button();
+            this.lblASMPathToExe = new System.Windows.Forms.Label();
+            this.txtPathToEXEASM = new System.Windows.Forms.TextBox();
+            this.btnCustomProcessDelete = new System.Windows.Forms.Button();
+            this.btnCustomProcessAdd = new System.Windows.Forms.Button();
+            this.cBoxCustomProcessSelector = new System.Windows.Forms.ComboBox();
+            this.lblCustomProcessLaunchParams = new System.Windows.Forms.Label();
+            this.txtCustomProcessLaunchParams = new System.Windows.Forms.TextBox();
+            this.lblCustomProcessName = new System.Windows.Forms.Label();
+            this.txtCustomProcessName = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cBoxPriorityCustom = new System.Windows.Forms.ComboBox();
+            this.btnProcessKeepaliveCustom = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtPathToEXECustom = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.mStripConfig = new System.Windows.Forms.MenuStrip();
             this.tsmItemConfigControl = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,182 +167,82 @@
             this.tsmConfigKeepaliveOpenLib = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmConfigKeepaliveOpenSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmConfigKeepaliveClean = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmConfigAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.viewReadmeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmConfigAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlMainConfig = new skbtInstaller.TablessControl();
             this.tabPageProcessServer = new System.Windows.Forms.TabPage();
             this.grpConfigServerBackup = new System.Windows.Forms.GroupBox();
-            this.chkUseZipLogs = new System.Windows.Forms.CheckBox();
             this.btnFortxtPathToBackupLog = new System.Windows.Forms.Button();
-            this.lblServerPathToLogBackup = new System.Windows.Forms.Label();
-            this.txtPathToBackupLog = new System.Windows.Forms.TextBox();
             this.btnFortxtPathToServerLog = new System.Windows.Forms.Button();
-            this.lblServerPathToLog = new System.Windows.Forms.Label();
-            this.txtPathToServerLog = new System.Windows.Forms.TextBox();
             this.flpServer = new System.Windows.Forms.FlowLayoutPanel();
             this.grpKeepaliveOptions = new System.Windows.Forms.GroupBox();
-            this.numStartTimeout = new System.Windows.Forms.NumericUpDown();
-            this.numManualTimeout = new System.Windows.Forms.NumericUpDown();
-            this.numAutoTimeout = new System.Windows.Forms.NumericUpDown();
-            this.numAutoDelay = new System.Windows.Forms.NumericUpDown();
-            this.cBoxDebugLevel = new System.Windows.Forms.ComboBox();
-            this.lblStartTimeout = new System.Windows.Forms.Label();
-            this.chkCleanWERs = new System.Windows.Forms.CheckBox();
-            this.lblManualTimeout = new System.Windows.Forms.Label();
-            this.lblAutoTimeout = new System.Windows.Forms.Label();
-            this.lblAutoDelay = new System.Windows.Forms.Label();
-            this.lblDebugLevel = new System.Windows.Forms.Label();
             this.grpConfigServerLaunch = new System.Windows.Forms.GroupBox();
-            this.chkServerBindToIP = new System.Windows.Forms.CheckBox();
-            this.numServerIP4 = new System.Windows.Forms.NumericUpDown();
-            this.numServerIP3 = new System.Windows.Forms.NumericUpDown();
-            this.numServerIP2 = new System.Windows.Forms.NumericUpDown();
-            this.numServerIP1 = new System.Windows.Forms.NumericUpDown();
-            this.lvlServerIP = new System.Windows.Forms.Label();
-            this.numServerPort = new System.Windows.Forms.NumericUpDown();
-            this.txtProfileName = new System.Windows.Forms.TextBox();
-            this.lblServerProfileName = new System.Windows.Forms.Label();
             this.btnFortxtPathToProfile = new System.Windows.Forms.Button();
-            this.lblPathToProfile = new System.Windows.Forms.Label();
-            this.txtPathToProfile = new System.Windows.Forms.TextBox();
             this.btnFortxtPathToBasicCFG = new System.Windows.Forms.Button();
             this.lblServerPathToBasic = new System.Windows.Forms.Label();
-            this.txtPathToBasicCFG = new System.Windows.Forms.TextBox();
             this.btnFortxtPathToConfigCFG = new System.Windows.Forms.Button();
-            this.lblServerPathToConfig = new System.Windows.Forms.Label();
-            this.txtPathToConfigCFG = new System.Windows.Forms.TextBox();
-            this.txtServerModline = new System.Windows.Forms.TextBox();
-            this.lblServerModline = new System.Windows.Forms.Label();
-            this.txtServerCommand = new System.Windows.Forms.TextBox();
-            this.lblServerCommand = new System.Windows.Forms.Label();
-            this.lblServerPort = new System.Windows.Forms.Label();
-            this.lblServerAffinity = new System.Windows.Forms.Label();
             this.lblerverPriority = new System.Windows.Forms.Label();
-            this.cBoxPriorityServer = new System.Windows.Forms.ComboBox();
-            this.btnProcessKeepaliveServer = new System.Windows.Forms.Button();
             this.btnFortxtPathToEXEServer = new System.Windows.Forms.Button();
-            this.lblServerPathToEXE = new System.Windows.Forms.Label();
-            this.txtPathToEXEServer = new System.Windows.Forms.TextBox();
             this.tabPageProcessDatabase = new System.Windows.Forms.TabPage();
             this.grpConfigDatabaseBackup = new System.Windows.Forms.GroupBox();
-            this.numBackupInterval = new System.Windows.Forms.NumericUpDown();
-            this.lblDatabaseBackupInterval = new System.Windows.Forms.Label();
-            this.chkUseZipBackups = new System.Windows.Forms.CheckBox();
             this.btnFortxtPathToBackupFolder = new System.Windows.Forms.Button();
-            this.lblDatabaseBackupFolder = new System.Windows.Forms.Label();
-            this.txtPathToBackupFolder = new System.Windows.Forms.TextBox();
             this.btnFortxtPathToDBFile = new System.Windows.Forms.Button();
-            this.lblDatabaseDumpFile = new System.Windows.Forms.Label();
-            this.txtPathToDBFile = new System.Windows.Forms.TextBox();
             this.flpDatabase = new System.Windows.Forms.FlowLayoutPanel();
-            this.lvlDatabaseAffinity = new System.Windows.Forms.Label();
-            this.lblDatabasePriority = new System.Windows.Forms.Label();
-            this.cBoxPriorityDatabase = new System.Windows.Forms.ComboBox();
-            this.btnProcessKeepaliveDatabase = new System.Windows.Forms.Button();
             this.btnFortxtPathToEXEDB = new System.Windows.Forms.Button();
-            this.lblDatabasePathToExe = new System.Windows.Forms.Label();
-            this.txtPathToEXEDB = new System.Windows.Forms.TextBox();
             this.tabPageProcessBEC = new System.Windows.Forms.TabPage();
             this.grpConfigBECBackup = new System.Windows.Forms.GroupBox();
-            this.chkBecUseDsc = new System.Windows.Forms.CheckBox();
-            this.txtPathToBattleye = new System.Windows.Forms.TextBox();
             this.btnFortxtPathToBattleye = new System.Windows.Forms.Button();
-            this.lblBECBEPath = new System.Windows.Forms.Label();
             this.flpBEC = new System.Windows.Forms.FlowLayoutPanel();
-            this.lblBECAffinity = new System.Windows.Forms.Label();
-            this.lblBECPriority = new System.Windows.Forms.Label();
-            this.cBoxPriorityBEC = new System.Windows.Forms.ComboBox();
-            this.btnProcessKeepaliveBEC = new System.Windows.Forms.Button();
             this.btnFortxtPathToEXEBEC = new System.Windows.Forms.Button();
-            this.lblBECPathToExe = new System.Windows.Forms.Label();
-            this.txtPathToEXEBEC = new System.Windows.Forms.TextBox();
             this.tabPageProcessHC = new System.Windows.Forms.TabPage();
             this.grpConfigHCLaunch = new System.Windows.Forms.GroupBox();
-            this.lblHCLaunchArgs = new System.Windows.Forms.Label();
-            this.txtHeadlessClientLaunchArgs = new System.Windows.Forms.TextBox();
             this.flpHeadlessClient = new System.Windows.Forms.FlowLayoutPanel();
-            this.lblHCAffinity = new System.Windows.Forms.Label();
-            this.lblHCPriority = new System.Windows.Forms.Label();
-            this.cBoxPriorityHeadlessClient = new System.Windows.Forms.ComboBox();
-            this.btnProcessKeepaliveHC = new System.Windows.Forms.Button();
             this.btnFortxtPathToEXEHC = new System.Windows.Forms.Button();
-            this.lblHCPathToExe = new System.Windows.Forms.Label();
-            this.txtPathToEXEHC = new System.Windows.Forms.TextBox();
             this.tabPageProcessTS = new System.Windows.Forms.TabPage();
             this.grpconfigTeamspeakLaunch = new System.Windows.Forms.GroupBox();
-            this.numTeamspeakPortNumber = new System.Windows.Forms.NumericUpDown();
-            this.lblTSPort = new System.Windows.Forms.Label();
             this.flpTeamspeak = new System.Windows.Forms.FlowLayoutPanel();
-            this.lblTSAffinity = new System.Windows.Forms.Label();
-            this.lblTSPriority = new System.Windows.Forms.Label();
-            this.cBoxPriorityTeamspeak = new System.Windows.Forms.ComboBox();
-            this.btnProcessKeepaliveTS = new System.Windows.Forms.Button();
             this.btnFortxtPathToEXETS = new System.Windows.Forms.Button();
-            this.lblTSPathToExe = new System.Windows.Forms.Label();
-            this.txtPathToEXETS = new System.Windows.Forms.TextBox();
             this.tabPageProcessASM = new System.Windows.Forms.TabPage();
             this.grpConfigASMLaunch = new System.Windows.Forms.GroupBox();
-            this.numASMLogInterval = new System.Windows.Forms.NumericUpDown();
             this.btnFortxtASMLogName = new System.Windows.Forms.Button();
-            this.lblASMLoggingInterval = new System.Windows.Forms.Label();
-            this.txtASMLogName = new System.Windows.Forms.TextBox();
-            this.lblASMLogName = new System.Windows.Forms.Label();
             this.flpASM = new System.Windows.Forms.FlowLayoutPanel();
-            this.lblASMAffinity = new System.Windows.Forms.Label();
-            this.lblASMPriority = new System.Windows.Forms.Label();
-            this.cBoxPriorityASM = new System.Windows.Forms.ComboBox();
-            this.btnProcessKeepaliveASM = new System.Windows.Forms.Button();
             this.btnFortxtPathToEXEASM = new System.Windows.Forms.Button();
-            this.lblASMPathToExe = new System.Windows.Forms.Label();
-            this.txtPathToEXEASM = new System.Windows.Forms.TextBox();
             this.tabPageProcessCustom = new System.Windows.Forms.TabPage();
-            this.btnCustomProcessDelete = new System.Windows.Forms.Button();
-            this.btnCustomProcessAdd = new System.Windows.Forms.Button();
-            this.cBoxCustomProcessSelector = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.flpCustom = new System.Windows.Forms.FlowLayoutPanel();
-            this.lblCustomProcessLaunchParams = new System.Windows.Forms.Label();
-            this.txtCustomProcessLaunchParams = new System.Windows.Forms.TextBox();
-            this.lblCustomProcessName = new System.Windows.Forms.Label();
-            this.txtCustomProcessName = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cBoxPriorityCustom = new System.Windows.Forms.ComboBox();
-            this.btnProcessKeepaliveCustom = new System.Windows.Forms.Button();
             this.btnCustomProcessBrowseEXE = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtPathToEXECustom = new System.Windows.Forms.TextBox();
+            this.chkUseNewIDRoutine = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbActive)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbConfigServer)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numStartTimeout)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numManualTimeout)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numAutoTimeout)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numAutoDelay)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numServerIP4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numServerIP3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numServerIP2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numServerIP1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numServerPort)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBackupInterval)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numTeamspeakPortNumber)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numASMLogInterval)).BeginInit();
             this.panel1.SuspendLayout();
             this.mStripConfig.SuspendLayout();
             this.tabControlMainConfig.SuspendLayout();
             this.tabPageProcessServer.SuspendLayout();
             this.grpConfigServerBackup.SuspendLayout();
             this.grpKeepaliveOptions.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numStartTimeout)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numManualTimeout)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numAutoTimeout)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numAutoDelay)).BeginInit();
             this.grpConfigServerLaunch.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numServerIP4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numServerIP3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numServerIP2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numServerIP1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numServerPort)).BeginInit();
             this.tabPageProcessDatabase.SuspendLayout();
             this.grpConfigDatabaseBackup.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numBackupInterval)).BeginInit();
             this.tabPageProcessBEC.SuspendLayout();
             this.grpConfigBECBackup.SuspendLayout();
             this.tabPageProcessHC.SuspendLayout();
             this.grpConfigHCLaunch.SuspendLayout();
             this.tabPageProcessTS.SuspendLayout();
             this.grpconfigTeamspeakLaunch.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numTeamspeakPortNumber)).BeginInit();
             this.tabPageProcessASM.SuspendLayout();
             this.grpConfigASMLaunch.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numASMLogInterval)).BeginInit();
             this.tabPageProcessCustom.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -595,211 +596,6 @@
             this.pbConfigServer.TabStop = false;
             this.toolTip1.SetToolTip(this.pbConfigServer, "Server Process Activity Not Detected");
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.mStripConfig);
-            this.panel1.Location = new System.Drawing.Point(340, 9);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(199, 24);
-            this.panel1.TabIndex = 35;
-            // 
-            // mStripConfig
-            // 
-            this.mStripConfig.BackColor = System.Drawing.Color.Transparent;
-            this.mStripConfig.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmItemConfigControl,
-            this.tsmConfigKeepalive,
-            this.tsmConfigAbout});
-            this.mStripConfig.Location = new System.Drawing.Point(0, 0);
-            this.mStripConfig.Name = "mStripConfig";
-            this.mStripConfig.Size = new System.Drawing.Size(199, 24);
-            this.mStripConfig.TabIndex = 0;
-            // 
-            // tsmItemConfigControl
-            // 
-            this.tsmItemConfigControl.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmItemConfigControlStart,
-            this.tsmConfigControlStop,
-            this.tsmItemConfigControlRestart});
-            this.tsmItemConfigControl.ForeColor = System.Drawing.Color.GreenYellow;
-            this.tsmItemConfigControl.Name = "tsmItemConfigControl";
-            this.tsmItemConfigControl.Size = new System.Drawing.Size(59, 20);
-            this.tsmItemConfigControl.Text = "Control";
-            // 
-            // tsmItemConfigControlStart
-            // 
-            this.tsmItemConfigControlStart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this.tsmItemConfigControlStart.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.tsmItemConfigControlStart.Name = "tsmItemConfigControlStart";
-            this.tsmItemConfigControlStart.Size = new System.Drawing.Size(153, 22);
-            this.tsmItemConfigControlStart.Text = "Manual Start";
-            this.tsmItemConfigControlStart.Click += new System.EventHandler(this.tsmItemConfigControlStart_Click);
-            // 
-            // tsmConfigControlStop
-            // 
-            this.tsmConfigControlStop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this.tsmConfigControlStop.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.tsmConfigControlStop.Name = "tsmConfigControlStop";
-            this.tsmConfigControlStop.Size = new System.Drawing.Size(153, 22);
-            this.tsmConfigControlStop.Text = "Manual Stop";
-            this.tsmConfigControlStop.Click += new System.EventHandler(this.tsmConfigControlStop_Click);
-            // 
-            // tsmItemConfigControlRestart
-            // 
-            this.tsmItemConfigControlRestart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this.tsmItemConfigControlRestart.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.tsmItemConfigControlRestart.Name = "tsmItemConfigControlRestart";
-            this.tsmItemConfigControlRestart.Size = new System.Drawing.Size(153, 22);
-            this.tsmItemConfigControlRestart.Text = "Manual Restart";
-            this.tsmItemConfigControlRestart.Click += new System.EventHandler(this.tsmItemConfigControlRestart_Click);
-            // 
-            // tsmConfigKeepalive
-            // 
-            this.tsmConfigKeepalive.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmConfigKeepaliveStart,
-            this.tsmConfigKeepaliveStop,
-            this.tsmConfigKeepaliveLog,
-            this.tsmConfigKeepaliveOpenLib,
-            this.tsmConfigKeepaliveOpenSettings,
-            this.tsmConfigKeepaliveClean,
-            this.viewReadmeToolStripMenuItem});
-            this.tsmConfigKeepalive.ForeColor = System.Drawing.Color.GreenYellow;
-            this.tsmConfigKeepalive.Name = "tsmConfigKeepalive";
-            this.tsmConfigKeepalive.Size = new System.Drawing.Size(69, 20);
-            this.tsmConfigKeepalive.Text = "Keepalive";
-            // 
-            // tsmConfigKeepaliveStart
-            // 
-            this.tsmConfigKeepaliveStart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this.tsmConfigKeepaliveStart.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.tsmConfigKeepaliveStart.Name = "tsmConfigKeepaliveStart";
-            this.tsmConfigKeepaliveStart.Size = new System.Drawing.Size(173, 22);
-            this.tsmConfigKeepaliveStart.Text = "Start Keepalive";
-            this.tsmConfigKeepaliveStart.Click += new System.EventHandler(this.tsmConfigKeepaliveStart_Click);
-            // 
-            // tsmConfigKeepaliveStop
-            // 
-            this.tsmConfigKeepaliveStop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this.tsmConfigKeepaliveStop.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.tsmConfigKeepaliveStop.Name = "tsmConfigKeepaliveStop";
-            this.tsmConfigKeepaliveStop.Size = new System.Drawing.Size(173, 22);
-            this.tsmConfigKeepaliveStop.Text = "Stop Keepalive";
-            this.tsmConfigKeepaliveStop.Click += new System.EventHandler(this.tsmConfigKeepaliveStop_Click);
-            // 
-            // tsmConfigKeepaliveLog
-            // 
-            this.tsmConfigKeepaliveLog.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this.tsmConfigKeepaliveLog.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.tsmConfigKeepaliveLog.Name = "tsmConfigKeepaliveLog";
-            this.tsmConfigKeepaliveLog.Size = new System.Drawing.Size(173, 22);
-            this.tsmConfigKeepaliveLog.Text = "View Log";
-            this.tsmConfigKeepaliveLog.Click += new System.EventHandler(this.tsmConfigKeepaliveLog_Click);
-            // 
-            // tsmConfigKeepaliveOpenLib
-            // 
-            this.tsmConfigKeepaliveOpenLib.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this.tsmConfigKeepaliveOpenLib.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.tsmConfigKeepaliveOpenLib.Name = "tsmConfigKeepaliveOpenLib";
-            this.tsmConfigKeepaliveOpenLib.Size = new System.Drawing.Size(173, 22);
-            this.tsmConfigKeepaliveOpenLib.Text = "Open Batch Lib";
-            this.tsmConfigKeepaliveOpenLib.Click += new System.EventHandler(this.tsmConfigKeepaliveOpenLib_Click);
-            // 
-            // tsmConfigKeepaliveOpenSettings
-            // 
-            this.tsmConfigKeepaliveOpenSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this.tsmConfigKeepaliveOpenSettings.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.tsmConfigKeepaliveOpenSettings.Name = "tsmConfigKeepaliveOpenSettings";
-            this.tsmConfigKeepaliveOpenSettings.Size = new System.Drawing.Size(173, 22);
-            this.tsmConfigKeepaliveOpenSettings.Text = "Open Settings Raw";
-            this.tsmConfigKeepaliveOpenSettings.Click += new System.EventHandler(this.tsmConfigKeepaliveOpenSettings_Click);
-            // 
-            // tsmConfigKeepaliveClean
-            // 
-            this.tsmConfigKeepaliveClean.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this.tsmConfigKeepaliveClean.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.tsmConfigKeepaliveClean.Name = "tsmConfigKeepaliveClean";
-            this.tsmConfigKeepaliveClean.Size = new System.Drawing.Size(173, 22);
-            this.tsmConfigKeepaliveClean.Text = "Clean Batch Lib";
-            this.tsmConfigKeepaliveClean.Click += new System.EventHandler(this.tsmConfigKeepaliveClean_Click);
-            // 
-            // tsmConfigAbout
-            // 
-            this.tsmConfigAbout.ForeColor = System.Drawing.Color.GreenYellow;
-            this.tsmConfigAbout.Name = "tsmConfigAbout";
-            this.tsmConfigAbout.Size = new System.Drawing.Size(52, 20);
-            this.tsmConfigAbout.Text = "About";
-            this.tsmConfigAbout.Click += new System.EventHandler(this.tsmConfigAbout_Click);
-            // 
-            // viewReadmeToolStripMenuItem
-            // 
-            this.viewReadmeToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this.viewReadmeToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.viewReadmeToolStripMenuItem.Name = "viewReadmeToolStripMenuItem";
-            this.viewReadmeToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
-            this.viewReadmeToolStripMenuItem.Text = "View Readme";
-            this.viewReadmeToolStripMenuItem.Click += new System.EventHandler(this.viewReadmeToolStripMenuItem_Click);
-            // 
-            // tabControlMainConfig
-            // 
-            this.tabControlMainConfig.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControlMainConfig.Controls.Add(this.tabPageProcessServer);
-            this.tabControlMainConfig.Controls.Add(this.tabPageProcessDatabase);
-            this.tabControlMainConfig.Controls.Add(this.tabPageProcessBEC);
-            this.tabControlMainConfig.Controls.Add(this.tabPageProcessHC);
-            this.tabControlMainConfig.Controls.Add(this.tabPageProcessTS);
-            this.tabControlMainConfig.Controls.Add(this.tabPageProcessASM);
-            this.tabControlMainConfig.Controls.Add(this.tabPageProcessCustom);
-            this.tabControlMainConfig.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabControlMainConfig.ItemSize = new System.Drawing.Size(125, 21);
-            this.tabControlMainConfig.Location = new System.Drawing.Point(16, 187);
-            this.tabControlMainConfig.Name = "tabControlMainConfig";
-            this.tabControlMainConfig.SelectedIndex = 0;
-            this.tabControlMainConfig.Size = new System.Drawing.Size(596, 295);
-            this.tabControlMainConfig.TabIndex = 11;
-            this.tabControlMainConfig.TabStop = false;
-            // 
-            // tabPageProcessServer
-            // 
-            this.tabPageProcessServer.AutoScroll = true;
-            this.tabPageProcessServer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.tabPageProcessServer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tabPageProcessServer.Controls.Add(this.grpConfigServerBackup);
-            this.tabPageProcessServer.Controls.Add(this.flpServer);
-            this.tabPageProcessServer.Controls.Add(this.grpKeepaliveOptions);
-            this.tabPageProcessServer.Controls.Add(this.grpConfigServerLaunch);
-            this.tabPageProcessServer.Controls.Add(this.lblServerAffinity);
-            this.tabPageProcessServer.Controls.Add(this.lblerverPriority);
-            this.tabPageProcessServer.Controls.Add(this.cBoxPriorityServer);
-            this.tabPageProcessServer.Controls.Add(this.btnProcessKeepaliveServer);
-            this.tabPageProcessServer.Controls.Add(this.btnFortxtPathToEXEServer);
-            this.tabPageProcessServer.Controls.Add(this.lblServerPathToEXE);
-            this.tabPageProcessServer.Controls.Add(this.txtPathToEXEServer);
-            this.tabPageProcessServer.Location = new System.Drawing.Point(4, 25);
-            this.tabPageProcessServer.Name = "tabPageProcessServer";
-            this.tabPageProcessServer.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageProcessServer.Size = new System.Drawing.Size(588, 266);
-            this.tabPageProcessServer.TabIndex = 0;
-            this.tabPageProcessServer.Text = "Arma Server";
-            // 
-            // grpConfigServerBackup
-            // 
-            this.grpConfigServerBackup.Controls.Add(this.chkUseZipLogs);
-            this.grpConfigServerBackup.Controls.Add(this.btnFortxtPathToBackupLog);
-            this.grpConfigServerBackup.Controls.Add(this.lblServerPathToLogBackup);
-            this.grpConfigServerBackup.Controls.Add(this.txtPathToBackupLog);
-            this.grpConfigServerBackup.Controls.Add(this.btnFortxtPathToServerLog);
-            this.grpConfigServerBackup.Controls.Add(this.lblServerPathToLog);
-            this.grpConfigServerBackup.Controls.Add(this.txtPathToServerLog);
-            this.grpConfigServerBackup.ForeColor = System.Drawing.Color.White;
-            this.grpConfigServerBackup.Location = new System.Drawing.Point(6, 109);
-            this.grpConfigServerBackup.Name = "grpConfigServerBackup";
-            this.grpConfigServerBackup.Size = new System.Drawing.Size(555, 135);
-            this.grpConfigServerBackup.TabIndex = 31;
-            this.grpConfigServerBackup.TabStop = false;
-            this.grpConfigServerBackup.Text = "Backup/Logging Settings";
-            // 
             // chkUseZipLogs
             // 
             this.chkUseZipLogs.AutoSize = true;
@@ -813,22 +609,6 @@
             this.toolTip1.SetToolTip(this.chkUseZipLogs, "Toggle the use of compression when archiving server logs.");
             this.chkUseZipLogs.UseVisualStyleBackColor = true;
             this.chkUseZipLogs.CheckedChanged += new System.EventHandler(this.actionUseZipLogs);
-            // 
-            // btnFortxtPathToBackupLog
-            // 
-            this.btnFortxtPathToBackupLog.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-            this.btnFortxtPathToBackupLog.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.btnFortxtPathToBackupLog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFortxtPathToBackupLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFortxtPathToBackupLog.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.btnFortxtPathToBackupLog.Location = new System.Drawing.Point(475, 100);
-            this.btnFortxtPathToBackupLog.Margin = new System.Windows.Forms.Padding(0);
-            this.btnFortxtPathToBackupLog.Name = "btnFortxtPathToBackupLog";
-            this.btnFortxtPathToBackupLog.Size = new System.Drawing.Size(64, 22);
-            this.btnFortxtPathToBackupLog.TabIndex = 41;
-            this.btnFortxtPathToBackupLog.Text = "Browse";
-            this.btnFortxtPathToBackupLog.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            this.btnFortxtPathToBackupLog.UseVisualStyleBackColor = true;
             // 
             // lblServerPathToLogBackup
             // 
@@ -855,23 +635,6 @@
             this.txtPathToBackupLog.TabIndex = 39;
             this.toolTip1.SetToolTip(this.txtPathToBackupLog, "Path to the folder which contains all server log archives");
             // 
-            // btnFortxtPathToServerLog
-            // 
-            this.btnFortxtPathToServerLog.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-            this.btnFortxtPathToServerLog.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.btnFortxtPathToServerLog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFortxtPathToServerLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFortxtPathToServerLog.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.btnFortxtPathToServerLog.Location = new System.Drawing.Point(475, 50);
-            this.btnFortxtPathToServerLog.Margin = new System.Windows.Forms.Padding(0);
-            this.btnFortxtPathToServerLog.Name = "btnFortxtPathToServerLog";
-            this.btnFortxtPathToServerLog.Size = new System.Drawing.Size(64, 22);
-            this.btnFortxtPathToServerLog.TabIndex = 38;
-            this.btnFortxtPathToServerLog.Text = "Browse";
-            this.btnFortxtPathToServerLog.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            this.btnFortxtPathToServerLog.UseVisualStyleBackColor = true;
-            this.btnFortxtPathToServerLog.Click += new System.EventHandler(this.actionBrowseButtonForFilePath);
-            // 
             // lblServerPathToLog
             // 
             this.lblServerPathToLog.AutoSize = true;
@@ -896,36 +659,6 @@
             this.txtPathToServerLog.Size = new System.Drawing.Size(463, 22);
             this.txtPathToServerLog.TabIndex = 36;
             this.toolTip1.SetToolTip(this.txtPathToServerLog, "Path to the folder which contains the live server logs");
-            // 
-            // flpServer
-            // 
-            this.flpServer.AutoScroll = true;
-            this.flpServer.Location = new System.Drawing.Point(207, 69);
-            this.flpServer.Name = "flpServer";
-            this.flpServer.Size = new System.Drawing.Size(354, 49);
-            this.flpServer.TabIndex = 30;
-            this.flpServer.WrapContents = false;
-            // 
-            // grpKeepaliveOptions
-            // 
-            this.grpKeepaliveOptions.Controls.Add(this.numStartTimeout);
-            this.grpKeepaliveOptions.Controls.Add(this.numManualTimeout);
-            this.grpKeepaliveOptions.Controls.Add(this.numAutoTimeout);
-            this.grpKeepaliveOptions.Controls.Add(this.numAutoDelay);
-            this.grpKeepaliveOptions.Controls.Add(this.cBoxDebugLevel);
-            this.grpKeepaliveOptions.Controls.Add(this.lblStartTimeout);
-            this.grpKeepaliveOptions.Controls.Add(this.chkCleanWERs);
-            this.grpKeepaliveOptions.Controls.Add(this.lblManualTimeout);
-            this.grpKeepaliveOptions.Controls.Add(this.lblAutoTimeout);
-            this.grpKeepaliveOptions.Controls.Add(this.lblAutoDelay);
-            this.grpKeepaliveOptions.Controls.Add(this.lblDebugLevel);
-            this.grpKeepaliveOptions.ForeColor = System.Drawing.Color.White;
-            this.grpKeepaliveOptions.Location = new System.Drawing.Point(6, 250);
-            this.grpKeepaliveOptions.Name = "grpKeepaliveOptions";
-            this.grpKeepaliveOptions.Size = new System.Drawing.Size(555, 147);
-            this.grpKeepaliveOptions.TabIndex = 29;
-            this.grpKeepaliveOptions.TabStop = false;
-            this.grpKeepaliveOptions.Text = "Restart / Keepalive Settings";
             // 
             // numStartTimeout
             // 
@@ -1122,41 +855,6 @@
             this.toolTip1.SetToolTip(this.lblDebugLevel, "Batchrun.log Debug Level.\r\n0= NO LOGS\r\n1= Only Events\r\n2= Events + Errors\r\n3= Eve" +
         "rything (Verbose)");
             // 
-            // grpConfigServerLaunch
-            // 
-            this.grpConfigServerLaunch.Controls.Add(this.chkServerBindToIP);
-            this.grpConfigServerLaunch.Controls.Add(this.numServerIP4);
-            this.grpConfigServerLaunch.Controls.Add(this.numServerIP3);
-            this.grpConfigServerLaunch.Controls.Add(this.numServerIP2);
-            this.grpConfigServerLaunch.Controls.Add(this.numServerIP1);
-            this.grpConfigServerLaunch.Controls.Add(this.lvlServerIP);
-            this.grpConfigServerLaunch.Controls.Add(this.numServerPort);
-            this.grpConfigServerLaunch.Controls.Add(this.txtProfileName);
-            this.grpConfigServerLaunch.Controls.Add(this.lblServerProfileName);
-            this.grpConfigServerLaunch.Controls.Add(this.btnFortxtPathToProfile);
-            this.grpConfigServerLaunch.Controls.Add(this.lblPathToProfile);
-            this.grpConfigServerLaunch.Controls.Add(this.txtPathToProfile);
-            this.grpConfigServerLaunch.Controls.Add(this.btnFortxtPathToBasicCFG);
-            this.grpConfigServerLaunch.Controls.Add(this.lblServerPathToBasic);
-            this.grpConfigServerLaunch.Controls.Add(this.txtPathToBasicCFG);
-            this.grpConfigServerLaunch.Controls.Add(this.btnFortxtPathToConfigCFG);
-            this.grpConfigServerLaunch.Controls.Add(this.lblServerPathToConfig);
-            this.grpConfigServerLaunch.Controls.Add(this.txtPathToConfigCFG);
-            this.grpConfigServerLaunch.Controls.Add(this.txtServerModline);
-            this.grpConfigServerLaunch.Controls.Add(this.lblServerModline);
-            this.grpConfigServerLaunch.Controls.Add(this.txtServerCommand);
-            this.grpConfigServerLaunch.Controls.Add(this.lblServerCommand);
-            this.grpConfigServerLaunch.Controls.Add(this.lblServerPort);
-            this.grpConfigServerLaunch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.grpConfigServerLaunch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpConfigServerLaunch.ForeColor = System.Drawing.Color.White;
-            this.grpConfigServerLaunch.Location = new System.Drawing.Point(6, 403);
-            this.grpConfigServerLaunch.Name = "grpConfigServerLaunch";
-            this.grpConfigServerLaunch.Size = new System.Drawing.Size(555, 400);
-            this.grpConfigServerLaunch.TabIndex = 27;
-            this.grpConfigServerLaunch.TabStop = false;
-            this.grpConfigServerLaunch.Text = "Process Launch Settings";
-            // 
             // chkServerBindToIP
             // 
             this.chkServerBindToIP.AutoSize = true;
@@ -1325,23 +1023,6 @@
             this.toolTip1.SetToolTip(this.lblServerProfileName, "Profile Name/Filename, This is set only by choosing the path to your profile. It " +
         "is automatic. Just here for reference.");
             // 
-            // btnFortxtPathToProfile
-            // 
-            this.btnFortxtPathToProfile.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-            this.btnFortxtPathToProfile.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.btnFortxtPathToProfile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFortxtPathToProfile.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFortxtPathToProfile.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.btnFortxtPathToProfile.Location = new System.Drawing.Point(475, 318);
-            this.btnFortxtPathToProfile.Margin = new System.Windows.Forms.Padding(0);
-            this.btnFortxtPathToProfile.Name = "btnFortxtPathToProfile";
-            this.btnFortxtPathToProfile.Size = new System.Drawing.Size(64, 22);
-            this.btnFortxtPathToProfile.TabIndex = 41;
-            this.btnFortxtPathToProfile.Text = "Browse";
-            this.btnFortxtPathToProfile.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            this.btnFortxtPathToProfile.UseVisualStyleBackColor = true;
-            this.btnFortxtPathToProfile.Click += new System.EventHandler(this.actionBrowseButtonForFilePath);
-            // 
             // lblPathToProfile
             // 
             this.lblPathToProfile.AutoSize = true;
@@ -1369,34 +1050,6 @@
             this.toolTip1.SetToolTip(this.txtPathToProfile, "Path to Profiles (This line will be modified according to the location of your pr" +
         "ofiles, it may be shortened. This is normal)");
             // 
-            // btnFortxtPathToBasicCFG
-            // 
-            this.btnFortxtPathToBasicCFG.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-            this.btnFortxtPathToBasicCFG.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.btnFortxtPathToBasicCFG.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFortxtPathToBasicCFG.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFortxtPathToBasicCFG.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.btnFortxtPathToBasicCFG.Location = new System.Drawing.Point(475, 264);
-            this.btnFortxtPathToBasicCFG.Margin = new System.Windows.Forms.Padding(0);
-            this.btnFortxtPathToBasicCFG.Name = "btnFortxtPathToBasicCFG";
-            this.btnFortxtPathToBasicCFG.Size = new System.Drawing.Size(64, 22);
-            this.btnFortxtPathToBasicCFG.TabIndex = 38;
-            this.btnFortxtPathToBasicCFG.Text = "Browse";
-            this.btnFortxtPathToBasicCFG.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            this.btnFortxtPathToBasicCFG.UseVisualStyleBackColor = true;
-            this.btnFortxtPathToBasicCFG.Click += new System.EventHandler(this.actionBrowseButtonForFilePath);
-            // 
-            // lblServerPathToBasic
-            // 
-            this.lblServerPathToBasic.AutoSize = true;
-            this.lblServerPathToBasic.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblServerPathToBasic.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lblServerPathToBasic.Location = new System.Drawing.Point(6, 245);
-            this.lblServerPathToBasic.Name = "lblServerPathToBasic";
-            this.lblServerPathToBasic.Size = new System.Drawing.Size(106, 16);
-            this.lblServerPathToBasic.TabIndex = 37;
-            this.lblServerPathToBasic.Text = "Path to basic.cfg";
-            // 
             // txtPathToBasicCFG
             // 
             this.txtPathToBasicCFG.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -1409,23 +1062,6 @@
             this.txtPathToBasicCFG.Size = new System.Drawing.Size(463, 22);
             this.txtPathToBasicCFG.TabIndex = 36;
             this.toolTip1.SetToolTip(this.txtPathToBasicCFG, "Path to Server Config \"Basic.CFG\"");
-            // 
-            // btnFortxtPathToConfigCFG
-            // 
-            this.btnFortxtPathToConfigCFG.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-            this.btnFortxtPathToConfigCFG.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.btnFortxtPathToConfigCFG.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFortxtPathToConfigCFG.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFortxtPathToConfigCFG.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.btnFortxtPathToConfigCFG.Location = new System.Drawing.Point(475, 210);
-            this.btnFortxtPathToConfigCFG.Margin = new System.Windows.Forms.Padding(0);
-            this.btnFortxtPathToConfigCFG.Name = "btnFortxtPathToConfigCFG";
-            this.btnFortxtPathToConfigCFG.Size = new System.Drawing.Size(64, 22);
-            this.btnFortxtPathToConfigCFG.TabIndex = 35;
-            this.btnFortxtPathToConfigCFG.Text = "Browse";
-            this.btnFortxtPathToConfigCFG.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            this.btnFortxtPathToConfigCFG.UseVisualStyleBackColor = true;
-            this.btnFortxtPathToConfigCFG.Click += new System.EventHandler(this.actionBrowseButtonForFilePath);
             // 
             // lblServerPathToConfig
             // 
@@ -1532,17 +1168,6 @@
             this.lblServerAffinity.Text = "Process Affinity (cores)";
             this.toolTip1.SetToolTip(this.lblServerAffinity, "Process EXE Affinity. The cores with which this process can utilize.");
             // 
-            // lblerverPriority
-            // 
-            this.lblerverPriority.AutoSize = true;
-            this.lblerverPriority.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblerverPriority.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lblerverPriority.Location = new System.Drawing.Point(3, 58);
-            this.lblerverPriority.Name = "lblerverPriority";
-            this.lblerverPriority.Size = new System.Drawing.Size(102, 16);
-            this.lblerverPriority.TabIndex = 16;
-            this.lblerverPriority.Text = "Process Priority";
-            // 
             // cBoxPriorityServer
             // 
             this.cBoxPriorityServer.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
@@ -1587,24 +1212,6 @@
             this.btnProcessKeepaliveServer.MouseLeave += new System.EventHandler(this.evntKeepProcessAlive_MouseLeave);
             this.btnProcessKeepaliveServer.MouseMove += new System.Windows.Forms.MouseEventHandler(this.evntKeepProcessAlive_MouseMove);
             // 
-            // btnFortxtPathToEXEServer
-            // 
-            this.btnFortxtPathToEXEServer.Enabled = false;
-            this.btnFortxtPathToEXEServer.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-            this.btnFortxtPathToEXEServer.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.btnFortxtPathToEXEServer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFortxtPathToEXEServer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFortxtPathToEXEServer.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.btnFortxtPathToEXEServer.Location = new System.Drawing.Point(497, 25);
-            this.btnFortxtPathToEXEServer.Margin = new System.Windows.Forms.Padding(0);
-            this.btnFortxtPathToEXEServer.Name = "btnFortxtPathToEXEServer";
-            this.btnFortxtPathToEXEServer.Size = new System.Drawing.Size(64, 22);
-            this.btnFortxtPathToEXEServer.TabIndex = 10;
-            this.btnFortxtPathToEXEServer.Text = "Browse";
-            this.btnFortxtPathToEXEServer.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            this.btnFortxtPathToEXEServer.UseVisualStyleBackColor = true;
-            this.btnFortxtPathToEXEServer.Click += new System.EventHandler(this.actionBrowseButtonForFilePath);
-            // 
             // lblServerPathToEXE
             // 
             this.lblServerPathToEXE.AutoSize = true;
@@ -1629,46 +1236,6 @@
             this.txtPathToEXEServer.Size = new System.Drawing.Size(287, 22);
             this.txtPathToEXEServer.TabIndex = 3;
             this.toolTip1.SetToolTip(this.txtPathToEXEServer, "Path to the process executable (Arma EXE linked to above path. Unchangeable)");
-            // 
-            // tabPageProcessDatabase
-            // 
-            this.tabPageProcessDatabase.AutoScroll = true;
-            this.tabPageProcessDatabase.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.tabPageProcessDatabase.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tabPageProcessDatabase.Controls.Add(this.grpConfigDatabaseBackup);
-            this.tabPageProcessDatabase.Controls.Add(this.flpDatabase);
-            this.tabPageProcessDatabase.Controls.Add(this.lvlDatabaseAffinity);
-            this.tabPageProcessDatabase.Controls.Add(this.lblDatabasePriority);
-            this.tabPageProcessDatabase.Controls.Add(this.cBoxPriorityDatabase);
-            this.tabPageProcessDatabase.Controls.Add(this.btnProcessKeepaliveDatabase);
-            this.tabPageProcessDatabase.Controls.Add(this.btnFortxtPathToEXEDB);
-            this.tabPageProcessDatabase.Controls.Add(this.lblDatabasePathToExe);
-            this.tabPageProcessDatabase.Controls.Add(this.txtPathToEXEDB);
-            this.tabPageProcessDatabase.Location = new System.Drawing.Point(4, 25);
-            this.tabPageProcessDatabase.Name = "tabPageProcessDatabase";
-            this.tabPageProcessDatabase.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageProcessDatabase.Size = new System.Drawing.Size(588, 266);
-            this.tabPageProcessDatabase.TabIndex = 1;
-            this.tabPageProcessDatabase.Text = "Database";
-            // 
-            // grpConfigDatabaseBackup
-            // 
-            this.grpConfigDatabaseBackup.Controls.Add(this.numBackupInterval);
-            this.grpConfigDatabaseBackup.Controls.Add(this.lblDatabaseBackupInterval);
-            this.grpConfigDatabaseBackup.Controls.Add(this.chkUseZipBackups);
-            this.grpConfigDatabaseBackup.Controls.Add(this.btnFortxtPathToBackupFolder);
-            this.grpConfigDatabaseBackup.Controls.Add(this.lblDatabaseBackupFolder);
-            this.grpConfigDatabaseBackup.Controls.Add(this.txtPathToBackupFolder);
-            this.grpConfigDatabaseBackup.Controls.Add(this.btnFortxtPathToDBFile);
-            this.grpConfigDatabaseBackup.Controls.Add(this.lblDatabaseDumpFile);
-            this.grpConfigDatabaseBackup.Controls.Add(this.txtPathToDBFile);
-            this.grpConfigDatabaseBackup.ForeColor = System.Drawing.Color.White;
-            this.grpConfigDatabaseBackup.Location = new System.Drawing.Point(6, 109);
-            this.grpConfigDatabaseBackup.Name = "grpConfigDatabaseBackup";
-            this.grpConfigDatabaseBackup.Size = new System.Drawing.Size(555, 182);
-            this.grpConfigDatabaseBackup.TabIndex = 42;
-            this.grpConfigDatabaseBackup.TabStop = false;
-            this.grpConfigDatabaseBackup.Text = "Backup/Logging Settings";
             // 
             // numBackupInterval
             // 
@@ -1722,22 +1289,6 @@
             this.toolTip1.SetToolTip(this.chkUseZipBackups, "Toggles the use of compression when archiving database backups");
             this.chkUseZipBackups.UseVisualStyleBackColor = true;
             // 
-            // btnFortxtPathToBackupFolder
-            // 
-            this.btnFortxtPathToBackupFolder.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-            this.btnFortxtPathToBackupFolder.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.btnFortxtPathToBackupFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFortxtPathToBackupFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFortxtPathToBackupFolder.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.btnFortxtPathToBackupFolder.Location = new System.Drawing.Point(475, 150);
-            this.btnFortxtPathToBackupFolder.Margin = new System.Windows.Forms.Padding(0);
-            this.btnFortxtPathToBackupFolder.Name = "btnFortxtPathToBackupFolder";
-            this.btnFortxtPathToBackupFolder.Size = new System.Drawing.Size(64, 22);
-            this.btnFortxtPathToBackupFolder.TabIndex = 41;
-            this.btnFortxtPathToBackupFolder.Text = "Browse";
-            this.btnFortxtPathToBackupFolder.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            this.btnFortxtPathToBackupFolder.UseVisualStyleBackColor = true;
-            // 
             // lblDatabaseBackupFolder
             // 
             this.lblDatabaseBackupFolder.AutoSize = true;
@@ -1763,22 +1314,6 @@
             this.txtPathToBackupFolder.TabIndex = 39;
             this.toolTip1.SetToolTip(this.txtPathToBackupFolder, "Path to archive folder where database will be backed up to");
             // 
-            // btnFortxtPathToDBFile
-            // 
-            this.btnFortxtPathToDBFile.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-            this.btnFortxtPathToDBFile.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.btnFortxtPathToDBFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFortxtPathToDBFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFortxtPathToDBFile.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.btnFortxtPathToDBFile.Location = new System.Drawing.Point(475, 100);
-            this.btnFortxtPathToDBFile.Margin = new System.Windows.Forms.Padding(0);
-            this.btnFortxtPathToDBFile.Name = "btnFortxtPathToDBFile";
-            this.btnFortxtPathToDBFile.Size = new System.Drawing.Size(64, 22);
-            this.btnFortxtPathToDBFile.TabIndex = 38;
-            this.btnFortxtPathToDBFile.Text = "Browse";
-            this.btnFortxtPathToDBFile.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            this.btnFortxtPathToDBFile.UseVisualStyleBackColor = true;
-            // 
             // lblDatabaseDumpFile
             // 
             this.lblDatabaseDumpFile.AutoSize = true;
@@ -1803,15 +1338,6 @@
             this.txtPathToDBFile.Size = new System.Drawing.Size(463, 22);
             this.txtPathToDBFile.TabIndex = 36;
             this.toolTip1.SetToolTip(this.txtPathToDBFile, "Path to databse file to backup (Dump/Table file)");
-            // 
-            // flpDatabase
-            // 
-            this.flpDatabase.AutoScroll = true;
-            this.flpDatabase.Location = new System.Drawing.Point(207, 69);
-            this.flpDatabase.Name = "flpDatabase";
-            this.flpDatabase.Size = new System.Drawing.Size(354, 49);
-            this.flpDatabase.TabIndex = 42;
-            this.flpDatabase.WrapContents = false;
             // 
             // lvlDatabaseAffinity
             // 
@@ -1879,23 +1405,6 @@
             this.btnProcessKeepaliveDatabase.MouseLeave += new System.EventHandler(this.evntKeepProcessAlive_MouseLeave);
             this.btnProcessKeepaliveDatabase.MouseMove += new System.Windows.Forms.MouseEventHandler(this.evntKeepProcessAlive_MouseMove);
             // 
-            // btnFortxtPathToEXEDB
-            // 
-            this.btnFortxtPathToEXEDB.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-            this.btnFortxtPathToEXEDB.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.btnFortxtPathToEXEDB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFortxtPathToEXEDB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFortxtPathToEXEDB.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.btnFortxtPathToEXEDB.Location = new System.Drawing.Point(497, 25);
-            this.btnFortxtPathToEXEDB.Margin = new System.Windows.Forms.Padding(0);
-            this.btnFortxtPathToEXEDB.Name = "btnFortxtPathToEXEDB";
-            this.btnFortxtPathToEXEDB.Size = new System.Drawing.Size(64, 22);
-            this.btnFortxtPathToEXEDB.TabIndex = 28;
-            this.btnFortxtPathToEXEDB.Text = "Browse";
-            this.btnFortxtPathToEXEDB.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            this.btnFortxtPathToEXEDB.UseVisualStyleBackColor = true;
-            this.btnFortxtPathToEXEDB.Click += new System.EventHandler(this.actionBrowseButtonForFilePath);
-            // 
             // lblDatabasePathToExe
             // 
             this.lblDatabasePathToExe.AutoSize = true;
@@ -1920,41 +1429,6 @@
             this.txtPathToEXEDB.Size = new System.Drawing.Size(287, 22);
             this.txtPathToEXEDB.TabIndex = 26;
             this.toolTip1.SetToolTip(this.txtPathToEXEDB, "Full path to process executable");
-            // 
-            // tabPageProcessBEC
-            // 
-            this.tabPageProcessBEC.AutoScroll = true;
-            this.tabPageProcessBEC.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.tabPageProcessBEC.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tabPageProcessBEC.Controls.Add(this.grpConfigBECBackup);
-            this.tabPageProcessBEC.Controls.Add(this.flpBEC);
-            this.tabPageProcessBEC.Controls.Add(this.lblBECAffinity);
-            this.tabPageProcessBEC.Controls.Add(this.lblBECPriority);
-            this.tabPageProcessBEC.Controls.Add(this.cBoxPriorityBEC);
-            this.tabPageProcessBEC.Controls.Add(this.btnProcessKeepaliveBEC);
-            this.tabPageProcessBEC.Controls.Add(this.btnFortxtPathToEXEBEC);
-            this.tabPageProcessBEC.Controls.Add(this.lblBECPathToExe);
-            this.tabPageProcessBEC.Controls.Add(this.txtPathToEXEBEC);
-            this.tabPageProcessBEC.Location = new System.Drawing.Point(4, 25);
-            this.tabPageProcessBEC.Name = "tabPageProcessBEC";
-            this.tabPageProcessBEC.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageProcessBEC.Size = new System.Drawing.Size(588, 266);
-            this.tabPageProcessBEC.TabIndex = 2;
-            this.tabPageProcessBEC.Text = "BEC Process";
-            // 
-            // grpConfigBECBackup
-            // 
-            this.grpConfigBECBackup.Controls.Add(this.chkBecUseDsc);
-            this.grpConfigBECBackup.Controls.Add(this.txtPathToBattleye);
-            this.grpConfigBECBackup.Controls.Add(this.btnFortxtPathToBattleye);
-            this.grpConfigBECBackup.Controls.Add(this.lblBECBEPath);
-            this.grpConfigBECBackup.ForeColor = System.Drawing.Color.White;
-            this.grpConfigBECBackup.Location = new System.Drawing.Point(6, 109);
-            this.grpConfigBECBackup.Name = "grpConfigBECBackup";
-            this.grpConfigBECBackup.Size = new System.Drawing.Size(555, 80);
-            this.grpConfigBECBackup.TabIndex = 46;
-            this.grpConfigBECBackup.TabStop = false;
-            this.grpConfigBECBackup.Text = "Backup/Logging Settings";
             // 
             // chkBecUseDsc
             // 
@@ -1982,22 +1456,6 @@
             this.txtPathToBattleye.TabIndex = 42;
             this.toolTip1.SetToolTip(this.txtPathToBattleye, "Full path to the folder containing the battleye logs and filters");
             // 
-            // btnFortxtPathToBattleye
-            // 
-            this.btnFortxtPathToBattleye.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-            this.btnFortxtPathToBattleye.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.btnFortxtPathToBattleye.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFortxtPathToBattleye.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFortxtPathToBattleye.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.btnFortxtPathToBattleye.Location = new System.Drawing.Point(475, 50);
-            this.btnFortxtPathToBattleye.Margin = new System.Windows.Forms.Padding(0);
-            this.btnFortxtPathToBattleye.Name = "btnFortxtPathToBattleye";
-            this.btnFortxtPathToBattleye.Size = new System.Drawing.Size(64, 22);
-            this.btnFortxtPathToBattleye.TabIndex = 44;
-            this.btnFortxtPathToBattleye.Text = "Browse";
-            this.btnFortxtPathToBattleye.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            this.btnFortxtPathToBattleye.UseVisualStyleBackColor = true;
-            // 
             // lblBECBEPath
             // 
             this.lblBECBEPath.AutoSize = true;
@@ -2009,15 +1467,6 @@
             this.lblBECBEPath.TabIndex = 43;
             this.lblBECBEPath.Text = "Path to Battleye Scripts/Log Folder";
             this.toolTip1.SetToolTip(this.lblBECBEPath, "Full path to the folder containing the battleye logs and filters");
-            // 
-            // flpBEC
-            // 
-            this.flpBEC.AutoScroll = true;
-            this.flpBEC.Location = new System.Drawing.Point(207, 69);
-            this.flpBEC.Name = "flpBEC";
-            this.flpBEC.Size = new System.Drawing.Size(354, 49);
-            this.flpBEC.TabIndex = 46;
-            this.flpBEC.WrapContents = false;
             // 
             // lblBECAffinity
             // 
@@ -2085,23 +1534,6 @@
             this.btnProcessKeepaliveBEC.MouseLeave += new System.EventHandler(this.evntKeepProcessAlive_MouseLeave);
             this.btnProcessKeepaliveBEC.MouseMove += new System.Windows.Forms.MouseEventHandler(this.evntKeepProcessAlive_MouseMove);
             // 
-            // btnFortxtPathToEXEBEC
-            // 
-            this.btnFortxtPathToEXEBEC.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-            this.btnFortxtPathToEXEBEC.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.btnFortxtPathToEXEBEC.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFortxtPathToEXEBEC.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFortxtPathToEXEBEC.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.btnFortxtPathToEXEBEC.Location = new System.Drawing.Point(497, 25);
-            this.btnFortxtPathToEXEBEC.Margin = new System.Windows.Forms.Padding(0);
-            this.btnFortxtPathToEXEBEC.Name = "btnFortxtPathToEXEBEC";
-            this.btnFortxtPathToEXEBEC.Size = new System.Drawing.Size(64, 22);
-            this.btnFortxtPathToEXEBEC.TabIndex = 28;
-            this.btnFortxtPathToEXEBEC.Text = "Browse";
-            this.btnFortxtPathToEXEBEC.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            this.btnFortxtPathToEXEBEC.UseVisualStyleBackColor = true;
-            this.btnFortxtPathToEXEBEC.Click += new System.EventHandler(this.actionBrowseButtonForFilePath);
-            // 
             // lblBECPathToExe
             // 
             this.lblBECPathToExe.AutoSize = true;
@@ -2127,39 +1559,6 @@
             this.txtPathToEXEBEC.TabIndex = 26;
             this.toolTip1.SetToolTip(this.txtPathToEXEBEC, "Full path to process executable");
             // 
-            // tabPageProcessHC
-            // 
-            this.tabPageProcessHC.AutoScroll = true;
-            this.tabPageProcessHC.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.tabPageProcessHC.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tabPageProcessHC.Controls.Add(this.grpConfigHCLaunch);
-            this.tabPageProcessHC.Controls.Add(this.flpHeadlessClient);
-            this.tabPageProcessHC.Controls.Add(this.lblHCAffinity);
-            this.tabPageProcessHC.Controls.Add(this.lblHCPriority);
-            this.tabPageProcessHC.Controls.Add(this.cBoxPriorityHeadlessClient);
-            this.tabPageProcessHC.Controls.Add(this.btnProcessKeepaliveHC);
-            this.tabPageProcessHC.Controls.Add(this.btnFortxtPathToEXEHC);
-            this.tabPageProcessHC.Controls.Add(this.lblHCPathToExe);
-            this.tabPageProcessHC.Controls.Add(this.txtPathToEXEHC);
-            this.tabPageProcessHC.Location = new System.Drawing.Point(4, 25);
-            this.tabPageProcessHC.Name = "tabPageProcessHC";
-            this.tabPageProcessHC.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageProcessHC.Size = new System.Drawing.Size(588, 266);
-            this.tabPageProcessHC.TabIndex = 3;
-            this.tabPageProcessHC.Text = "Headless Client";
-            // 
-            // grpConfigHCLaunch
-            // 
-            this.grpConfigHCLaunch.Controls.Add(this.lblHCLaunchArgs);
-            this.grpConfigHCLaunch.Controls.Add(this.txtHeadlessClientLaunchArgs);
-            this.grpConfigHCLaunch.ForeColor = System.Drawing.Color.White;
-            this.grpConfigHCLaunch.Location = new System.Drawing.Point(6, 109);
-            this.grpConfigHCLaunch.Name = "grpConfigHCLaunch";
-            this.grpConfigHCLaunch.Size = new System.Drawing.Size(555, 80);
-            this.grpConfigHCLaunch.TabIndex = 47;
-            this.grpConfigHCLaunch.TabStop = false;
-            this.grpConfigHCLaunch.Text = "Launch Parameters";
-            // 
             // lblHCLaunchArgs
             // 
             this.lblHCLaunchArgs.AutoSize = true;
@@ -2183,15 +1582,6 @@
             this.txtHeadlessClientLaunchArgs.Size = new System.Drawing.Size(530, 22);
             this.txtHeadlessClientLaunchArgs.TabIndex = 42;
             this.toolTip1.SetToolTip(this.txtHeadlessClientLaunchArgs, "Custom launch parameters for the Headless Client");
-            // 
-            // flpHeadlessClient
-            // 
-            this.flpHeadlessClient.AutoScroll = true;
-            this.flpHeadlessClient.Location = new System.Drawing.Point(207, 69);
-            this.flpHeadlessClient.Name = "flpHeadlessClient";
-            this.flpHeadlessClient.Size = new System.Drawing.Size(354, 49);
-            this.flpHeadlessClient.TabIndex = 47;
-            this.flpHeadlessClient.WrapContents = false;
             // 
             // lblHCAffinity
             // 
@@ -2259,23 +1649,6 @@
             this.btnProcessKeepaliveHC.MouseLeave += new System.EventHandler(this.evntKeepProcessAlive_MouseLeave);
             this.btnProcessKeepaliveHC.MouseMove += new System.Windows.Forms.MouseEventHandler(this.evntKeepProcessAlive_MouseMove);
             // 
-            // btnFortxtPathToEXEHC
-            // 
-            this.btnFortxtPathToEXEHC.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-            this.btnFortxtPathToEXEHC.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.btnFortxtPathToEXEHC.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFortxtPathToEXEHC.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFortxtPathToEXEHC.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.btnFortxtPathToEXEHC.Location = new System.Drawing.Point(497, 25);
-            this.btnFortxtPathToEXEHC.Margin = new System.Windows.Forms.Padding(0);
-            this.btnFortxtPathToEXEHC.Name = "btnFortxtPathToEXEHC";
-            this.btnFortxtPathToEXEHC.Size = new System.Drawing.Size(64, 22);
-            this.btnFortxtPathToEXEHC.TabIndex = 28;
-            this.btnFortxtPathToEXEHC.Text = "Browse";
-            this.btnFortxtPathToEXEHC.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            this.btnFortxtPathToEXEHC.UseVisualStyleBackColor = true;
-            this.btnFortxtPathToEXEHC.Click += new System.EventHandler(this.actionBrowseButtonForFilePath);
-            // 
             // lblHCPathToExe
             // 
             this.lblHCPathToExe.AutoSize = true;
@@ -2300,39 +1673,6 @@
             this.txtPathToEXEHC.Size = new System.Drawing.Size(287, 22);
             this.txtPathToEXEHC.TabIndex = 26;
             this.toolTip1.SetToolTip(this.txtPathToEXEHC, "Full path to process executable");
-            // 
-            // tabPageProcessTS
-            // 
-            this.tabPageProcessTS.AutoScroll = true;
-            this.tabPageProcessTS.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.tabPageProcessTS.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tabPageProcessTS.Controls.Add(this.grpconfigTeamspeakLaunch);
-            this.tabPageProcessTS.Controls.Add(this.flpTeamspeak);
-            this.tabPageProcessTS.Controls.Add(this.lblTSAffinity);
-            this.tabPageProcessTS.Controls.Add(this.lblTSPriority);
-            this.tabPageProcessTS.Controls.Add(this.cBoxPriorityTeamspeak);
-            this.tabPageProcessTS.Controls.Add(this.btnProcessKeepaliveTS);
-            this.tabPageProcessTS.Controls.Add(this.btnFortxtPathToEXETS);
-            this.tabPageProcessTS.Controls.Add(this.lblTSPathToExe);
-            this.tabPageProcessTS.Controls.Add(this.txtPathToEXETS);
-            this.tabPageProcessTS.Location = new System.Drawing.Point(4, 25);
-            this.tabPageProcessTS.Name = "tabPageProcessTS";
-            this.tabPageProcessTS.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageProcessTS.Size = new System.Drawing.Size(588, 266);
-            this.tabPageProcessTS.TabIndex = 4;
-            this.tabPageProcessTS.Text = "Teamspeak";
-            // 
-            // grpconfigTeamspeakLaunch
-            // 
-            this.grpconfigTeamspeakLaunch.Controls.Add(this.numTeamspeakPortNumber);
-            this.grpconfigTeamspeakLaunch.Controls.Add(this.lblTSPort);
-            this.grpconfigTeamspeakLaunch.ForeColor = System.Drawing.Color.White;
-            this.grpconfigTeamspeakLaunch.Location = new System.Drawing.Point(6, 109);
-            this.grpconfigTeamspeakLaunch.Name = "grpconfigTeamspeakLaunch";
-            this.grpconfigTeamspeakLaunch.Size = new System.Drawing.Size(555, 80);
-            this.grpconfigTeamspeakLaunch.TabIndex = 46;
-            this.grpconfigTeamspeakLaunch.TabStop = false;
-            this.grpconfigTeamspeakLaunch.Text = "Launch Parameters";
             // 
             // numTeamspeakPortNumber
             // 
@@ -2372,15 +1712,6 @@
             this.lblTSPort.TabIndex = 43;
             this.lblTSPort.Text = "Teamspeak Port Number";
             this.toolTip1.SetToolTip(this.lblTSPort, "Port number for use with teamspeak server");
-            // 
-            // flpTeamspeak
-            // 
-            this.flpTeamspeak.AutoScroll = true;
-            this.flpTeamspeak.Location = new System.Drawing.Point(207, 69);
-            this.flpTeamspeak.Name = "flpTeamspeak";
-            this.flpTeamspeak.Size = new System.Drawing.Size(354, 49);
-            this.flpTeamspeak.TabIndex = 46;
-            this.flpTeamspeak.WrapContents = false;
             // 
             // lblTSAffinity
             // 
@@ -2448,23 +1779,6 @@
             this.btnProcessKeepaliveTS.MouseLeave += new System.EventHandler(this.evntKeepProcessAlive_MouseLeave);
             this.btnProcessKeepaliveTS.MouseMove += new System.Windows.Forms.MouseEventHandler(this.evntKeepProcessAlive_MouseMove);
             // 
-            // btnFortxtPathToEXETS
-            // 
-            this.btnFortxtPathToEXETS.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-            this.btnFortxtPathToEXETS.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.btnFortxtPathToEXETS.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFortxtPathToEXETS.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFortxtPathToEXETS.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.btnFortxtPathToEXETS.Location = new System.Drawing.Point(497, 25);
-            this.btnFortxtPathToEXETS.Margin = new System.Windows.Forms.Padding(0);
-            this.btnFortxtPathToEXETS.Name = "btnFortxtPathToEXETS";
-            this.btnFortxtPathToEXETS.Size = new System.Drawing.Size(64, 22);
-            this.btnFortxtPathToEXETS.TabIndex = 28;
-            this.btnFortxtPathToEXETS.Text = "Browse";
-            this.btnFortxtPathToEXETS.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            this.btnFortxtPathToEXETS.UseVisualStyleBackColor = true;
-            this.btnFortxtPathToEXETS.Click += new System.EventHandler(this.actionBrowseButtonForFilePath);
-            // 
             // lblTSPathToExe
             // 
             this.lblTSPathToExe.AutoSize = true;
@@ -2489,42 +1803,6 @@
             this.txtPathToEXETS.Size = new System.Drawing.Size(287, 22);
             this.txtPathToEXETS.TabIndex = 26;
             this.toolTip1.SetToolTip(this.txtPathToEXETS, "Full path to process executable");
-            // 
-            // tabPageProcessASM
-            // 
-            this.tabPageProcessASM.AutoScroll = true;
-            this.tabPageProcessASM.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.tabPageProcessASM.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tabPageProcessASM.Controls.Add(this.grpConfigASMLaunch);
-            this.tabPageProcessASM.Controls.Add(this.flpASM);
-            this.tabPageProcessASM.Controls.Add(this.lblASMAffinity);
-            this.tabPageProcessASM.Controls.Add(this.lblASMPriority);
-            this.tabPageProcessASM.Controls.Add(this.cBoxPriorityASM);
-            this.tabPageProcessASM.Controls.Add(this.btnProcessKeepaliveASM);
-            this.tabPageProcessASM.Controls.Add(this.btnFortxtPathToEXEASM);
-            this.tabPageProcessASM.Controls.Add(this.lblASMPathToExe);
-            this.tabPageProcessASM.Controls.Add(this.txtPathToEXEASM);
-            this.tabPageProcessASM.Location = new System.Drawing.Point(4, 25);
-            this.tabPageProcessASM.Name = "tabPageProcessASM";
-            this.tabPageProcessASM.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageProcessASM.Size = new System.Drawing.Size(588, 266);
-            this.tabPageProcessASM.TabIndex = 5;
-            this.tabPageProcessASM.Text = "ASM";
-            // 
-            // grpConfigASMLaunch
-            // 
-            this.grpConfigASMLaunch.Controls.Add(this.numASMLogInterval);
-            this.grpConfigASMLaunch.Controls.Add(this.btnFortxtASMLogName);
-            this.grpConfigASMLaunch.Controls.Add(this.lblASMLoggingInterval);
-            this.grpConfigASMLaunch.Controls.Add(this.txtASMLogName);
-            this.grpConfigASMLaunch.Controls.Add(this.lblASMLogName);
-            this.grpConfigASMLaunch.ForeColor = System.Drawing.Color.White;
-            this.grpConfigASMLaunch.Location = new System.Drawing.Point(6, 109);
-            this.grpConfigASMLaunch.Name = "grpConfigASMLaunch";
-            this.grpConfigASMLaunch.Size = new System.Drawing.Size(555, 135);
-            this.grpConfigASMLaunch.TabIndex = 50;
-            this.grpConfigASMLaunch.TabStop = false;
-            this.grpConfigASMLaunch.Text = "Launch Parameters";
             // 
             // numASMLogInterval
             // 
@@ -2552,22 +1830,6 @@
             0,
             0,
             0});
-            // 
-            // btnFortxtASMLogName
-            // 
-            this.btnFortxtASMLogName.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-            this.btnFortxtASMLogName.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.btnFortxtASMLogName.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFortxtASMLogName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFortxtASMLogName.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.btnFortxtASMLogName.Location = new System.Drawing.Point(468, 100);
-            this.btnFortxtASMLogName.Margin = new System.Windows.Forms.Padding(0);
-            this.btnFortxtASMLogName.Name = "btnFortxtASMLogName";
-            this.btnFortxtASMLogName.Size = new System.Drawing.Size(64, 22);
-            this.btnFortxtASMLogName.TabIndex = 49;
-            this.btnFortxtASMLogName.Text = "Change";
-            this.btnFortxtASMLogName.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            this.btnFortxtASMLogName.UseVisualStyleBackColor = true;
             // 
             // lblASMLoggingInterval
             // 
@@ -2605,15 +1867,6 @@
             this.lblASMLogName.TabIndex = 47;
             this.lblASMLogName.Text = "ASM Log File Name";
             this.toolTip1.SetToolTip(this.lblASMLogName, "Name of the performance log that ASM creates");
-            // 
-            // flpASM
-            // 
-            this.flpASM.AutoScroll = true;
-            this.flpASM.Location = new System.Drawing.Point(207, 69);
-            this.flpASM.Name = "flpASM";
-            this.flpASM.Size = new System.Drawing.Size(354, 49);
-            this.flpASM.TabIndex = 50;
-            this.flpASM.WrapContents = false;
             // 
             // lblASMAffinity
             // 
@@ -2681,23 +1934,6 @@
             this.btnProcessKeepaliveASM.MouseLeave += new System.EventHandler(this.evntKeepProcessAlive_MouseLeave);
             this.btnProcessKeepaliveASM.MouseMove += new System.Windows.Forms.MouseEventHandler(this.evntKeepProcessAlive_MouseMove);
             // 
-            // btnFortxtPathToEXEASM
-            // 
-            this.btnFortxtPathToEXEASM.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-            this.btnFortxtPathToEXEASM.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.btnFortxtPathToEXEASM.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFortxtPathToEXEASM.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFortxtPathToEXEASM.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.btnFortxtPathToEXEASM.Location = new System.Drawing.Point(497, 25);
-            this.btnFortxtPathToEXEASM.Margin = new System.Windows.Forms.Padding(0);
-            this.btnFortxtPathToEXEASM.Name = "btnFortxtPathToEXEASM";
-            this.btnFortxtPathToEXEASM.Size = new System.Drawing.Size(64, 22);
-            this.btnFortxtPathToEXEASM.TabIndex = 28;
-            this.btnFortxtPathToEXEASM.Text = "Browse";
-            this.btnFortxtPathToEXEASM.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            this.btnFortxtPathToEXEASM.UseVisualStyleBackColor = true;
-            this.btnFortxtPathToEXEASM.Click += new System.EventHandler(this.actionBrowseButtonForFilePath);
-            // 
             // lblASMPathToExe
             // 
             this.lblASMPathToExe.AutoSize = true;
@@ -2722,22 +1958,6 @@
             this.txtPathToEXEASM.Size = new System.Drawing.Size(287, 22);
             this.txtPathToEXEASM.TabIndex = 26;
             this.toolTip1.SetToolTip(this.txtPathToEXEASM, "Full path to process executable");
-            // 
-            // tabPageProcessCustom
-            // 
-            this.tabPageProcessCustom.AutoScroll = true;
-            this.tabPageProcessCustom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.tabPageProcessCustom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tabPageProcessCustom.Controls.Add(this.btnCustomProcessDelete);
-            this.tabPageProcessCustom.Controls.Add(this.btnCustomProcessAdd);
-            this.tabPageProcessCustom.Controls.Add(this.cBoxCustomProcessSelector);
-            this.tabPageProcessCustom.Controls.Add(this.groupBox2);
-            this.tabPageProcessCustom.Location = new System.Drawing.Point(4, 25);
-            this.tabPageProcessCustom.Name = "tabPageProcessCustom";
-            this.tabPageProcessCustom.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageProcessCustom.Size = new System.Drawing.Size(588, 266);
-            this.tabPageProcessCustom.TabIndex = 6;
-            this.tabPageProcessCustom.Text = "Custom";
             // 
             // btnCustomProcessDelete
             // 
@@ -2794,37 +2014,6 @@
         "ustom Entries)");
             this.cBoxCustomProcessSelector.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.customProcessListDrawItem);
             this.cBoxCustomProcessSelector.SelectedIndexChanged += new System.EventHandler(this.actionCustomProcSelector);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.flpCustom);
-            this.groupBox2.Controls.Add(this.lblCustomProcessLaunchParams);
-            this.groupBox2.Controls.Add(this.txtCustomProcessLaunchParams);
-            this.groupBox2.Controls.Add(this.lblCustomProcessName);
-            this.groupBox2.Controls.Add(this.txtCustomProcessName);
-            this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.cBoxPriorityCustom);
-            this.groupBox2.Controls.Add(this.btnProcessKeepaliveCustom);
-            this.groupBox2.Controls.Add(this.btnCustomProcessBrowseEXE);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.txtPathToEXECustom);
-            this.groupBox2.ForeColor = System.Drawing.Color.White;
-            this.groupBox2.Location = new System.Drawing.Point(6, 64);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(555, 230);
-            this.groupBox2.TabIndex = 57;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "(Process EXE Name)";
-            // 
-            // flpCustom
-            // 
-            this.flpCustom.AutoScroll = true;
-            this.flpCustom.Location = new System.Drawing.Point(211, 92);
-            this.flpCustom.Name = "flpCustom";
-            this.flpCustom.Size = new System.Drawing.Size(337, 49);
-            this.flpCustom.TabIndex = 75;
-            this.flpCustom.WrapContents = false;
             // 
             // lblCustomProcessLaunchParams
             // 
@@ -2945,23 +2134,6 @@
             this.btnProcessKeepaliveCustom.MouseLeave += new System.EventHandler(this.evntKeepProcessAlive_MouseLeave);
             this.btnProcessKeepaliveCustom.MouseMove += new System.Windows.Forms.MouseEventHandler(this.evntKeepProcessAlive_MouseMove);
             // 
-            // btnCustomProcessBrowseEXE
-            // 
-            this.btnCustomProcessBrowseEXE.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-            this.btnCustomProcessBrowseEXE.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.btnCustomProcessBrowseEXE.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCustomProcessBrowseEXE.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCustomProcessBrowseEXE.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.btnCustomProcessBrowseEXE.Location = new System.Drawing.Point(484, 40);
-            this.btnCustomProcessBrowseEXE.Margin = new System.Windows.Forms.Padding(0);
-            this.btnCustomProcessBrowseEXE.Name = "btnCustomProcessBrowseEXE";
-            this.btnCustomProcessBrowseEXE.Size = new System.Drawing.Size(64, 22);
-            this.btnCustomProcessBrowseEXE.TabIndex = 58;
-            this.btnCustomProcessBrowseEXE.Text = "Browse";
-            this.btnCustomProcessBrowseEXE.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            this.btnCustomProcessBrowseEXE.UseVisualStyleBackColor = true;
-            this.btnCustomProcessBrowseEXE.Click += new System.EventHandler(this.actionBrowseButtonForFilePath);
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -2987,12 +2159,858 @@
             this.txtPathToEXECustom.TabIndex = 56;
             this.toolTip1.SetToolTip(this.txtPathToEXECustom, "Full path to process executable");
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.mStripConfig);
+            this.panel1.Location = new System.Drawing.Point(340, 9);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(199, 24);
+            this.panel1.TabIndex = 35;
+            // 
+            // mStripConfig
+            // 
+            this.mStripConfig.BackColor = System.Drawing.Color.Transparent;
+            this.mStripConfig.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmItemConfigControl,
+            this.tsmConfigKeepalive,
+            this.tsmConfigAbout});
+            this.mStripConfig.Location = new System.Drawing.Point(0, 0);
+            this.mStripConfig.Name = "mStripConfig";
+            this.mStripConfig.Size = new System.Drawing.Size(199, 24);
+            this.mStripConfig.TabIndex = 0;
+            // 
+            // tsmItemConfigControl
+            // 
+            this.tsmItemConfigControl.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmItemConfigControlStart,
+            this.tsmConfigControlStop,
+            this.tsmItemConfigControlRestart});
+            this.tsmItemConfigControl.ForeColor = System.Drawing.Color.GreenYellow;
+            this.tsmItemConfigControl.Name = "tsmItemConfigControl";
+            this.tsmItemConfigControl.Size = new System.Drawing.Size(59, 20);
+            this.tsmItemConfigControl.Text = "Control";
+            // 
+            // tsmItemConfigControlStart
+            // 
+            this.tsmItemConfigControlStart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.tsmItemConfigControlStart.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.tsmItemConfigControlStart.Name = "tsmItemConfigControlStart";
+            this.tsmItemConfigControlStart.Size = new System.Drawing.Size(153, 22);
+            this.tsmItemConfigControlStart.Text = "Manual Start";
+            this.tsmItemConfigControlStart.Click += new System.EventHandler(this.tsmItemConfigControlStart_Click);
+            // 
+            // tsmConfigControlStop
+            // 
+            this.tsmConfigControlStop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.tsmConfigControlStop.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.tsmConfigControlStop.Name = "tsmConfigControlStop";
+            this.tsmConfigControlStop.Size = new System.Drawing.Size(153, 22);
+            this.tsmConfigControlStop.Text = "Manual Stop";
+            this.tsmConfigControlStop.Click += new System.EventHandler(this.tsmConfigControlStop_Click);
+            // 
+            // tsmItemConfigControlRestart
+            // 
+            this.tsmItemConfigControlRestart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.tsmItemConfigControlRestart.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.tsmItemConfigControlRestart.Name = "tsmItemConfigControlRestart";
+            this.tsmItemConfigControlRestart.Size = new System.Drawing.Size(153, 22);
+            this.tsmItemConfigControlRestart.Text = "Manual Restart";
+            this.tsmItemConfigControlRestart.Click += new System.EventHandler(this.tsmItemConfigControlRestart_Click);
+            // 
+            // tsmConfigKeepalive
+            // 
+            this.tsmConfigKeepalive.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmConfigKeepaliveStart,
+            this.tsmConfigKeepaliveStop,
+            this.tsmConfigKeepaliveLog,
+            this.tsmConfigKeepaliveOpenLib,
+            this.tsmConfigKeepaliveOpenSettings,
+            this.tsmConfigKeepaliveClean,
+            this.viewReadmeToolStripMenuItem});
+            this.tsmConfigKeepalive.ForeColor = System.Drawing.Color.GreenYellow;
+            this.tsmConfigKeepalive.Name = "tsmConfigKeepalive";
+            this.tsmConfigKeepalive.Size = new System.Drawing.Size(69, 20);
+            this.tsmConfigKeepalive.Text = "Keepalive";
+            // 
+            // tsmConfigKeepaliveStart
+            // 
+            this.tsmConfigKeepaliveStart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.tsmConfigKeepaliveStart.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.tsmConfigKeepaliveStart.Name = "tsmConfigKeepaliveStart";
+            this.tsmConfigKeepaliveStart.Size = new System.Drawing.Size(173, 22);
+            this.tsmConfigKeepaliveStart.Text = "Start Keepalive";
+            this.tsmConfigKeepaliveStart.Click += new System.EventHandler(this.tsmConfigKeepaliveStart_Click);
+            // 
+            // tsmConfigKeepaliveStop
+            // 
+            this.tsmConfigKeepaliveStop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.tsmConfigKeepaliveStop.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.tsmConfigKeepaliveStop.Name = "tsmConfigKeepaliveStop";
+            this.tsmConfigKeepaliveStop.Size = new System.Drawing.Size(173, 22);
+            this.tsmConfigKeepaliveStop.Text = "Stop Keepalive";
+            this.tsmConfigKeepaliveStop.Click += new System.EventHandler(this.tsmConfigKeepaliveStop_Click);
+            // 
+            // tsmConfigKeepaliveLog
+            // 
+            this.tsmConfigKeepaliveLog.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.tsmConfigKeepaliveLog.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.tsmConfigKeepaliveLog.Name = "tsmConfigKeepaliveLog";
+            this.tsmConfigKeepaliveLog.Size = new System.Drawing.Size(173, 22);
+            this.tsmConfigKeepaliveLog.Text = "View Log";
+            this.tsmConfigKeepaliveLog.Click += new System.EventHandler(this.tsmConfigKeepaliveLog_Click);
+            // 
+            // tsmConfigKeepaliveOpenLib
+            // 
+            this.tsmConfigKeepaliveOpenLib.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.tsmConfigKeepaliveOpenLib.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.tsmConfigKeepaliveOpenLib.Name = "tsmConfigKeepaliveOpenLib";
+            this.tsmConfigKeepaliveOpenLib.Size = new System.Drawing.Size(173, 22);
+            this.tsmConfigKeepaliveOpenLib.Text = "Open Batch Lib";
+            this.tsmConfigKeepaliveOpenLib.Click += new System.EventHandler(this.tsmConfigKeepaliveOpenLib_Click);
+            // 
+            // tsmConfigKeepaliveOpenSettings
+            // 
+            this.tsmConfigKeepaliveOpenSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.tsmConfigKeepaliveOpenSettings.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.tsmConfigKeepaliveOpenSettings.Name = "tsmConfigKeepaliveOpenSettings";
+            this.tsmConfigKeepaliveOpenSettings.Size = new System.Drawing.Size(173, 22);
+            this.tsmConfigKeepaliveOpenSettings.Text = "Open Settings Raw";
+            this.tsmConfigKeepaliveOpenSettings.Click += new System.EventHandler(this.tsmConfigKeepaliveOpenSettings_Click);
+            // 
+            // tsmConfigKeepaliveClean
+            // 
+            this.tsmConfigKeepaliveClean.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.tsmConfigKeepaliveClean.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.tsmConfigKeepaliveClean.Name = "tsmConfigKeepaliveClean";
+            this.tsmConfigKeepaliveClean.Size = new System.Drawing.Size(173, 22);
+            this.tsmConfigKeepaliveClean.Text = "Clean Batch Lib";
+            this.tsmConfigKeepaliveClean.Click += new System.EventHandler(this.tsmConfigKeepaliveClean_Click);
+            // 
+            // viewReadmeToolStripMenuItem
+            // 
+            this.viewReadmeToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.viewReadmeToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.viewReadmeToolStripMenuItem.Name = "viewReadmeToolStripMenuItem";
+            this.viewReadmeToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.viewReadmeToolStripMenuItem.Text = "View Readme";
+            this.viewReadmeToolStripMenuItem.Click += new System.EventHandler(this.viewReadmeToolStripMenuItem_Click);
+            // 
+            // tsmConfigAbout
+            // 
+            this.tsmConfigAbout.ForeColor = System.Drawing.Color.GreenYellow;
+            this.tsmConfigAbout.Name = "tsmConfigAbout";
+            this.tsmConfigAbout.Size = new System.Drawing.Size(52, 20);
+            this.tsmConfigAbout.Text = "About";
+            this.tsmConfigAbout.Click += new System.EventHandler(this.tsmConfigAbout_Click);
+            // 
+            // tabControlMainConfig
+            // 
+            this.tabControlMainConfig.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControlMainConfig.Controls.Add(this.tabPageProcessServer);
+            this.tabControlMainConfig.Controls.Add(this.tabPageProcessDatabase);
+            this.tabControlMainConfig.Controls.Add(this.tabPageProcessBEC);
+            this.tabControlMainConfig.Controls.Add(this.tabPageProcessHC);
+            this.tabControlMainConfig.Controls.Add(this.tabPageProcessTS);
+            this.tabControlMainConfig.Controls.Add(this.tabPageProcessASM);
+            this.tabControlMainConfig.Controls.Add(this.tabPageProcessCustom);
+            this.tabControlMainConfig.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabControlMainConfig.ItemSize = new System.Drawing.Size(125, 21);
+            this.tabControlMainConfig.Location = new System.Drawing.Point(16, 187);
+            this.tabControlMainConfig.Name = "tabControlMainConfig";
+            this.tabControlMainConfig.SelectedIndex = 0;
+            this.tabControlMainConfig.Size = new System.Drawing.Size(596, 295);
+            this.tabControlMainConfig.TabIndex = 11;
+            this.tabControlMainConfig.TabStop = false;
+            // 
+            // tabPageProcessServer
+            // 
+            this.tabPageProcessServer.AutoScroll = true;
+            this.tabPageProcessServer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.tabPageProcessServer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tabPageProcessServer.Controls.Add(this.grpConfigServerBackup);
+            this.tabPageProcessServer.Controls.Add(this.flpServer);
+            this.tabPageProcessServer.Controls.Add(this.grpKeepaliveOptions);
+            this.tabPageProcessServer.Controls.Add(this.grpConfigServerLaunch);
+            this.tabPageProcessServer.Controls.Add(this.lblServerAffinity);
+            this.tabPageProcessServer.Controls.Add(this.lblerverPriority);
+            this.tabPageProcessServer.Controls.Add(this.cBoxPriorityServer);
+            this.tabPageProcessServer.Controls.Add(this.btnProcessKeepaliveServer);
+            this.tabPageProcessServer.Controls.Add(this.btnFortxtPathToEXEServer);
+            this.tabPageProcessServer.Controls.Add(this.lblServerPathToEXE);
+            this.tabPageProcessServer.Controls.Add(this.txtPathToEXEServer);
+            this.tabPageProcessServer.Location = new System.Drawing.Point(4, 25);
+            this.tabPageProcessServer.Name = "tabPageProcessServer";
+            this.tabPageProcessServer.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageProcessServer.Size = new System.Drawing.Size(588, 266);
+            this.tabPageProcessServer.TabIndex = 0;
+            this.tabPageProcessServer.Text = "Arma Server";
+            // 
+            // grpConfigServerBackup
+            // 
+            this.grpConfigServerBackup.Controls.Add(this.chkUseZipLogs);
+            this.grpConfigServerBackup.Controls.Add(this.btnFortxtPathToBackupLog);
+            this.grpConfigServerBackup.Controls.Add(this.lblServerPathToLogBackup);
+            this.grpConfigServerBackup.Controls.Add(this.txtPathToBackupLog);
+            this.grpConfigServerBackup.Controls.Add(this.btnFortxtPathToServerLog);
+            this.grpConfigServerBackup.Controls.Add(this.lblServerPathToLog);
+            this.grpConfigServerBackup.Controls.Add(this.txtPathToServerLog);
+            this.grpConfigServerBackup.ForeColor = System.Drawing.Color.White;
+            this.grpConfigServerBackup.Location = new System.Drawing.Point(6, 109);
+            this.grpConfigServerBackup.Name = "grpConfigServerBackup";
+            this.grpConfigServerBackup.Size = new System.Drawing.Size(555, 135);
+            this.grpConfigServerBackup.TabIndex = 31;
+            this.grpConfigServerBackup.TabStop = false;
+            this.grpConfigServerBackup.Text = "Backup/Logging Settings";
+            // 
+            // btnFortxtPathToBackupLog
+            // 
+            this.btnFortxtPathToBackupLog.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnFortxtPathToBackupLog.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnFortxtPathToBackupLog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFortxtPathToBackupLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFortxtPathToBackupLog.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.btnFortxtPathToBackupLog.Location = new System.Drawing.Point(475, 100);
+            this.btnFortxtPathToBackupLog.Margin = new System.Windows.Forms.Padding(0);
+            this.btnFortxtPathToBackupLog.Name = "btnFortxtPathToBackupLog";
+            this.btnFortxtPathToBackupLog.Size = new System.Drawing.Size(64, 22);
+            this.btnFortxtPathToBackupLog.TabIndex = 41;
+            this.btnFortxtPathToBackupLog.Text = "Browse";
+            this.btnFortxtPathToBackupLog.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.btnFortxtPathToBackupLog.UseVisualStyleBackColor = true;
+            // 
+            // btnFortxtPathToServerLog
+            // 
+            this.btnFortxtPathToServerLog.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnFortxtPathToServerLog.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnFortxtPathToServerLog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFortxtPathToServerLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFortxtPathToServerLog.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.btnFortxtPathToServerLog.Location = new System.Drawing.Point(475, 50);
+            this.btnFortxtPathToServerLog.Margin = new System.Windows.Forms.Padding(0);
+            this.btnFortxtPathToServerLog.Name = "btnFortxtPathToServerLog";
+            this.btnFortxtPathToServerLog.Size = new System.Drawing.Size(64, 22);
+            this.btnFortxtPathToServerLog.TabIndex = 38;
+            this.btnFortxtPathToServerLog.Text = "Browse";
+            this.btnFortxtPathToServerLog.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.btnFortxtPathToServerLog.UseVisualStyleBackColor = true;
+            this.btnFortxtPathToServerLog.Click += new System.EventHandler(this.actionBrowseButtonForFilePath);
+            // 
+            // flpServer
+            // 
+            this.flpServer.AutoScroll = true;
+            this.flpServer.Location = new System.Drawing.Point(207, 69);
+            this.flpServer.Name = "flpServer";
+            this.flpServer.Size = new System.Drawing.Size(354, 49);
+            this.flpServer.TabIndex = 30;
+            this.flpServer.WrapContents = false;
+            // 
+            // grpKeepaliveOptions
+            // 
+            this.grpKeepaliveOptions.Controls.Add(this.chkUseNewIDRoutine);
+            this.grpKeepaliveOptions.Controls.Add(this.numStartTimeout);
+            this.grpKeepaliveOptions.Controls.Add(this.numManualTimeout);
+            this.grpKeepaliveOptions.Controls.Add(this.numAutoTimeout);
+            this.grpKeepaliveOptions.Controls.Add(this.numAutoDelay);
+            this.grpKeepaliveOptions.Controls.Add(this.cBoxDebugLevel);
+            this.grpKeepaliveOptions.Controls.Add(this.lblStartTimeout);
+            this.grpKeepaliveOptions.Controls.Add(this.chkCleanWERs);
+            this.grpKeepaliveOptions.Controls.Add(this.lblManualTimeout);
+            this.grpKeepaliveOptions.Controls.Add(this.lblAutoTimeout);
+            this.grpKeepaliveOptions.Controls.Add(this.lblAutoDelay);
+            this.grpKeepaliveOptions.Controls.Add(this.lblDebugLevel);
+            this.grpKeepaliveOptions.ForeColor = System.Drawing.Color.White;
+            this.grpKeepaliveOptions.Location = new System.Drawing.Point(6, 250);
+            this.grpKeepaliveOptions.Name = "grpKeepaliveOptions";
+            this.grpKeepaliveOptions.Size = new System.Drawing.Size(555, 147);
+            this.grpKeepaliveOptions.TabIndex = 29;
+            this.grpKeepaliveOptions.TabStop = false;
+            this.grpKeepaliveOptions.Text = "Restart / Keepalive Settings";
+            // 
+            // grpConfigServerLaunch
+            // 
+            this.grpConfigServerLaunch.Controls.Add(this.chkServerBindToIP);
+            this.grpConfigServerLaunch.Controls.Add(this.numServerIP4);
+            this.grpConfigServerLaunch.Controls.Add(this.numServerIP3);
+            this.grpConfigServerLaunch.Controls.Add(this.numServerIP2);
+            this.grpConfigServerLaunch.Controls.Add(this.numServerIP1);
+            this.grpConfigServerLaunch.Controls.Add(this.lvlServerIP);
+            this.grpConfigServerLaunch.Controls.Add(this.numServerPort);
+            this.grpConfigServerLaunch.Controls.Add(this.txtProfileName);
+            this.grpConfigServerLaunch.Controls.Add(this.lblServerProfileName);
+            this.grpConfigServerLaunch.Controls.Add(this.btnFortxtPathToProfile);
+            this.grpConfigServerLaunch.Controls.Add(this.lblPathToProfile);
+            this.grpConfigServerLaunch.Controls.Add(this.txtPathToProfile);
+            this.grpConfigServerLaunch.Controls.Add(this.btnFortxtPathToBasicCFG);
+            this.grpConfigServerLaunch.Controls.Add(this.lblServerPathToBasic);
+            this.grpConfigServerLaunch.Controls.Add(this.txtPathToBasicCFG);
+            this.grpConfigServerLaunch.Controls.Add(this.btnFortxtPathToConfigCFG);
+            this.grpConfigServerLaunch.Controls.Add(this.lblServerPathToConfig);
+            this.grpConfigServerLaunch.Controls.Add(this.txtPathToConfigCFG);
+            this.grpConfigServerLaunch.Controls.Add(this.txtServerModline);
+            this.grpConfigServerLaunch.Controls.Add(this.lblServerModline);
+            this.grpConfigServerLaunch.Controls.Add(this.txtServerCommand);
+            this.grpConfigServerLaunch.Controls.Add(this.lblServerCommand);
+            this.grpConfigServerLaunch.Controls.Add(this.lblServerPort);
+            this.grpConfigServerLaunch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.grpConfigServerLaunch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpConfigServerLaunch.ForeColor = System.Drawing.Color.White;
+            this.grpConfigServerLaunch.Location = new System.Drawing.Point(6, 403);
+            this.grpConfigServerLaunch.Name = "grpConfigServerLaunch";
+            this.grpConfigServerLaunch.Size = new System.Drawing.Size(555, 400);
+            this.grpConfigServerLaunch.TabIndex = 27;
+            this.grpConfigServerLaunch.TabStop = false;
+            this.grpConfigServerLaunch.Text = "Process Launch Settings";
+            // 
+            // btnFortxtPathToProfile
+            // 
+            this.btnFortxtPathToProfile.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnFortxtPathToProfile.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnFortxtPathToProfile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFortxtPathToProfile.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFortxtPathToProfile.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.btnFortxtPathToProfile.Location = new System.Drawing.Point(475, 318);
+            this.btnFortxtPathToProfile.Margin = new System.Windows.Forms.Padding(0);
+            this.btnFortxtPathToProfile.Name = "btnFortxtPathToProfile";
+            this.btnFortxtPathToProfile.Size = new System.Drawing.Size(64, 22);
+            this.btnFortxtPathToProfile.TabIndex = 41;
+            this.btnFortxtPathToProfile.Text = "Browse";
+            this.btnFortxtPathToProfile.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.btnFortxtPathToProfile.UseVisualStyleBackColor = true;
+            this.btnFortxtPathToProfile.Click += new System.EventHandler(this.actionBrowseButtonForFilePath);
+            // 
+            // btnFortxtPathToBasicCFG
+            // 
+            this.btnFortxtPathToBasicCFG.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnFortxtPathToBasicCFG.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnFortxtPathToBasicCFG.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFortxtPathToBasicCFG.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFortxtPathToBasicCFG.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.btnFortxtPathToBasicCFG.Location = new System.Drawing.Point(475, 264);
+            this.btnFortxtPathToBasicCFG.Margin = new System.Windows.Forms.Padding(0);
+            this.btnFortxtPathToBasicCFG.Name = "btnFortxtPathToBasicCFG";
+            this.btnFortxtPathToBasicCFG.Size = new System.Drawing.Size(64, 22);
+            this.btnFortxtPathToBasicCFG.TabIndex = 38;
+            this.btnFortxtPathToBasicCFG.Text = "Browse";
+            this.btnFortxtPathToBasicCFG.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.btnFortxtPathToBasicCFG.UseVisualStyleBackColor = true;
+            this.btnFortxtPathToBasicCFG.Click += new System.EventHandler(this.actionBrowseButtonForFilePath);
+            // 
+            // lblServerPathToBasic
+            // 
+            this.lblServerPathToBasic.AutoSize = true;
+            this.lblServerPathToBasic.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblServerPathToBasic.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.lblServerPathToBasic.Location = new System.Drawing.Point(6, 245);
+            this.lblServerPathToBasic.Name = "lblServerPathToBasic";
+            this.lblServerPathToBasic.Size = new System.Drawing.Size(106, 16);
+            this.lblServerPathToBasic.TabIndex = 37;
+            this.lblServerPathToBasic.Text = "Path to basic.cfg";
+            // 
+            // btnFortxtPathToConfigCFG
+            // 
+            this.btnFortxtPathToConfigCFG.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnFortxtPathToConfigCFG.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnFortxtPathToConfigCFG.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFortxtPathToConfigCFG.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFortxtPathToConfigCFG.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.btnFortxtPathToConfigCFG.Location = new System.Drawing.Point(475, 210);
+            this.btnFortxtPathToConfigCFG.Margin = new System.Windows.Forms.Padding(0);
+            this.btnFortxtPathToConfigCFG.Name = "btnFortxtPathToConfigCFG";
+            this.btnFortxtPathToConfigCFG.Size = new System.Drawing.Size(64, 22);
+            this.btnFortxtPathToConfigCFG.TabIndex = 35;
+            this.btnFortxtPathToConfigCFG.Text = "Browse";
+            this.btnFortxtPathToConfigCFG.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.btnFortxtPathToConfigCFG.UseVisualStyleBackColor = true;
+            this.btnFortxtPathToConfigCFG.Click += new System.EventHandler(this.actionBrowseButtonForFilePath);
+            // 
+            // lblerverPriority
+            // 
+            this.lblerverPriority.AutoSize = true;
+            this.lblerverPriority.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblerverPriority.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.lblerverPriority.Location = new System.Drawing.Point(3, 58);
+            this.lblerverPriority.Name = "lblerverPriority";
+            this.lblerverPriority.Size = new System.Drawing.Size(102, 16);
+            this.lblerverPriority.TabIndex = 16;
+            this.lblerverPriority.Text = "Process Priority";
+            // 
+            // btnFortxtPathToEXEServer
+            // 
+            this.btnFortxtPathToEXEServer.Enabled = false;
+            this.btnFortxtPathToEXEServer.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnFortxtPathToEXEServer.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnFortxtPathToEXEServer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFortxtPathToEXEServer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFortxtPathToEXEServer.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.btnFortxtPathToEXEServer.Location = new System.Drawing.Point(497, 25);
+            this.btnFortxtPathToEXEServer.Margin = new System.Windows.Forms.Padding(0);
+            this.btnFortxtPathToEXEServer.Name = "btnFortxtPathToEXEServer";
+            this.btnFortxtPathToEXEServer.Size = new System.Drawing.Size(64, 22);
+            this.btnFortxtPathToEXEServer.TabIndex = 10;
+            this.btnFortxtPathToEXEServer.Text = "Browse";
+            this.btnFortxtPathToEXEServer.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.btnFortxtPathToEXEServer.UseVisualStyleBackColor = true;
+            this.btnFortxtPathToEXEServer.Click += new System.EventHandler(this.actionBrowseButtonForFilePath);
+            // 
+            // tabPageProcessDatabase
+            // 
+            this.tabPageProcessDatabase.AutoScroll = true;
+            this.tabPageProcessDatabase.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.tabPageProcessDatabase.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tabPageProcessDatabase.Controls.Add(this.grpConfigDatabaseBackup);
+            this.tabPageProcessDatabase.Controls.Add(this.flpDatabase);
+            this.tabPageProcessDatabase.Controls.Add(this.lvlDatabaseAffinity);
+            this.tabPageProcessDatabase.Controls.Add(this.lblDatabasePriority);
+            this.tabPageProcessDatabase.Controls.Add(this.cBoxPriorityDatabase);
+            this.tabPageProcessDatabase.Controls.Add(this.btnProcessKeepaliveDatabase);
+            this.tabPageProcessDatabase.Controls.Add(this.btnFortxtPathToEXEDB);
+            this.tabPageProcessDatabase.Controls.Add(this.lblDatabasePathToExe);
+            this.tabPageProcessDatabase.Controls.Add(this.txtPathToEXEDB);
+            this.tabPageProcessDatabase.Location = new System.Drawing.Point(4, 25);
+            this.tabPageProcessDatabase.Name = "tabPageProcessDatabase";
+            this.tabPageProcessDatabase.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageProcessDatabase.Size = new System.Drawing.Size(588, 266);
+            this.tabPageProcessDatabase.TabIndex = 1;
+            this.tabPageProcessDatabase.Text = "Database";
+            // 
+            // grpConfigDatabaseBackup
+            // 
+            this.grpConfigDatabaseBackup.Controls.Add(this.numBackupInterval);
+            this.grpConfigDatabaseBackup.Controls.Add(this.lblDatabaseBackupInterval);
+            this.grpConfigDatabaseBackup.Controls.Add(this.chkUseZipBackups);
+            this.grpConfigDatabaseBackup.Controls.Add(this.btnFortxtPathToBackupFolder);
+            this.grpConfigDatabaseBackup.Controls.Add(this.lblDatabaseBackupFolder);
+            this.grpConfigDatabaseBackup.Controls.Add(this.txtPathToBackupFolder);
+            this.grpConfigDatabaseBackup.Controls.Add(this.btnFortxtPathToDBFile);
+            this.grpConfigDatabaseBackup.Controls.Add(this.lblDatabaseDumpFile);
+            this.grpConfigDatabaseBackup.Controls.Add(this.txtPathToDBFile);
+            this.grpConfigDatabaseBackup.ForeColor = System.Drawing.Color.White;
+            this.grpConfigDatabaseBackup.Location = new System.Drawing.Point(6, 109);
+            this.grpConfigDatabaseBackup.Name = "grpConfigDatabaseBackup";
+            this.grpConfigDatabaseBackup.Size = new System.Drawing.Size(555, 182);
+            this.grpConfigDatabaseBackup.TabIndex = 42;
+            this.grpConfigDatabaseBackup.TabStop = false;
+            this.grpConfigDatabaseBackup.Text = "Backup/Logging Settings";
+            // 
+            // btnFortxtPathToBackupFolder
+            // 
+            this.btnFortxtPathToBackupFolder.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnFortxtPathToBackupFolder.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnFortxtPathToBackupFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFortxtPathToBackupFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFortxtPathToBackupFolder.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.btnFortxtPathToBackupFolder.Location = new System.Drawing.Point(475, 150);
+            this.btnFortxtPathToBackupFolder.Margin = new System.Windows.Forms.Padding(0);
+            this.btnFortxtPathToBackupFolder.Name = "btnFortxtPathToBackupFolder";
+            this.btnFortxtPathToBackupFolder.Size = new System.Drawing.Size(64, 22);
+            this.btnFortxtPathToBackupFolder.TabIndex = 41;
+            this.btnFortxtPathToBackupFolder.Text = "Browse";
+            this.btnFortxtPathToBackupFolder.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.btnFortxtPathToBackupFolder.UseVisualStyleBackColor = true;
+            // 
+            // btnFortxtPathToDBFile
+            // 
+            this.btnFortxtPathToDBFile.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnFortxtPathToDBFile.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnFortxtPathToDBFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFortxtPathToDBFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFortxtPathToDBFile.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.btnFortxtPathToDBFile.Location = new System.Drawing.Point(475, 100);
+            this.btnFortxtPathToDBFile.Margin = new System.Windows.Forms.Padding(0);
+            this.btnFortxtPathToDBFile.Name = "btnFortxtPathToDBFile";
+            this.btnFortxtPathToDBFile.Size = new System.Drawing.Size(64, 22);
+            this.btnFortxtPathToDBFile.TabIndex = 38;
+            this.btnFortxtPathToDBFile.Text = "Browse";
+            this.btnFortxtPathToDBFile.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.btnFortxtPathToDBFile.UseVisualStyleBackColor = true;
+            // 
+            // flpDatabase
+            // 
+            this.flpDatabase.AutoScroll = true;
+            this.flpDatabase.Location = new System.Drawing.Point(207, 69);
+            this.flpDatabase.Name = "flpDatabase";
+            this.flpDatabase.Size = new System.Drawing.Size(354, 49);
+            this.flpDatabase.TabIndex = 42;
+            this.flpDatabase.WrapContents = false;
+            // 
+            // btnFortxtPathToEXEDB
+            // 
+            this.btnFortxtPathToEXEDB.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnFortxtPathToEXEDB.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnFortxtPathToEXEDB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFortxtPathToEXEDB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFortxtPathToEXEDB.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.btnFortxtPathToEXEDB.Location = new System.Drawing.Point(497, 25);
+            this.btnFortxtPathToEXEDB.Margin = new System.Windows.Forms.Padding(0);
+            this.btnFortxtPathToEXEDB.Name = "btnFortxtPathToEXEDB";
+            this.btnFortxtPathToEXEDB.Size = new System.Drawing.Size(64, 22);
+            this.btnFortxtPathToEXEDB.TabIndex = 28;
+            this.btnFortxtPathToEXEDB.Text = "Browse";
+            this.btnFortxtPathToEXEDB.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.btnFortxtPathToEXEDB.UseVisualStyleBackColor = true;
+            this.btnFortxtPathToEXEDB.Click += new System.EventHandler(this.actionBrowseButtonForFilePath);
+            // 
+            // tabPageProcessBEC
+            // 
+            this.tabPageProcessBEC.AutoScroll = true;
+            this.tabPageProcessBEC.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.tabPageProcessBEC.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tabPageProcessBEC.Controls.Add(this.grpConfigBECBackup);
+            this.tabPageProcessBEC.Controls.Add(this.flpBEC);
+            this.tabPageProcessBEC.Controls.Add(this.lblBECAffinity);
+            this.tabPageProcessBEC.Controls.Add(this.lblBECPriority);
+            this.tabPageProcessBEC.Controls.Add(this.cBoxPriorityBEC);
+            this.tabPageProcessBEC.Controls.Add(this.btnProcessKeepaliveBEC);
+            this.tabPageProcessBEC.Controls.Add(this.btnFortxtPathToEXEBEC);
+            this.tabPageProcessBEC.Controls.Add(this.lblBECPathToExe);
+            this.tabPageProcessBEC.Controls.Add(this.txtPathToEXEBEC);
+            this.tabPageProcessBEC.Location = new System.Drawing.Point(4, 25);
+            this.tabPageProcessBEC.Name = "tabPageProcessBEC";
+            this.tabPageProcessBEC.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageProcessBEC.Size = new System.Drawing.Size(588, 266);
+            this.tabPageProcessBEC.TabIndex = 2;
+            this.tabPageProcessBEC.Text = "BEC Process";
+            // 
+            // grpConfigBECBackup
+            // 
+            this.grpConfigBECBackup.Controls.Add(this.chkBecUseDsc);
+            this.grpConfigBECBackup.Controls.Add(this.txtPathToBattleye);
+            this.grpConfigBECBackup.Controls.Add(this.btnFortxtPathToBattleye);
+            this.grpConfigBECBackup.Controls.Add(this.lblBECBEPath);
+            this.grpConfigBECBackup.ForeColor = System.Drawing.Color.White;
+            this.grpConfigBECBackup.Location = new System.Drawing.Point(6, 109);
+            this.grpConfigBECBackup.Name = "grpConfigBECBackup";
+            this.grpConfigBECBackup.Size = new System.Drawing.Size(555, 80);
+            this.grpConfigBECBackup.TabIndex = 46;
+            this.grpConfigBECBackup.TabStop = false;
+            this.grpConfigBECBackup.Text = "Backup/Logging Settings";
+            // 
+            // btnFortxtPathToBattleye
+            // 
+            this.btnFortxtPathToBattleye.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnFortxtPathToBattleye.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnFortxtPathToBattleye.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFortxtPathToBattleye.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFortxtPathToBattleye.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.btnFortxtPathToBattleye.Location = new System.Drawing.Point(475, 50);
+            this.btnFortxtPathToBattleye.Margin = new System.Windows.Forms.Padding(0);
+            this.btnFortxtPathToBattleye.Name = "btnFortxtPathToBattleye";
+            this.btnFortxtPathToBattleye.Size = new System.Drawing.Size(64, 22);
+            this.btnFortxtPathToBattleye.TabIndex = 44;
+            this.btnFortxtPathToBattleye.Text = "Browse";
+            this.btnFortxtPathToBattleye.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.btnFortxtPathToBattleye.UseVisualStyleBackColor = true;
+            // 
+            // flpBEC
+            // 
+            this.flpBEC.AutoScroll = true;
+            this.flpBEC.Location = new System.Drawing.Point(207, 69);
+            this.flpBEC.Name = "flpBEC";
+            this.flpBEC.Size = new System.Drawing.Size(354, 49);
+            this.flpBEC.TabIndex = 46;
+            this.flpBEC.WrapContents = false;
+            // 
+            // btnFortxtPathToEXEBEC
+            // 
+            this.btnFortxtPathToEXEBEC.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnFortxtPathToEXEBEC.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnFortxtPathToEXEBEC.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFortxtPathToEXEBEC.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFortxtPathToEXEBEC.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.btnFortxtPathToEXEBEC.Location = new System.Drawing.Point(497, 25);
+            this.btnFortxtPathToEXEBEC.Margin = new System.Windows.Forms.Padding(0);
+            this.btnFortxtPathToEXEBEC.Name = "btnFortxtPathToEXEBEC";
+            this.btnFortxtPathToEXEBEC.Size = new System.Drawing.Size(64, 22);
+            this.btnFortxtPathToEXEBEC.TabIndex = 28;
+            this.btnFortxtPathToEXEBEC.Text = "Browse";
+            this.btnFortxtPathToEXEBEC.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.btnFortxtPathToEXEBEC.UseVisualStyleBackColor = true;
+            this.btnFortxtPathToEXEBEC.Click += new System.EventHandler(this.actionBrowseButtonForFilePath);
+            // 
+            // tabPageProcessHC
+            // 
+            this.tabPageProcessHC.AutoScroll = true;
+            this.tabPageProcessHC.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.tabPageProcessHC.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tabPageProcessHC.Controls.Add(this.grpConfigHCLaunch);
+            this.tabPageProcessHC.Controls.Add(this.flpHeadlessClient);
+            this.tabPageProcessHC.Controls.Add(this.lblHCAffinity);
+            this.tabPageProcessHC.Controls.Add(this.lblHCPriority);
+            this.tabPageProcessHC.Controls.Add(this.cBoxPriorityHeadlessClient);
+            this.tabPageProcessHC.Controls.Add(this.btnProcessKeepaliveHC);
+            this.tabPageProcessHC.Controls.Add(this.btnFortxtPathToEXEHC);
+            this.tabPageProcessHC.Controls.Add(this.lblHCPathToExe);
+            this.tabPageProcessHC.Controls.Add(this.txtPathToEXEHC);
+            this.tabPageProcessHC.Location = new System.Drawing.Point(4, 25);
+            this.tabPageProcessHC.Name = "tabPageProcessHC";
+            this.tabPageProcessHC.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageProcessHC.Size = new System.Drawing.Size(588, 266);
+            this.tabPageProcessHC.TabIndex = 3;
+            this.tabPageProcessHC.Text = "Headless Client";
+            // 
+            // grpConfigHCLaunch
+            // 
+            this.grpConfigHCLaunch.Controls.Add(this.lblHCLaunchArgs);
+            this.grpConfigHCLaunch.Controls.Add(this.txtHeadlessClientLaunchArgs);
+            this.grpConfigHCLaunch.ForeColor = System.Drawing.Color.White;
+            this.grpConfigHCLaunch.Location = new System.Drawing.Point(6, 109);
+            this.grpConfigHCLaunch.Name = "grpConfigHCLaunch";
+            this.grpConfigHCLaunch.Size = new System.Drawing.Size(555, 80);
+            this.grpConfigHCLaunch.TabIndex = 47;
+            this.grpConfigHCLaunch.TabStop = false;
+            this.grpConfigHCLaunch.Text = "Launch Parameters";
+            // 
+            // flpHeadlessClient
+            // 
+            this.flpHeadlessClient.AutoScroll = true;
+            this.flpHeadlessClient.Location = new System.Drawing.Point(207, 69);
+            this.flpHeadlessClient.Name = "flpHeadlessClient";
+            this.flpHeadlessClient.Size = new System.Drawing.Size(354, 49);
+            this.flpHeadlessClient.TabIndex = 47;
+            this.flpHeadlessClient.WrapContents = false;
+            // 
+            // btnFortxtPathToEXEHC
+            // 
+            this.btnFortxtPathToEXEHC.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnFortxtPathToEXEHC.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnFortxtPathToEXEHC.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFortxtPathToEXEHC.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFortxtPathToEXEHC.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.btnFortxtPathToEXEHC.Location = new System.Drawing.Point(497, 25);
+            this.btnFortxtPathToEXEHC.Margin = new System.Windows.Forms.Padding(0);
+            this.btnFortxtPathToEXEHC.Name = "btnFortxtPathToEXEHC";
+            this.btnFortxtPathToEXEHC.Size = new System.Drawing.Size(64, 22);
+            this.btnFortxtPathToEXEHC.TabIndex = 28;
+            this.btnFortxtPathToEXEHC.Text = "Browse";
+            this.btnFortxtPathToEXEHC.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.btnFortxtPathToEXEHC.UseVisualStyleBackColor = true;
+            this.btnFortxtPathToEXEHC.Click += new System.EventHandler(this.actionBrowseButtonForFilePath);
+            // 
+            // tabPageProcessTS
+            // 
+            this.tabPageProcessTS.AutoScroll = true;
+            this.tabPageProcessTS.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.tabPageProcessTS.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tabPageProcessTS.Controls.Add(this.grpconfigTeamspeakLaunch);
+            this.tabPageProcessTS.Controls.Add(this.flpTeamspeak);
+            this.tabPageProcessTS.Controls.Add(this.lblTSAffinity);
+            this.tabPageProcessTS.Controls.Add(this.lblTSPriority);
+            this.tabPageProcessTS.Controls.Add(this.cBoxPriorityTeamspeak);
+            this.tabPageProcessTS.Controls.Add(this.btnProcessKeepaliveTS);
+            this.tabPageProcessTS.Controls.Add(this.btnFortxtPathToEXETS);
+            this.tabPageProcessTS.Controls.Add(this.lblTSPathToExe);
+            this.tabPageProcessTS.Controls.Add(this.txtPathToEXETS);
+            this.tabPageProcessTS.Location = new System.Drawing.Point(4, 25);
+            this.tabPageProcessTS.Name = "tabPageProcessTS";
+            this.tabPageProcessTS.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageProcessTS.Size = new System.Drawing.Size(588, 266);
+            this.tabPageProcessTS.TabIndex = 4;
+            this.tabPageProcessTS.Text = "Teamspeak";
+            // 
+            // grpconfigTeamspeakLaunch
+            // 
+            this.grpconfigTeamspeakLaunch.Controls.Add(this.numTeamspeakPortNumber);
+            this.grpconfigTeamspeakLaunch.Controls.Add(this.lblTSPort);
+            this.grpconfigTeamspeakLaunch.ForeColor = System.Drawing.Color.White;
+            this.grpconfigTeamspeakLaunch.Location = new System.Drawing.Point(6, 109);
+            this.grpconfigTeamspeakLaunch.Name = "grpconfigTeamspeakLaunch";
+            this.grpconfigTeamspeakLaunch.Size = new System.Drawing.Size(555, 80);
+            this.grpconfigTeamspeakLaunch.TabIndex = 46;
+            this.grpconfigTeamspeakLaunch.TabStop = false;
+            this.grpconfigTeamspeakLaunch.Text = "Launch Parameters";
+            // 
+            // flpTeamspeak
+            // 
+            this.flpTeamspeak.AutoScroll = true;
+            this.flpTeamspeak.Location = new System.Drawing.Point(207, 69);
+            this.flpTeamspeak.Name = "flpTeamspeak";
+            this.flpTeamspeak.Size = new System.Drawing.Size(354, 49);
+            this.flpTeamspeak.TabIndex = 46;
+            this.flpTeamspeak.WrapContents = false;
+            // 
+            // btnFortxtPathToEXETS
+            // 
+            this.btnFortxtPathToEXETS.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnFortxtPathToEXETS.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnFortxtPathToEXETS.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFortxtPathToEXETS.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFortxtPathToEXETS.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.btnFortxtPathToEXETS.Location = new System.Drawing.Point(497, 25);
+            this.btnFortxtPathToEXETS.Margin = new System.Windows.Forms.Padding(0);
+            this.btnFortxtPathToEXETS.Name = "btnFortxtPathToEXETS";
+            this.btnFortxtPathToEXETS.Size = new System.Drawing.Size(64, 22);
+            this.btnFortxtPathToEXETS.TabIndex = 28;
+            this.btnFortxtPathToEXETS.Text = "Browse";
+            this.btnFortxtPathToEXETS.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.btnFortxtPathToEXETS.UseVisualStyleBackColor = true;
+            this.btnFortxtPathToEXETS.Click += new System.EventHandler(this.actionBrowseButtonForFilePath);
+            // 
+            // tabPageProcessASM
+            // 
+            this.tabPageProcessASM.AutoScroll = true;
+            this.tabPageProcessASM.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.tabPageProcessASM.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tabPageProcessASM.Controls.Add(this.grpConfigASMLaunch);
+            this.tabPageProcessASM.Controls.Add(this.flpASM);
+            this.tabPageProcessASM.Controls.Add(this.lblASMAffinity);
+            this.tabPageProcessASM.Controls.Add(this.lblASMPriority);
+            this.tabPageProcessASM.Controls.Add(this.cBoxPriorityASM);
+            this.tabPageProcessASM.Controls.Add(this.btnProcessKeepaliveASM);
+            this.tabPageProcessASM.Controls.Add(this.btnFortxtPathToEXEASM);
+            this.tabPageProcessASM.Controls.Add(this.lblASMPathToExe);
+            this.tabPageProcessASM.Controls.Add(this.txtPathToEXEASM);
+            this.tabPageProcessASM.Location = new System.Drawing.Point(4, 25);
+            this.tabPageProcessASM.Name = "tabPageProcessASM";
+            this.tabPageProcessASM.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageProcessASM.Size = new System.Drawing.Size(588, 266);
+            this.tabPageProcessASM.TabIndex = 5;
+            this.tabPageProcessASM.Text = "ASM";
+            // 
+            // grpConfigASMLaunch
+            // 
+            this.grpConfigASMLaunch.Controls.Add(this.numASMLogInterval);
+            this.grpConfigASMLaunch.Controls.Add(this.btnFortxtASMLogName);
+            this.grpConfigASMLaunch.Controls.Add(this.lblASMLoggingInterval);
+            this.grpConfigASMLaunch.Controls.Add(this.txtASMLogName);
+            this.grpConfigASMLaunch.Controls.Add(this.lblASMLogName);
+            this.grpConfigASMLaunch.ForeColor = System.Drawing.Color.White;
+            this.grpConfigASMLaunch.Location = new System.Drawing.Point(6, 109);
+            this.grpConfigASMLaunch.Name = "grpConfigASMLaunch";
+            this.grpConfigASMLaunch.Size = new System.Drawing.Size(555, 135);
+            this.grpConfigASMLaunch.TabIndex = 50;
+            this.grpConfigASMLaunch.TabStop = false;
+            this.grpConfigASMLaunch.Text = "Launch Parameters";
+            // 
+            // btnFortxtASMLogName
+            // 
+            this.btnFortxtASMLogName.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnFortxtASMLogName.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnFortxtASMLogName.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFortxtASMLogName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFortxtASMLogName.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.btnFortxtASMLogName.Location = new System.Drawing.Point(468, 100);
+            this.btnFortxtASMLogName.Margin = new System.Windows.Forms.Padding(0);
+            this.btnFortxtASMLogName.Name = "btnFortxtASMLogName";
+            this.btnFortxtASMLogName.Size = new System.Drawing.Size(64, 22);
+            this.btnFortxtASMLogName.TabIndex = 49;
+            this.btnFortxtASMLogName.Text = "Change";
+            this.btnFortxtASMLogName.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.btnFortxtASMLogName.UseVisualStyleBackColor = true;
+            // 
+            // flpASM
+            // 
+            this.flpASM.AutoScroll = true;
+            this.flpASM.Location = new System.Drawing.Point(207, 69);
+            this.flpASM.Name = "flpASM";
+            this.flpASM.Size = new System.Drawing.Size(354, 49);
+            this.flpASM.TabIndex = 50;
+            this.flpASM.WrapContents = false;
+            // 
+            // btnFortxtPathToEXEASM
+            // 
+            this.btnFortxtPathToEXEASM.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnFortxtPathToEXEASM.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnFortxtPathToEXEASM.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFortxtPathToEXEASM.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFortxtPathToEXEASM.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.btnFortxtPathToEXEASM.Location = new System.Drawing.Point(497, 25);
+            this.btnFortxtPathToEXEASM.Margin = new System.Windows.Forms.Padding(0);
+            this.btnFortxtPathToEXEASM.Name = "btnFortxtPathToEXEASM";
+            this.btnFortxtPathToEXEASM.Size = new System.Drawing.Size(64, 22);
+            this.btnFortxtPathToEXEASM.TabIndex = 28;
+            this.btnFortxtPathToEXEASM.Text = "Browse";
+            this.btnFortxtPathToEXEASM.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.btnFortxtPathToEXEASM.UseVisualStyleBackColor = true;
+            this.btnFortxtPathToEXEASM.Click += new System.EventHandler(this.actionBrowseButtonForFilePath);
+            // 
+            // tabPageProcessCustom
+            // 
+            this.tabPageProcessCustom.AutoScroll = true;
+            this.tabPageProcessCustom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.tabPageProcessCustom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tabPageProcessCustom.Controls.Add(this.btnCustomProcessDelete);
+            this.tabPageProcessCustom.Controls.Add(this.btnCustomProcessAdd);
+            this.tabPageProcessCustom.Controls.Add(this.cBoxCustomProcessSelector);
+            this.tabPageProcessCustom.Controls.Add(this.groupBox2);
+            this.tabPageProcessCustom.Location = new System.Drawing.Point(4, 25);
+            this.tabPageProcessCustom.Name = "tabPageProcessCustom";
+            this.tabPageProcessCustom.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageProcessCustom.Size = new System.Drawing.Size(588, 266);
+            this.tabPageProcessCustom.TabIndex = 6;
+            this.tabPageProcessCustom.Text = "Custom";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.flpCustom);
+            this.groupBox2.Controls.Add(this.lblCustomProcessLaunchParams);
+            this.groupBox2.Controls.Add(this.txtCustomProcessLaunchParams);
+            this.groupBox2.Controls.Add(this.lblCustomProcessName);
+            this.groupBox2.Controls.Add(this.txtCustomProcessName);
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.cBoxPriorityCustom);
+            this.groupBox2.Controls.Add(this.btnProcessKeepaliveCustom);
+            this.groupBox2.Controls.Add(this.btnCustomProcessBrowseEXE);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.txtPathToEXECustom);
+            this.groupBox2.ForeColor = System.Drawing.Color.White;
+            this.groupBox2.Location = new System.Drawing.Point(6, 64);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(555, 230);
+            this.groupBox2.TabIndex = 57;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "(Process EXE Name)";
+            // 
+            // flpCustom
+            // 
+            this.flpCustom.AutoScroll = true;
+            this.flpCustom.Location = new System.Drawing.Point(211, 92);
+            this.flpCustom.Name = "flpCustom";
+            this.flpCustom.Size = new System.Drawing.Size(337, 49);
+            this.flpCustom.TabIndex = 75;
+            this.flpCustom.WrapContents = false;
+            // 
+            // btnCustomProcessBrowseEXE
+            // 
+            this.btnCustomProcessBrowseEXE.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnCustomProcessBrowseEXE.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnCustomProcessBrowseEXE.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCustomProcessBrowseEXE.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCustomProcessBrowseEXE.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.btnCustomProcessBrowseEXE.Location = new System.Drawing.Point(484, 40);
+            this.btnCustomProcessBrowseEXE.Margin = new System.Windows.Forms.Padding(0);
+            this.btnCustomProcessBrowseEXE.Name = "btnCustomProcessBrowseEXE";
+            this.btnCustomProcessBrowseEXE.Size = new System.Drawing.Size(64, 22);
+            this.btnCustomProcessBrowseEXE.TabIndex = 58;
+            this.btnCustomProcessBrowseEXE.Text = "Browse";
+            this.btnCustomProcessBrowseEXE.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.btnCustomProcessBrowseEXE.UseVisualStyleBackColor = true;
+            this.btnCustomProcessBrowseEXE.Click += new System.EventHandler(this.actionBrowseButtonForFilePath);
+            // 
+            // chkUseNewIDRoutine
+            // 
+            this.chkUseNewIDRoutine.AutoSize = true;
+            this.chkUseNewIDRoutine.BackColor = System.Drawing.Color.Transparent;
+            this.chkUseNewIDRoutine.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkUseNewIDRoutine.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.chkUseNewIDRoutine.Location = new System.Drawing.Point(245, 21);
+            this.chkUseNewIDRoutine.Name = "chkUseNewIDRoutine";
+            this.chkUseNewIDRoutine.Size = new System.Drawing.Size(124, 17);
+            this.chkUseNewIDRoutine.TabIndex = 57;
+            this.chkUseNewIDRoutine.Text = "Use New ID Routine";
+            this.toolTip1.SetToolTip(this.chkUseNewIDRoutine, "Toggle the feature that auto-closes any error/crash/WER dialogs found so batch ca" +
+        "n proceed.");
+            this.chkUseNewIDRoutine.UseVisualStyleBackColor = false;
+            this.chkUseNewIDRoutine.CheckedChanged += new System.EventHandler(this.actionUseNewRoutine);
+            // 
             // frmConfigWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.ClientSize = new System.Drawing.Size(630, 572);
+            this.ClientSize = new System.Drawing.Size(630, 594);
             this.ControlBox = false;
             this.Controls.Add(this.pbConfigServer);
             this.Controls.Add(this.panel1);
@@ -3030,6 +3048,18 @@
             this.Load += new System.EventHandler(this.frmConfigWindow_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbActive)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbConfigServer)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numStartTimeout)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numManualTimeout)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numAutoTimeout)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numAutoDelay)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numServerIP4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numServerIP3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numServerIP2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numServerIP1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numServerPort)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBackupInterval)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numTeamspeakPortNumber)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numASMLogInterval)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.mStripConfig.ResumeLayout(false);
@@ -3041,22 +3071,12 @@
             this.grpConfigServerBackup.PerformLayout();
             this.grpKeepaliveOptions.ResumeLayout(false);
             this.grpKeepaliveOptions.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numStartTimeout)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numManualTimeout)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numAutoTimeout)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numAutoDelay)).EndInit();
             this.grpConfigServerLaunch.ResumeLayout(false);
             this.grpConfigServerLaunch.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numServerIP4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numServerIP3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numServerIP2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numServerIP1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numServerPort)).EndInit();
             this.tabPageProcessDatabase.ResumeLayout(false);
             this.tabPageProcessDatabase.PerformLayout();
             this.grpConfigDatabaseBackup.ResumeLayout(false);
             this.grpConfigDatabaseBackup.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numBackupInterval)).EndInit();
             this.tabPageProcessBEC.ResumeLayout(false);
             this.tabPageProcessBEC.PerformLayout();
             this.grpConfigBECBackup.ResumeLayout(false);
@@ -3069,12 +3089,10 @@
             this.tabPageProcessTS.PerformLayout();
             this.grpconfigTeamspeakLaunch.ResumeLayout(false);
             this.grpconfigTeamspeakLaunch.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numTeamspeakPortNumber)).EndInit();
             this.tabPageProcessASM.ResumeLayout(false);
             this.tabPageProcessASM.PerformLayout();
             this.grpConfigASMLaunch.ResumeLayout(false);
             this.grpConfigASMLaunch.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numASMLogInterval)).EndInit();
             this.tabPageProcessCustom.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -3267,5 +3285,6 @@
         private System.Windows.Forms.ToolStripMenuItem tsmConfigAbout;
         private System.Windows.Forms.PictureBox pbConfigServer;
         private System.Windows.Forms.ToolStripMenuItem viewReadmeToolStripMenuItem;
+        private System.Windows.Forms.CheckBox chkUseNewIDRoutine;
     }
 }

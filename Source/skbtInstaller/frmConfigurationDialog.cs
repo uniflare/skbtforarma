@@ -452,8 +452,9 @@ namespace skbtInstaller
             else
             {
                 tsmConfigKeepaliveStop.Enabled = false;
-                tsmConfigKeepaliveStart.Enabled = true;
                 tsmConfigKeepaliveClean.Enabled = true;
+
+                tsmConfigKeepaliveStart.Enabled = (this.sMeta.isInstalled)? true : false;
 
                 this.pbActive.BackColor = System.Drawing.Color.FromArgb(200, 0, 0);
                 this.toolTip1.SetToolTip(this.pbActive, "Keepalive Activity NOT Detected. Keepalive is not running");
@@ -690,7 +691,8 @@ namespace skbtInstaller
                 {"{PRIORITY_DB}", this.sConfig.objDatabaseProc.Priority},
                 {"{PRIORITY_TS}", this.sConfig.objTeamspeakProc.Priority},
                 {"{PRIORITY_ASM}", this.sConfig.objASMProc.Priority},
-                {"{CUSTOM_PROCESS_ENTRIES}", cusProcLines}
+                {"{CUSTOM_PROCESS_ENTRIES}", cusProcLines},
+                {"{SPECIFIC_PROC_CHECK}", this.sConfig.SpecificProcCheck ? "1" : "0"}
             };
             this.sMeta.textualName = this.txtConfigName.Text;
 
@@ -3131,6 +3133,21 @@ namespace skbtInstaller
         {
             AboutDialog abt = new AboutDialog();
             abt.ShowDialog();
+        }
+
+        private void actionUseNewRoutine(object sender, EventArgs e)
+        {
+            this.sConfig.SpecificProcCheck = (((CheckBox)sender).Checked == true) ? true : false;
+            if (this.chkUseNewIDRoutine.Checked != this.sc.CoreConfig.getServerConfigList()[this.sMeta.Identifier].SpecificProcCheck)
+            {
+                // red
+                this.chkUseNewIDRoutine.ForeColor = changedFore;
+            }
+            else
+            {
+                // normal
+                this.chkUseNewIDRoutine.ForeColor = Color.FromKnownColor(KnownColor.ScrollBar);
+            }
         }
     }
 

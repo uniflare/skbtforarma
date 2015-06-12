@@ -4,6 +4,7 @@ if "%configdone%"=="1" (
 )
 set configdone=0
 set skbt_debug={DEBUG_LEVEL}
+set ProcPathCheck={SPECIFIC_PROC_CHECK}
 set keepalive_database={KEEPALIVE_DATABASE}
 set keepalive_bec={KEEPALIVE_BEC}
 set keepalive_asm={KEEPALIVE_ASM}

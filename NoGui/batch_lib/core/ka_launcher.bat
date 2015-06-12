@@ -18,7 +18,7 @@ echo.
 echo [%TIMESTR%] Starting Keepalive
 cd %armapath%
 set /a kkk=0
-start /wait "Server Keepalive Tools v1.2.2.0 by Uniflare (AKA) Chemical Bliss" "batch_lib\core\server_keepalive.bat" >nul 2>&1
+start /wait "Server Keepalive Tools v1.2.2.1 by Uniflare (AKA) Chemical Bliss" "batch_lib\core\server_keepalive.bat" >nul 2>&1
 :keep_keepalive_alive
 echo. 
 set /p quitflag=<"batch_lib\wrkdir\stopkeepalive.txt"

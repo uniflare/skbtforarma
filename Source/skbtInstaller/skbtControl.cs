@@ -278,7 +278,7 @@ namespace skbtInstaller
                 {
                     // Not Installed
                     this.frmMainWindowHandle.enableInstall();
-                    this.frmMainWindowHandle.disableUninstall();
+                    this.frmMainWindowHandle.enableUninstall();
                     this.frmMainWindowHandle.disableConfigure();
                 }
             }

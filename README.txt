@@ -2,6 +2,8 @@
 ARMA SERVER KEEPALIVE TOOL 1.2.2.1
 ==================
 Several Bug Fixes
+Added more specific process identification routine. (In beta, checkign for stability)
+Added checkbox to server keepalive tab to choose to use the new Processor ID routine.
 
 ==================
 == NEW CHANGES  ==
@@ -10,6 +12,9 @@ Fixed a bug where deleting the last config and adding a new could result in a di
 Fixed a bug where deleting all CProc on one config would disable CProc selection on another.
 Fixed exception durign uninstall when batch_lib folder was already deleted.
 Fixed reading existing config file when installing over an old config.
+Enabled Uninstall button on fresh configs that havn't been saved yet.
+ADDED: More Specific Process ID Routine
+ADDED: New Proc ID Routine Checkbox
 
 ==================
 == INSTALLATION ==

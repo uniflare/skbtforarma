@@ -1,6 +1,4 @@
 @echo off
-tasklist /FI "IMAGENAME eq %armaserverexe%" 2>NUL | find /I /N "%armaserverexe%">NUL
-if "!ERRORLEVEL!"=="0"  goto :EOF
 
 set currentDir=%CD%
 cd /D %armapath%/batch_lib/external

@@ -3,8 +3,6 @@ setlocal ENABLEDELAYEDEXPANSION
 set cprocid=%1
 
 if !keepalive_cusproc[%cprocid%]!==1 (
-	tasklist /FI "IMAGENAME eq !cusproc_filename[%cprocid%]!" 2>NUL | find /I /N "!cusproc_filename[%cprocid%]!">NUL
-	if "!ERRORLEVEL!"=="0"  goto :EOF
 	set currentDir=%CD%
 	cd /D %armapath%/batch_lib/external
 	psexec -w "!cusproc_path[%cprocid%]!" -d -!cusproc_priority[%cprocid%]! -a !cusproc_affinity[%cprocid%]! -accepteula !cusproc_path[%cprocid%]!/!cusproc_filename[%cprocid%]! !cusproc_params[%cprocid%]!

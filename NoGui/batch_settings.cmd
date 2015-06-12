@@ -57,6 +57,9 @@ set bindtoip=0
 REM // ONLY USED IF bindtoip IS 1 :: Public IP address when using the -ip param in your command line. 
 set serverip=127.0.0.1
 
+REM // ***NEW*** Identify processes using full working paths rather than just EXE (Allows multi-server same EXE name setups)
+REM // - NOTE: IN BETA TESTING
+set ProcPathCheck=0
 
 REM \\ // ===================================================== \\ //
 REM // \\           EXTERNAL TOOL SPECIFIC SETTINGS             // \\

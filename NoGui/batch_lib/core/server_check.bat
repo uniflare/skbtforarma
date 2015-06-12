@@ -5,8 +5,14 @@ set bec=false
 set started_server=false
 
 :Stage1
-tasklist /FI "IMAGENAME eq %armaserverexe%" 2>NUL | find /I /N "%armaserverexe%">NUL
-if "%ERRORLEVEL%"=="0" 	goto ServerRunning
+set isRunning=false
+if %ProcPathCheck%==1 (
+	call :FUNC2 isRunning processIsRunning "!armaserverexe!" "!armapath:"=!"
+	if !isRunning!==true goto ServerRunning
+) else (
+	tasklist /FI "IMAGENAME eq %armaserverexe%" 2>NUL | find /I /N "%armaserverexe%">NUL
+	if "%ERRORLEVEL%"=="0" 	goto ServerRunning
+)
 goto ServerNotRunning
 
 :ServerRunning
@@ -21,8 +27,14 @@ set server=false
 
 rem check BEC
 :Stage2
-tasklist /FI "IMAGENAME eq %becexename%" 2>NUL | find /I /N "%becexename%">NUL
-if "%ERRORLEVEL%"=="0" 	goto BECRunning
+set isBecRunning=false
+if %ProcPathCheck%==1 (
+	call :FUNC2 isBecRunning processIsRunning "!becexename!" "!becpath:"=!"
+	if !isBecRunning!==true goto BECRunning
+) else (
+	tasklist /FI "IMAGENAME eq %becexename%" 2>NUL | find /I /N "%becexename%">NUL
+	if "%ERRORLEVEL%"=="0" 	goto BECRunning
+)
 goto BECNotRunning
 
 :BECRunning

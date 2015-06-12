@@ -38,6 +38,9 @@ namespace skbtInstaller
         // Ref Prop
         String refPathToEXE;
 
+        // New Proc ID Check
+        public Boolean SpecificProcCheck;
+
         // Keepalive Flags
         public bool CleanWER;
 
@@ -84,6 +87,7 @@ namespace skbtInstaller
             this.CleanWER = origin.CleanWER;
             this.AutoRestartDelay = origin.AutoRestartDelay;
             this.IP = origin.IP;
+            this.SpecificProcCheck = origin.SpecificProcCheck;
             this.ManualTimeoutLength = origin.ManualTimeoutLength;
             this.objASMProc = new skbtProcessConfigASM(
                 origin.objASMProc.EXEFile, 
@@ -187,6 +191,7 @@ namespace skbtInstaller
             this.ManualTimeoutLength = 300; // 5 minutes
             this.AutoTimeoutLength = 25; // 25 sec for graceful shutdown
             this.AutoRestartDelay = 5; // 1 sec just cause
+            this.SpecificProcCheck = true;
 
             this.objServerProc = new skbtProcessConfigServer(
                 Path.GetFileName(refPathToEXE),
@@ -416,10 +421,15 @@ namespace skbtInstaller
                 if (skbtConfigArray.ContainsKey("bec_flag_dsc")){
                     useDSC = (skbtConfigArray["bec_flag_dsc"].ToString() == "0") ? false : true;
                 }
+
+                // New Specific Proc ID Routine
+                if (skbtConfigArray.ContainsKey("ProcPathCheck"))
+                {
+                    this.SpecificProcCheck = (skbtConfigArray["ProcPathCheck"] == "1") ? true : false;
+                }
                 else
                 {
-                    // Older Version
-                    // Tell user maybe?
+                    this.SpecificProcCheck = false;
                 }
 
                 UInt16 skbt_debug = 1; // Default events only

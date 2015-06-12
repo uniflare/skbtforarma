@@ -123,8 +123,12 @@ namespace skbtInstaller
             if (MessageBox.Show("Are you sure you wish to delete your config for this server?\nThis will also delete your batch_lib folder, and remove this config from your installer.", "Are you sure?", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 // delete settings
-                string sFile = this.sc.CoreConfig.getServerMetaObject(thisIdentifier).PathToConfig.Trim('"');
-                File.Delete(sFile);
+                string sFile = this.sc.CoreConfig.getServerMetaObject(thisIdentifier).PathToConfig;
+                if (sFile != null)
+                {
+                    sFile = sFile.Trim('"');
+                    File.Delete(sFile);
+                }
 
                 skbtCoreConfig cC = this.sc.CoreConfig;
                 skbtServerMeta sM = cC.getServerMetaObject(thisIdentifier);

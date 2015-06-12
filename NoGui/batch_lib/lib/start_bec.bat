@@ -1,8 +1,5 @@
 @echo off
 if %keepalive_bec%==1 (
-	REM // Double start fix
-	tasklist /FI "IMAGENAME eq %becexename%" 2>NUL | find /I /N "%becexename%">NUL
-	if "!ERRORLEVEL!"=="0"  goto :EOF
 	set currentDir="%CD%"
 	cd /D "%armapath%/batch_lib/external"
 	set dscoption=--dsc

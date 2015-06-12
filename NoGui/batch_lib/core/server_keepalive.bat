@@ -5,7 +5,7 @@ call :doSanityCheck
 cd "%armapath%"
 
 call :FUNC TIMESTR GetTimeStr
-call :FUNC NOVAR BatchLogWrite 1__KEEPALIVE__INITIALIZE__Starting_v1.2.2_NoGui
+call :FUNC NOVAR BatchLogWrite 1__KEEPALIVE__INITIALIZE__Starting_v1.2.2_Gui
 set DEBUG_FLAG=0
 set /a auto_timeout=%auto_timeout_length%
 set /a manual_timeout=%manual_timeout_length%
@@ -50,7 +50,7 @@ goto :EOF
 cls
 echo ===========================================             %TIMESTR:@= @ %
 
-echo    Server Keepalive 1.2.2.0 NonGUI by Uniflare (AKA) Chemical Bliss
+echo    Server Keepalive 1.2.2.1 by Uniflare (AKA) Chemical Bliss
 echo.
 echo    Armapath: %armapath%
 echo.
@@ -469,8 +469,14 @@ call "batch_lib/custom/event_BeforeServerCheck.bat"
 REM CHECK IF DATABASE IS ACTIVE FIRST/ALWAYS
 if "%keepalive_database%"=="0" goto :Stage2
 
-tasklist /FI "IMAGENAME eq %redisexename%" 2>NUL | find /I /N "%redisexename%">NUL
-if "!ERRORLEVEL!"=="0"  goto Stage2
+if %ProcPathCheck%==1 (
+	set ACTIVE=false
+	call :FUNC2 ACTIVE processIsRunning "!redisexename!" "!redispath:"=!"
+	if !ACTIVE!==true goto :Stage2
+) else (
+	tasklist /FI "IMAGENAME eq %redisexename%" 2>NUL | find /I /N "%redisexename%">NUL
+	if "!ERRORLEVEL!"=="0" goto Stage2
+)
 if %firstloop%==0 call :RedisInactiveEvent & call :draw_display
 if %firstloop%==0 call "batch_lib\lib\stop_all.bat"
 call "batch_lib/lib/start_redis.bat" & set taskresult=SUCCESS || set taskresult=FAILURE
@@ -481,8 +487,14 @@ set redis_down=1
 :Stage2
 if "%keepalive_asm%"=="1" (
 	REM CHECK IF SERVER MONITOR (ASM) IS ACTIVE
-	tasklist /FI "IMAGENAME eq %asmexename%" 2>NUL | find /I /N "%asmexename%">NUL
-	if "!ERRORLEVEL!"=="0"  goto Stage3
+	if %ProcPathCheck%==1 (
+		set ACTIVE=false
+		call :FUNC2 ACTIVE processIsRunning "!asmexename!" "!asmpath:"=!"
+		if !ACTIVE!==true goto :Stage3
+	) else (
+		tasklist /FI "IMAGENAME eq %asmexename%" 2>NUL | find /I /N "%asmexename%">NUL
+		if "!ERRORLEVEL!"=="0"  goto Stage3
+	)
 	if %firstloop%==0 call :MonitorInactiveEvent & call :draw_display
 	call "batch_lib/lib/start_asm.bat" & set taskresult=SUCCESS || set taskresult=FAILURE
 	call :FUNC NOVAR BatchLogWrite 3__KEEPALIVE__START_ASM__%taskresult%
@@ -491,8 +503,14 @@ if "%keepalive_asm%"=="1" (
 :Stage3
 if "%keepalive_ts%"=="1" (
 	REM CHECK IF TEAMSPEAK IS ACTIVE
-	tasklist /FI "IMAGENAME eq %teamspeakfilename%" 2>NUL | find /I /N "%teamspeakfilename%">NUL
-	if "!ERRORLEVEL!"=="0"  goto Stage4
+	if %ProcPathCheck%==1 (
+		set ACTIVE=false
+		call :FUNC2 ACTIVE processIsRunning "!teamspeakfilename!" "!teamspeakpath:"=!"
+		if !ACTIVE!==true goto :Stage4
+	) else (
+		tasklist /FI "IMAGENAME eq %teamspeakfilename%" 2>NUL | find /I /N "%teamspeakfilename%">NUL
+		if "!ERRORLEVEL!"=="0"  goto Stage4
+	)
 	if %firstloop%==0 call :TeamspeakInactiveEvent & call :draw_display
 	call "batch_lib/lib/start_teamspeak.bat" & set taskresult=SUCCESS || set taskresult=FAILURE
 	call :FUNC NOVAR BatchLogWrite 3__KEEPALIVE__START_TEAMSPEAK__%taskresult%
@@ -501,8 +519,14 @@ if "%keepalive_ts%"=="1" (
 :Stage4
 if "%keepalive_hc%"=="1" (
 	REM CHECK IF Headless Client IS ACTIVE
-	tasklist /FI "IMAGENAME eq %hcexename%" 2>NUL | find /I /N "%hcexename%">NUL
-	if "!ERRORLEVEL!"=="0"  goto Stage4_2
+	if %ProcPathCheck%==1 (
+		set ACTIVE=false
+		call :FUNC2 ACTIVE processIsRunning "!hcexename!" "!hcarmapath:"=!"
+		if !ACTIVE!==true goto :Stage4_2
+	) else (
+		tasklist /FI "IMAGENAME eq %hcexename%" 2>NUL | find /I /N "%hcexename%">NUL
+		if "!ERRORLEVEL!"=="0"  goto Stage4_2
+	)
 	if %redis_down%==0 (
 		if %in_manual_routine%==false (
 			if %in_auto_routine%==false (
@@ -511,6 +535,7 @@ if "%keepalive_hc%"=="1" (
 		)
 	)
 	call "batch_lib/lib/start_hc.bat" & set taskresult=SUCCESS || set taskresult=FAILURE
+	call :FUNC NOVAR BatchLogWrite 3__KEEPALIVE__START_HC__%taskresult%
 )
 
 :Stage4_2
@@ -520,10 +545,19 @@ set j=99
 :mloop_cproc_active
 if %i%==100 goto Stage5
 if "!keepalive_cusproc[%i%]!"=="1" (
-	tasklist /FI "IMAGENAME eq !cusproc_filename[%i%]!" 2>NUL | find /I /N "!cusproc_filename[%i%]!">NUL
-	if "!ERRORLEVEL!"=="0" (
-		set /a i=%i%+1
-		goto :mloop_cproc_active
+	if %ProcPathCheck%==1 (
+		set ACTIVE=false
+		call :FUNC2 ACTIVE processIsRunning "!cusproc_filename[%i%]!" "!cusproc_path[%i%]:"=!"
+		if !ACTIVE!==true (
+			set /a i=%i%+1
+			goto :mloop_cproc_active
+		)
+	) else (
+		tasklist /FI "IMAGENAME eq !cusproc_filename[%i%]!" 2>NUL | find /I /N "!cusproc_filename[%i%]!">NUL
+		if "!ERRORLEVEL!"=="0" (
+			set /a i=%i%+1
+			goto :mloop_cproc_active
+		)
 	)
 	if %firstloop%==0 call :CProcInactiveEvent %i% & call :draw_display
 	call "batch_lib/lib/start_cproc.bat" %i% & set taskresult=SUCCESS || set taskresult=FAILURE
@@ -535,7 +569,13 @@ goto :mloop_cproc_active
 
 
 :Stage5
-call :FUNC isRunning serverIsRunning
+set isRunning=false
+set isBecRunning=false
+if %ProcPathCheck%==1 (
+	call :FUNC2 isRunning processIsRunning "!armaserverexe!" "!armapath:"=!"
+) else (
+	call :FUNC isRunning serverIsRunning
+)
 
 if "!isRunning!"=="true" (
 	if "%in_manual_routine%"=="true" (
@@ -549,8 +589,12 @@ if "!isRunning!"=="true" (
 		call "batch_lib/lib/setmanual.bat" clear
 	) else (
 		if "%keepalive_bec%"=="1" (
-			call :FUNC isBecRunning becIsRunning
-			if "!isBecRunning!"=="false" goto BECOnlyNotRunning
+			if %ProcPathCheck%==1 (
+				call :FUNC2 isBecRunning processIsRunning "%becexename%" "%becpath:"=%"
+			) else (
+				call :FUNC isBecRunning becIsRunning
+			)
+			if !isBecRunning!==false goto BECOnlyNotRunning
 		)
 	)
 	goto ServerIsRunning
@@ -573,7 +617,11 @@ if "!isRunning!"=="false" (
 		echo Server was started recently, waiting !thisdiff! seconds before trying again.
 		set /a thisdiff=!thisdiff!+1
 		call :FUNC sleeprtn sleep !thisdiff!
-		call :FUNC isRunning serverIsRunning
+		if %ProcPathCheck%==1 (
+			call :FUNC2 isRunning processIsRunning "!armaserverexe!" "!armapath:"=!"
+		) else (
+			call :FUNC isRunning serverIsRunning
+		)
 		if "!isRunning!"=="false" goto ServerNotRunning
 		goto ServerIsRunning
 	) else (
@@ -1024,6 +1072,33 @@ for /f %%I in ('%filename% "%args%"%args2%') do (
 )
 set "%1=%val1%"
 cd /D %currentDir%
+goto :EOF
+
+:FUNC2
+set currentDirF=%CD%
+cd "%armapath%/batch_lib/gbl_func"
+rem %1 = return var, %2 = function, %3 = args
+set returnvarname=%1
+set funcname=%2
+set argString=%3
+set argString2=%4
+set argString=%argString:__= %
+set argString=%argString:"=%
+set argString=%argString:(=[%
+set argString=%argString:)=]%
+set args=
+set args2=
+set args=%argString%
+if "%args%"=="__=" set args=
+set filename=%funcname%.cmd
+set val1=
+if not "%argString2:"=%"=="" set args2=%argString2%
+
+for /f %%I in ('%filename% "%args:"=%" "%args2:"=%"') do (
+	set "val1=%%I"
+)
+set "%1=%val1%"
+cd %currentDirF%
 goto :EOF
 
 :MATH
