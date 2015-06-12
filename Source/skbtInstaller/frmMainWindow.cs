@@ -123,16 +123,23 @@ namespace skbtInstaller
             if (MessageBox.Show("Are you sure you wish to delete your config for this server?\nThis will also delete your batch_lib folder, and remove this config from your installer.", "Are you sure?", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 // delete settings
-                File.Delete(this.sc.CoreConfig.getServerMetaObject(thisIdentifier).PathToConfig);
+                string sFile = this.sc.CoreConfig.getServerMetaObject(thisIdentifier).PathToConfig.Trim('"');
+                File.Delete(sFile);
 
-                // delete batch_lib
-                Directory.Delete(
-                    Path.Combine(
-                        Path.GetDirectoryName(this.sc.CoreConfig.getServerMetaObject(thisIdentifier).PathToEXE), 
-                        "batch_lib"
-                    ),
-                    true
-                );
+                skbtCoreConfig cC = this.sc.CoreConfig;
+                skbtServerMeta sM = cC.getServerMetaObject(thisIdentifier);
+                string exePath = sM.PathToEXE;
+                string exeDir = Path.GetDirectoryName(exePath);
+
+                string dir = Path.GetFullPath(Path.Combine(exeDir, "batch_lib"));
+                if (Directory.Exists(dir))
+                {
+                    // delete batch_lib
+                    Directory.Delete(
+                        dir,
+                        true
+                    );
+                }
 
                 // Delete Shrotcuts/Program Group
                 String StartMenuProgName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), "Programs", skbtServerControl.ProgramGroupName, this.sc.CoreConfig.getServerMetaObject(this.getSelectedPathValue()).textualName);

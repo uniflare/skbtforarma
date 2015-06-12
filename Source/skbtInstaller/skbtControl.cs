@@ -101,7 +101,7 @@ namespace skbtInstaller
             if (cPath != null)
             {
 
-                if (System.IO.File.Exists(cPath))
+                if (System.IO.File.Exists(Path.GetFullPath(cPath.Trim('"'))))
                 {
 
                     // No Folder, Not Installed

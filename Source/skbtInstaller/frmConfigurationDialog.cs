@@ -88,7 +88,7 @@ namespace skbtInstaller
             this.activityTimer.Enabled = true;
             this.activityTimer.Start();
 
-            if (!System.IO.File.Exists(thisConfigMeta.PathToConfig))
+            if (!System.IO.File.Exists(thisConfigMeta.PathToConfig.Trim('"')))
             {
                 MessageBox.Show("No batch settings were found. Reverting to defaults.",
                     "Settings not found",
@@ -2246,12 +2246,6 @@ namespace skbtInstaller
                     this.cBoxCustomProcessSelector.Items.Add(cBoxItem);
                     this.cBoxCustomProcessSelector.SelectedItem = cBoxItem;
 
-                    // Fill in default values for rest of fields
-
-
-
-                    // Enable/disable/change colors etc.
-
                     return;
                 }
                 else
@@ -2457,6 +2451,7 @@ namespace skbtInstaller
             // If no selected tab, default to first process item in list (whichever read first from config)
 
             this.pageCustomLoading = true;
+            this.cBoxCustomProcessSelector.Items.Clear();
 
             if (this.sConfig.objCustomProc.Count() > 0)
             {
@@ -2514,6 +2509,9 @@ namespace skbtInstaller
                         this.selectedCustomID = kvp.Key;
 
                         this.actionCustomProcSelector(this.cBoxCustomProcessSelector, new EventArgs() { });
+
+                        // Make sure list is enabled
+                        this.cBoxCustomProcessSelector.Enabled = true;
 
                         // Flag
                         temp_first = true;
@@ -3053,6 +3051,7 @@ namespace skbtInstaller
         private void tsmConfigKeepaliveStart_Click(object sender, EventArgs e)
         {
             this.executeBatchFile(Path.GetFullPath(Path.Combine(this.sConfig.objServerProc.Path, "batch_lib", "start_keepalive.bat")));
+            ((ToolStripItem)sender).Enabled = false;
         }
 
         private void tsmConfigKeepaliveStop_Click(object sender, EventArgs e)

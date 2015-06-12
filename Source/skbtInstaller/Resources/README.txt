@@ -1,16 +1,15 @@
 ==================
-ARMA SERVER KEEPALIVE TOOL 1.2.2
+ARMA SERVER KEEPALIVE TOOL 1.2.2.1
 ==================
-Added higher core support (up to 100 cores atm)
-Added a new icons showing batch/server status
-Added a control bar in config window, make administering easier.
+Several Bug Fixes
 
 ==================
 == NEW CHANGES  ==
 ==================
-ADDED: Higher processor core limit for affinity settings.
-ADDED: Icon in top right of config window showing keepalive batch status.
-ADDED: New Control Bar in Config Window.
+Fixed a bug where deleting the last config and adding a new could result in a display error.
+Fixed a bug where deleting all CProc on one config would disable CProc selection on another.
+Fixed exception durign uninstall when batch_lib folder was already deleted.
+Fixed reading existing config file when installing over an old config.
 
 ==================
 == INSTALLATION ==
@@ -57,6 +56,11 @@ NOTE: The logfile is called "batchrun.log" and is placed in the batch_lib direct
 ==================
 = OLD CHANGELOGS =
 ==================
+
+== Version 1.2.2
+ADDED: Higher processor core limit for affinity settings.
+ADDED: Icon in top right of config window showing keepalive batch status.
+ADDED: New Control Bar in Config Window.
 
 == Version 1.2.1
 Fixed error when adding a new custom process on a new default config
