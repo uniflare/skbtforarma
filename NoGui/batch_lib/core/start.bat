@@ -192,7 +192,7 @@ if exist "%file_newmish%" (
 goto startCommand
 
 :DISABLED_FEATURES_A2
-call :FUNC NOVAR BatchLogWrite 3__START.BAT__PBO_AUTO_FEATURES_WORKINPROGRESS
+call :FUNC NOVAR BatchLogWrite 3__START.BAT__SKIPPED_PBO_AUTO
 
 :SKIP_ROUTINE
 :startCommand
@@ -200,6 +200,9 @@ cls
 echo STARTING SERVER
 set startserver=false
 set startbec=false
+
+REM EVENT HOOK - custom/event_BeforeServerStart.bat
+call "%armapath%\batch_lib\custom\event_BeforeServerStart.bat"
 
 IF /i "%1"=="" (
 	set startserver=true

@@ -641,9 +641,6 @@ goto LoopAgain
 
 :ServerNotRunning
 
-REM EVENT HOOK - custom/event_BeforeServerStart.bat
-call "batch_lib/custom/event_BeforeServerStart.bat"
-
 set tempType=unknown
 if %redis_down%==1 set tempType=redis
 if %firstloop%==1 set tempType=firststart

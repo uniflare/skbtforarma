@@ -1,12 +1,12 @@
 ==================
-ARMA SERVER KEEPALIVE TOOL 1.2.2.1 (NoGui)
+ARMA SERVER KEEPALIVE TOOL 1.2.2.2 (NoGui)
 ==================
-Added more specific process identification routine. (In beta, checkign for stability)
+Fixed before server event call. Should be called right before server start. (Now it is).
 
 ==================
 == NEW CHANGES  ==
 ==================
-ADDED: More Specific Process ID Routine
+
 
 ==================
 == INSTALLATION ==
