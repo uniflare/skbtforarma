@@ -431,8 +431,13 @@ namespace skbtInstaller
         }
         public void activityTimer_Check(object sender, EventArgs e)
         {
+            if (this.sMeta == null) { return; }
+            if (this.sMeta.isInstalled == false) { return; }
+
             // Server Process
-            Process tProc = this.getProcessByPath(Path.GetFullPath(Path.Combine(this.sConfig.objServerProc.Path, this.sConfig.objServerProc.EXEFile)));
+
+            string filep = Path.GetFullPath(Path.Combine(this.sConfig.objServerProc.Path, this.sConfig.objServerProc.EXEFile));
+            Process tProc = this.getProcessByPath(filep);
 
             // Active Flags
             Boolean keepaliveRunning = this.sc.frmMainWindowHandle.IsKeepaliveActive(this.sConfig)? true : false;
@@ -3023,7 +3028,15 @@ namespace skbtInstaller
         {
             if (this.formSaved == false)
             {
-                var window = MessageBox.Show("Are you sure you want to close the configuration manager? " + Environment.NewLine + "Any changes made will be lost!", "You are about to lose config data", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                DialogResult window;
+                if (this.sMeta.isInstalled == false)
+                {
+                    window = MessageBox.Show("Are you sure you want to close the configuration manager? " + Environment.NewLine + "The keepalive has not been installed properly until you click SAVE!", "Any changes made will be lost!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    window = MessageBox.Show("Are you sure you want to close the configuration manager? " + Environment.NewLine + "Any changes made will be lost!", "You are about to lose config data", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                }
                 if (window == DialogResult.No) e.Cancel = true;
                 else e.Cancel = false;
             }

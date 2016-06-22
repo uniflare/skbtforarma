@@ -71,6 +71,7 @@ namespace skbtInstaller
          */
         public void AddNewServerConfig(){
 
+            MessageBox.Show("Please provide the server executable you wish to keep alive.");
             String PathToEXE = this.frmMainWindowHandle.getNewServerEXEPathFromUser();
 
             if (PathToEXE == null)
@@ -168,7 +169,7 @@ namespace skbtInstaller
                 }
             }
 
-            MessageBox.Show("There was no installation found. Please install.");
+            MessageBox.Show("There was no previous SKBT installation found. Please proceed by clicking Install.");
 
             // Add config internally
             this.CoreConfig.addServerConfig(newID, new skbtServerConfig(PathToEXE));

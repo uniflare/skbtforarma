@@ -95,6 +95,8 @@ namespace skbtInstaller
 
             // Install Batch Lib
 
+            MessageBox.Show("Please provide a location and name you wish to give to your config file.");
+
             String result = null;
             if ((result = this.getNewFilePathFromUser()) != null)
             {
